@@ -5,6 +5,7 @@ from ninept import qwen
 
 
 
+
 np.random.seed(42)
 n_samples = 500
 
@@ -56,5 +57,8 @@ print("test1")
 print(qwen("How are you?"))
 query = "Apply feature engineering to this dataset and return only and only python code to engineer the new variables into the pandas Dataset \"medical_data\"" + medical_data.head().to_string()
 print(query)
-print(qwen(query))
+#print(qwen(query))
 
+
+
+#### Vince trial and error stuff

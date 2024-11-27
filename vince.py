@@ -34,7 +34,7 @@ def impute_mixed_data(df, n_imputations=1):
         early_stopping_rounds=None,
         verbosity=0
     )
-    numeric_imputer = IterativeImputer(estimator=xgb_estimator, max_iter=10, random_state=42)
+    numeric_imputer = IterativeImputer(estimator=xgb_estimator, max_iter=100, random_state=42)
     categorical_imputer = SimpleImputer(strategy="most_frequent")
 
     # Perform imputations
@@ -109,8 +109,50 @@ def delete_values(df, p):
 
     return df
 
+def delete_values_with_exclusion(df, p, exclude_column):
+    """
+    Deletes p percent of all values in the DataFrame by replacing them with NaN,
+    while ensuring that the specified column does not get any missing values.
+
+    Parameters:
+        df (pd.DataFrame): The input DataFrame.
+        p (float): Percentage of values to delete (between 0 and 100).
+        exclude_column (str): Name of the column to exclude from missing values.
+
+    Returns:
+        pd.DataFrame: The DataFrame with missing values introduced.
+    """
+    if not (0 <= p <= 100):
+        raise ValueError("Percentage 'p' must be between 0 and 100.")
+    if exclude_column not in df.columns:
+        raise ValueError(f"Column '{exclude_column}' not found in the DataFrame.")
+
+    # Copy the DataFrame to avoid modifying the original
+    df = df.copy()
+
+    # Calculate the number of values to replace
+    total_values = df.size - len(df[exclude_column])  # Exclude the protected column
+    n_missing = int(total_values * (p / 100))
+
+    # Flatten the DataFrame index for easier random sampling
+    flat_indices = [
+        (i, j) for i in range(df.shape[0]) for j in range(df.shape[1])
+        if df.columns[j] != exclude_column
+    ]
+
+    # Randomly select indices to replace with NaN
+    missing_indices = np.random.choice(len(flat_indices), n_missing, replace=False)
+
+    # Replace the selected values with NaN
+    for idx in missing_indices:
+        i, j = flat_indices[idx]
+        df.iat[i, j] = np.nan
+
+    return df
+
+
 # Load the CSV file
-file_path = 'C:/Users/vince/OneDrive/Desktop/Case Studies/mtcars.csv'  # Replace with the actual path to the file
+file_path = 'mtcars.csv'  # Replace with the actual path to the file
 mtcars_df = pd.read_csv(file_path)
 
 mtcars_df = mtcars_df.drop(mtcars_df.columns[0], axis=1)
@@ -119,13 +161,15 @@ mtcars_df = mtcars_df.drop(mtcars_df.columns[0], axis=1)
 print(mtcars_df.head())
 
 #ampute
-mtcars_df_mis = delete_values(mtcars_df, 50)
+mtcars_df_mis = delete_values_with_exclusion(mtcars_df, 10, "mpg")
 print(mtcars_df_mis.head())
 
 #impute
-mtcars_df_imp = impute_mixed_data(mtcars_df_mis, 3)
+mtcars_df_imp = impute_mixed_data(mtcars_df_mis, 1)
 print(mtcars_df_imp.head())
 
+#complete cases
+complete_cases_df = mtcars_df_mis.dropna()
 
 #### compare with and without
 
@@ -180,4 +224,12 @@ def train_and_compare(df1, df2, response_variable):
 
 
 #train_and_compare(mtcars_df_mis, mtcars_df_imp, "mpg")
+
 train_and_compare(mtcars_df, mtcars_df_imp, "mpg")
+train_and_compare(mtcars_df, complete_cases_df, "mpg")
+
+
+#TODO compare with single imputation
+#implement missing as features (only makes sense for non MCAR)
+# early stopping not reached
+# how to impute categorical?
