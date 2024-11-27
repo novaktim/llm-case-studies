@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import datetime
+import re
 from ninept import qwen
 
 
@@ -53,10 +54,36 @@ medical_data = pd.DataFrame({
     "BloodPressure": blood_pressure
 })
 
-print(qwen("How are you?"))
-query = "Apply feature engineering to this dataset and return only and only python code to engineer the new variables into the pandas Dataset \"medical_data\"" + medical_data.head().to_string()
-print(query)
+#print("How are you?")
+#print(qwen("How are you?"))
+#print(qwen("How are you?", role="You are a python program"))
+query = "Apply feature engineering to the pandas dataset \"medical_data\" and assume it is already given as a variable and return only and only python code without comments to engineer the new variables: " + medical_data.head().to_string()
+print(query + "\n")
 #print(qwen(query))
 
+def extract_code_or_keep(input_string):
+    # Regular expression to capture Python code within triple backticks
+    code_blocks = re.findall(r"```python\n(.*?)```", input_string, re.DOTALL)
+    if code_blocks:
+        return "\n".join(code_blocks)
+    else:
+        return input_string
+    
+def ask_llm_python(medical_data, query, role, tries=3):
+    output = qwen(query, role)
+    code = extract_code_or_keep(output)
+    try:
+        print("Trying to execute python code: \n" + code)
+        exec(code)
+        return medical_data
+    except:
+        if tries == 0:
+            raise Exception(f"Failed to get a valid response from the llm: {query}")
+        else:
+            return ask_llm_python(medical_data, query + " The last answer was not a valid python code. Please answer only in python code and no explanations or comments.",
+            role=role, tries=tries-1)
 
+medical_data2 = ask_llm_python(medical_data, query, role="You are a python program", tries=3)
+print("\nFinished\n")
+print(medical_data.head().to_string())
 #### Vince trial and error stuff
