@@ -5,6 +5,14 @@ from sklearn.compose import ColumnTransformer
 from xgboost import XGBRegressor
 import pandas as pd
 import numpy as np
+from ninept import qwen
+
+## Additional information comes as imput from other group
+
+addInfo = ""
+dataSummary = ""
+colDescription = ""
+
 
 ### impute a dataframe n_imputations many times and return dataframe
 def impute_mixed_data(df, n_imputations=1):
@@ -225,11 +233,70 @@ def train_and_compare(df1, df2, response_variable):
 
 #train_and_compare(mtcars_df_mis, mtcars_df_imp, "mpg")
 
+def add_missingness_correlation_vars(df, response, threshold):
+    """
+    Adds missingness indicators for columns with missing values based on correlation with the response variable.
+
+    Parameters:
+        df (pd.DataFrame): The input DataFrame.
+        response (str): The name of the response variable column.
+        threshold (float): The correlation threshold to add the missingness indicator.
+
+    Returns:
+        pd.DataFrame: The modified DataFrame with new columns for significant missingness indicators.
+    """
+    if response not in df.columns:
+        raise ValueError(f"Response variable '{response}' not found in the DataFrame.")
+    if not isinstance(threshold, (int, float)):
+        raise ValueError("Threshold must be a numeric value.")
+    
+    # Copy the DataFrame to avoid modifying the original
+    df = df.copy()
+
+    # Ensure response is numeric (correlation requires numeric data)
+    if not np.issubdtype(df[response].dtype, np.number):
+        raise ValueError("The response variable must be numeric to calculate correlations.")
+
+    # Identify columns with missing values
+    missingness_cols = [col for col in df.columns if col != response and df[col].isnull().any()]
+
+    for col in missingness_cols:
+        # Create a missingness indicator (1 if missing, 0 otherwise)
+        missing_indicator = df[col].isnull().astype(int)
+        # Calculate correlation with the response variable
+        correlation = missing_indicator.corr(df[response])
+        
+        # Add the indicator as a new column if correlation exceeds the threshold
+        if abs(correlation) > threshold:
+            new_col_name = f"{col}_missing"
+            df[new_col_name] = missing_indicator
+
+    return df
+
+
+
+
+mtcars_inclMissingIndicator = add_missingness_correlation_vars(mtcars_df_mis, "mpg", 0.1)
+mtcars_inclMissingIndicator = add_missingness_correlation_vars(mtcars_df_mis, "mpg", 0.1)
+mtcars_inclMissingIndicator = impute_mixed_data(mtcars_inclMissingIndicator, 1)
+print(mtcars_inclMissingIndicator.head(10))
+
 train_and_compare(mtcars_df, mtcars_df_imp, "mpg")
 train_and_compare(mtcars_df, complete_cases_df, "mpg")
+train_and_compare(mtcars_df, mtcars_inclMissingIndicator, "mpg")
 
 
 #TODO compare with single imputation
 #implement missing as features (only makes sense for non MCAR)
 # early stopping not reached
 # how to impute categorical?
+
+
+
+# Ask Qwen which missingness structure could have an influence of the response
+colnames_string = ", ".join(mtcars_df.columns)
+
+query = "Have a look at the following columns: " + colnames_string + ". Also consider the dataframe description:" + dataSummary + ", the description of the columns:" + colDescription + "these additional information" + addInfo +  "and try to have an educated guess, for which variable the indicator whether the value is missing or not could have predictive power on the response variable: mpg"
+
+print(query)
+print(qwen(query))
