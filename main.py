@@ -5,6 +5,7 @@ from ninept import qwen
 
 
 
+
 np.random.seed(42)
 n_samples = 500
 
@@ -57,3 +58,5 @@ query = "Apply feature engineering to this dataset and return only and only pyth
 print(query)
 #print(qwen(query))
 
+
+#### Vince trial and error stuff
