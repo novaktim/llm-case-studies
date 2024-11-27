@@ -296,7 +296,72 @@ train_and_compare(mtcars_df, mtcars_inclMissingIndicator, "mpg")
 # Ask Qwen which missingness structure could have an influence of the response
 colnames_string = ", ".join(mtcars_df.columns)
 
-query = "Have a look at the following columns: " + colnames_string + ". Also consider the dataframe description:" + dataSummary + ", the description of the columns:" + colDescription + "these additional information" + addInfo +  "and try to have an educated guess, for which variable the indicator whether the value is missing or not could have predictive power on the response variable: mpg"
+query = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + " these additional information: " + addInfo +  " and try to have an educated guess, for which variable the indicator whether the value is missing or not could have predictive power on the response variable: mpg. Only output a single column index for which you think the column is the most relevant for predicting mpg, do not output anything else!"
+
 
 print(query)
-print(qwen(query))
+#print(qwen(query))
+
+
+# Imagine the response has to be a number
+def read(output):
+    output = output.strip()
+    output.replace(",", ".")
+    return int(output)
+
+def call_llm(content, role, tries=10):
+    outp = qwen(content, role)
+    try:
+        return read(outp)
+    except:
+        if tries == 0:
+            raise Exception("Failed to get a valid response from the llm (" + str(outp) + ")")
+        else:
+            return call_llm(content + f"The last string ('{outp}') was not a valid number. Please answer only with an integer number", role, tries - 1)
+        
+print(call_llm(query, "data science expert"))
+
+#TODO 
+#return array of ints und nicht einzelnen int
+#print number of tries needed
+
+#paar comments yur praesi
+#naechste 2 wochen nach naechster frei
+#built pipeline with LLM feature engeeneering and imputation and compare results
+
+#ask Gwen which features should be used as polynomial or log transformed features
+#Binning, Interaction features
+#Handling Temporal Features
+#Extract Date Components: Extract day, month, year, or day of the week from timestamps.
+#Lag Features: Create features based on past values (useful in time-series data).
+#Rolling Statistics: Compute rolling means, sums, or standard deviations over time.
+
+#exclude indicator features and constant features by hand
+
+#also shoul indicate in query that it has the option to not return anything
+
+
+# Imagine the response has to be an array of integers
+def read_mv(output):
+    output = output.strip()
+    output = output.replace(",", ".")
+    # Split the output into parts and try converting each to an integer
+    return [int(value) for value in output.split()]
+
+def call_llm_mv(content, role, tries=10):
+    outp = qwen(content, role)
+    try:
+        return read_mv(outp)
+    except:
+        if tries == 0:
+            raise Exception("Failed to get a valid response from the llm (" + str(outp) + ")")
+        else:
+            print("This try did not work: " + str(tries))
+            return call_llm_mv(
+                content + f"The last string ('{outp}') was not a valid array of integers. Please answer only with a space-separated list of integers.",
+                role,
+                tries - 1
+            )
+query_mv = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + " these additional information: " + addInfo +  " and try to have an educated guess, for which variable the indicator whether the value is missing or not could have predictive power on the response variable: mpg. Only output the column indices for which you think the column is relevant for predicting mpg, so return a list of integers and do not output anything else!"
+print(query_mv)
+print(call_llm_mv(query_mv, "data science expert"))
