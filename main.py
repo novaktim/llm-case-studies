@@ -7,6 +7,7 @@ from ninept import qwen
 
 
 
+
 np.random.seed(42)
 n_samples = 500
 
@@ -87,3 +88,18 @@ medical_data2 = ask_llm_python(medical_data, query, role="You are a python progr
 print("\nFinished\n")
 print(medical_data.head().to_string())
 #### Vince trial and error stuff
+# Imagine the response has to be a number
+def read(output):
+    output = output.strip()
+    output.replace(",", ".")
+    return int(output)
+
+def call_llm(content, role, tries=10):
+    outp = qwen(content, role)
+    try:
+        return read(outp)
+    except:
+        if tries == 0:
+            raise Exception("Failed to get a valid response from the llm (" + str(outp) + ")")
+        else:
+            return call_llm(content + f"The last string ('{outp}') was not a valid number. Please answer only with an integer number", role, tries - 1)
