@@ -52,9 +52,8 @@ medical_data = pd.DataFrame({
     "BloodPressure": blood_pressure
 })
 
-print("test1")
 print(qwen("How are you?"))
 query = "Apply feature engineering to this dataset and return only and only python code to engineer the new variables into the pandas Dataset \"medical_data\"" + medical_data.head().to_string()
 print(query)
-print(qwen(query))
+#print(qwen(query))
 
