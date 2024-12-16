@@ -16,3 +16,5 @@ Merging all the information into a single field, use this field as **Content** o
 From the Qwen model, get the response from the given content.
 ### Currently working on:
 - Encoding the categorical variable
+### Author
+Ahmed Arian Sajid
