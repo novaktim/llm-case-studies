@@ -14,3 +14,5 @@ To get a response from the Gwen model, first, we performed the following steps:
 Merging all the information into a single field, use this field as **Content** of the Qwen Model.
 ### Retrieving the information from the Qwen Model
 From the Qwen model, get the response from the given content.
+### Currently working on:
+- Encoding the categorical variable
