@@ -9,6 +9,9 @@ from ninept import qwen
 from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import make_scorer, mean_squared_error, accuracy_score
+from sklearn.linear_model import BayesianRidge
+from scipy.stats import boxcox
+
 
 ############################################ Data ##########################################
 
@@ -20,7 +23,7 @@ colDescription = ""
 #description as dictionary?
 responseVar = "mpg" #testing data
 # Load the CSV file
-file_path = 'mtcars.csv'  
+file_path = 'data/mtcars.csv'  
 mtcars_df = pd.read_csv(file_path)
 
 mtcars_df = mtcars_df.drop(mtcars_df.columns[0], axis=1)
@@ -49,7 +52,7 @@ def impute_mixed_data(df, n_imputations=1, strategy = "stacking"):
     Returns:
         pd.DataFrame: The DataFrame with imputed values aggregated across imputations.
     """
-     if strategy not in ["aggregate", "stacking"]:
+    if strategy not in ["aggregate", "stacking"]:
         raise ValueError(f"Invalid strategy '{strategy}'. Choose 'aggregate' or 'stacking'.")
 
     # Identify columns
@@ -66,8 +69,16 @@ def impute_mixed_data(df, n_imputations=1, strategy = "stacking"):
         early_stopping_rounds=None,
         verbosity=0
     )
-    numeric_imputer = IterativeImputer(estimator=xgb_estimator, max_iter=100, random_state=42,
-                                       sample_posterior=True) #need sample posterior for MI
+    #numeric_imputer = IterativeImputer(estimator=xgb_estimator, max_iter=100, random_state=42,
+    #                                   sample_posterior=True) #need sample posterior for MI
+    
+    #rather use Bayesian Ridge since we need posterior estimation with std estimate
+    numeric_imputer = IterativeImputer(
+    estimator=BayesianRidge(),
+    max_iter=100,
+    random_state=42,
+    sample_posterior=True  # Use posterior sampling
+    )
     categorical_imputer = SimpleImputer(strategy="constant") #fill_value=None, add_indicator=FALSE
     #set missing values as their own category seems more sensible
     
@@ -280,11 +291,6 @@ def add_missingness_correlation_vars(df, response, threshold):
     return df
 
 
-#query = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + " these additional information: " + addInfo +  " and try to have an educated guess, for which variable the indicator whether the value is missing or not could have predictive power on the response variable: " + responseVar + ". Only output a single column index for which you think the column is the most relevant for predicting:" + responseVar + ", do not output anything else!"
-#print(query)
-#print(qwen(query))
-
-
 # Imagine the response has to be a number
 def read(output):
     output = output.strip()
@@ -302,7 +308,6 @@ def call_llm(content, role, tries=10):
             return call_llm(content + f"The last string ('{outp}') was not a valid number. Please answer only with an integer number", role, tries - 1)
         
 
-#print(call_llm(query, "data science expert"))
 
 # Imagine the response has to be an array of integers
 def read_mv(output):
@@ -319,9 +324,62 @@ def call_llm_mv(content, role, tries=10):
         if tries == 0:
             raise Exception("Failed to get a valid response from the llm (" + str(outp) + ")")
         else:
-            print("This try did not work: " + str(tries))
+           # print("This try did not work: " + str(tries))
             return call_llm_mv(
                 content + f"The last string ('{outp}') was not a valid array of integers. Please answer only with a space-separated list of integers.",
+                role,
+                tries - 1
+            )
+
+
+#### check LLM output for list of lists of integer pairs
+import ast
+
+def read_pairlist(output):
+    """
+    Validates and parses the output into a list of lists, where each inner list contains exactly 2 integers.
+
+    Parameters:
+        output (str): The input string to validate and parse.
+
+    Returns:
+        list of lists: Parsed and validated list of lists containing integers.
+
+    Raises:
+        ValueError: If the input is not a valid list of lists with exactly 2 integers each.
+    """
+    output = output.strip()
+
+    # Parse safely using ast.literal_eval
+    try:
+        parsed = ast.literal_eval(output)
+    except (ValueError, SyntaxError):
+        raise ValueError("Input must be a valid Python expression representing a list of lists.")
+
+    # Ensure parsed object is a list of lists
+    if not (
+        isinstance(parsed, list) and 
+        all(
+            isinstance(inner, list) and len(inner) == 2 and 
+            all(isinstance(i, int) for i in inner)
+            for inner in parsed
+        )
+    ):
+        raise ValueError("Input must be a list of lists, where each inner list contains exactly 2 integers.")
+
+    return parsed
+
+def call_llm_pairlist(content, role, tries=10):
+    outp = qwen(content, role)
+    try:
+        return read_pairlist(outp)
+    except:
+        if tries == 0:
+            raise Exception("Failed to get a valid response from the llm (" + str(outp) + ")")
+        else:
+            print("This try did not work: " + str(tries))
+            return call_llm_mv(
+                content + f"The last string ('{outp}') was not a valid list of lists, where each inner list contains exactly 2 integers. Please do that.",
                 role,
                 tries - 1
             )
@@ -377,6 +435,8 @@ def add_power_columns(df, column_indices, power):
         if index < 0 or index >= len(df.columns):
             raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
         
+        
+        column_name = df.columns[index]
         # Handle power-specific column naming
         if power == 2:
             new_column_name = f"{column_name}_squared"
@@ -397,12 +457,14 @@ def add_power_columns(df, column_indices, power):
 
 def add_log_columns(df, column_indices):
     """
-    Adds log versions of the specified columns to the DataFrame.
+    Adds log-transformed versions of the specified columns to the DataFrame.
+
     Parameters:
         df (pd.DataFrame): The input DataFrame.
-        column_indices (list): List of column indices to be squared.
+        column_indices (list): List of column indices to be log-transformed.
+
     Returns:
-        pd.DataFrame: A new DataFrame with additional log transformed columns.
+        pd.DataFrame: A new DataFrame with additional log-transformed columns.
     """
     # Create a copy of the DataFrame to avoid modifying the original
     df = df.copy()
@@ -411,10 +473,14 @@ def add_log_columns(df, column_indices):
         if index < 0 or index >= len(df.columns):
             raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
         
-        if (df[index] <= 0).any():
-            raise ValueError("contains non-positive values, cannot compute log.")
-
         column_name = df.columns[index]
+        
+        # Check for non-positive values
+        if (df[column_name] <= 0).any():
+            print(f"Column '{column_name}' contains non-positive values and will be skipped.")
+            continue  # Skip this column
+
+        # Add log-transformed column
         new_column_name = f"{column_name}_log"
         df[new_column_name] = np.log(df[column_name])
 
@@ -449,6 +515,40 @@ def add_interaction_columns(df, column_indices):
     return df
 
 
+def add_boxcox_columns(df, column_indices):
+    """
+    Adds Box-Cox transformed versions of the specified columns to the DataFrame.
+
+    Parameters:
+        df (pd.DataFrame): The input DataFrame.
+        column_indices (list): List of column indices to apply the Box-Cox transformation.
+
+    Returns:
+        pd.DataFrame: A new DataFrame with additional Box-Cox transformed columns.
+    """
+    # Create a copy of the DataFrame to avoid modifying the original
+    df = df.copy()
+
+    for index in column_indices:
+        if index < 0 or index >= len(df.columns):
+            raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
+
+        column_name = df.columns[index]
+        
+        # Check for positive values required for Box-Cox transformation
+        if (df[column_name] <= 0).any():
+            print(f"Column '{column_name}' contains non-positive values and will be skipped.")
+            continue
+
+        # Apply Box-Cox transformation
+        transformed_data, lambda_optimal = boxcox(df[column_name])
+        new_column_name = f"{column_name}_boxcox"
+        df[new_column_name] = transformed_data
+
+        # Print the optimal λ for the transformation
+        print(f"Column '{column_name}' transformed with optimal λ = {lambda_optimal:.4f}")
+
+    return df
 ######################################### Plan ####################################################
 
 #built pipeline with LLM feature engeeneering and imputation and compare results
@@ -490,28 +590,30 @@ def add_interaction_columns(df, column_indices):
 ################################################ LLM queries #################################################
 
 query_missing = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess, for which variable the indicator whether the value is missing or not could have predictive power on the response variable: " + responseVar + ". Only output the column indices for which you think the column is relevant for predicting " + responseVar + ", so return a list of integers and do not output anything else! If you don't find a useful column, return NULL."
-print(query_missing)
+#print(query_missing)
 answer_missing = call_llm_mv(query_missing, "data science expert")
-print(answer_missing)
+#print(answer_missing)
 
-query_Ints = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess, for which variables an interaction term should be added as a new feature which could improve a prediction model on " + responseVar + ", so return a list of lists with two integers in each and do not output anything else! If you don't find anythign useful, return NULL."
+query_Ints = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess, for which variables an interaction term should be added as a new feature which could improve a prediction model on " + responseVar + ", so return a list of lists with two integers in each and do not output anything else! Example output: [[2, 3], [2,4], [1,6]]"
 query_Squ = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess, for which variables a squared tern should be added as a new feature which could improve a prediction model on " + responseVar + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
 query_Cub = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess, for which variables a cubic term should be added as a new feature which could improve a prediction model on " + responseVar + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
 query_Log = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess,  which variable should be log-tranformed  which could improve a prediction model on " + responseVar + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
+query_boxCox = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess,  which variable should be box-cox transformed which could improve a prediction model on " + responseVar + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
 
-answer_Ints = call_llm_mv(query_Ints, "data science expert")
+print(query_Ints)
+answer_Ints = call_llm_pairlist(query_Ints, "data science expert")
+print(answer_Ints)
+
 answer_Squ = call_llm_mv(query_Squ, "data science expert")
 answer_Cub = call_llm_mv(query_Cub, "data science expert")
-answer_Loc = call_llm_mv(query_Log, "data science expert")
+answer_Log = call_llm_mv(query_Log, "data science expert")
+answer_boxCox = call_llm_mv(query_Log, "data science expert")
 
 
 
 
 
 ############################################ TESTING ###################################################
-
-
-
 
 #ampute
 mtcars_df_mis = delete_values_with_exclusion(mtcars_df, 10, responseVar)
@@ -544,5 +646,46 @@ mtcars_missCol_imp = add_interaction_columns(mtcars_missCol_imp, answer_Ints)
 
 #TODO
 #Test with LLM if it works technically
-#Improve imputation
+#Improve imputation x
+    #research bayesian ridge 
 #write general function that works with all dataframes
+#LLM pairlist check does not work - just do 2 at a time? keeping track?
+#Add description of feature engineering as output
+#Test with real EDA results
+
+
+################################################### Main function ##########################################
+
+def vince_feature_engineering(df, 
+                            eda_summary = "", #from EDA
+                            ext_info = "", #from external knowledge group
+                            response = "mpg"):  
+    
+    colnames_string = ", ".join(df.columns) #might delete this if we get this from EDA
+    
+    df_new = impute_mixed_data(df, n_imputation = 5)
+    
+    query_missing = "Have a look at the following columns: " + colnames_string + " . Also consider the results from the explanatory data analysis: " + eda_summary + " , these additional information: " + ext_info +  " and try to have an educated guess, for which variable the indicator whether the value is missing or not could have predictive power on the response variable: " + response + "so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
+    query_Ints = "Have a look at the following columns: " + colnames_string + " . Also consider the results from the explanatory data analysis: " + eda_summary + " , these additional information: " + ext_info +  " and try to have an educated guess, for which variables an interaction term should be added as a new feature which could improve a prediction model on " + response + ", so return a list of lists with two integers in each and do not output anything else! Example output: [[2, 3], [2,4], [1,6]]"
+    query_Squ = "Have a look at the following columns: " + colnames_string + " . Also consider the results from the explanatory data analysis: " + eda_summary + " , these additional information: " + ext_info +  " and try to have an educated guess, for which variables a squared tern should be added as a new feature which could improve a prediction model on " + response + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
+    query_Cub = "Have a look at the following columns: " + colnames_string + " . Also consider the results from the explanatory data analysis: " + eda_summary + " , these additional information: " + ext_info +  " and try to have an educated guess, for which variables a cubic term should be added as a new feature which could improve a prediction model on " + response + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
+    query_Log = "Have a look at the following columns: " + colnames_string + " . Also consider the results from the explanatory data analysis: " + eda_summary + " , these additional information: " + ext_info +  " and try to have an educated guess,  which variable should be log-tranformed  which could improve a prediction model on " + response + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
+    query_boxCox = "Have a look at the following columns: " + colnames_string + " . Also consider the results from the explanatory data analysis: " + eda_summary + " , these additional information: " + ext_info +  " and try to have an educated guess,  which variable should be box-cox transformed which could improve a prediction model on " + response + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
+
+    answer_Ints = call_llm_pairlist(query_Ints, "data science expert")
+    answer_Squ = call_llm_mv(query_Squ, "data science expert")
+    answer_Cub = call_llm_mv(query_Cub, "data science expert")
+    answer_Log = call_llm_mv(query_Log, "data science expert")
+    answer_missing = call_llm_mv(query_missing, "data science expert")
+    answer_boxCox = call_llm_mv(query_boxCox, "data science expert")
+        
+        
+    #TODO add try catch stuff here to be more robust
+    df_new = add_missingness_columns(mtcars_df_mis, answer_missing)
+    df_new = add_power_columns(mtcars_missCol_imp, answer_Squ, 2)
+    df_new = add_power_columns(mtcars_missCol_imp, answer_Cub, 3)
+    df_new = add_log_columns(mtcars_missCol_imp, answer_Log)
+    df_new = add_interaction_columns(mtcars_missCol_imp, answer_Ints)
+    df_new = add_boxcox_columns(mtcars_missCol_imp, answer_boxCox)
+
+    return df_new
