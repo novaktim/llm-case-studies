@@ -32,7 +32,7 @@ colnames_string = ", ".join(mtcars_df.columns)
 ######################################## Lots of Functions ####################################
 
 ### impute a dataframe n_imputations many times and return dataframe
-def impute_mixed_data(df, n_imputations=1):
+def impute_mixed_data(df, n_imputations=1, strategy = "stacking"):
     """
     Imputes missing values in a DataFrame using:
         - MICE with XGBoost for numeric columns
@@ -41,16 +41,23 @@ def impute_mixed_data(df, n_imputations=1):
     Parameters:
         df (pd.DataFrame): The input DataFrame containing missing values.
         n_imputations (int): Number of imputations for multiple imputation. Defaults to 1.
+        strategy (str): Strategy for handling multiple imputations:
+             - "aggregate": Returns a single DataFrame with aggregated imputations.
+            - "stacking": Stacks imputations vertically in a single DataFrame.
+
     
     Returns:
         pd.DataFrame: The DataFrame with imputed values aggregated across imputations.
     """
+     if strategy not in ["aggregate", "stacking"]:
+        raise ValueError(f"Invalid strategy '{strategy}'. Choose 'aggregate' or 'stacking'.")
+
     # Identify columns
     numeric_cols = df.select_dtypes(include=["number"]).columns
     categorical_cols = df.select_dtypes(include=["object", "category"]).columns
     ignored_cols = df.columns.difference(numeric_cols.union(categorical_cols))
 
-    # Define imputers
+    # Define imputer
     xgb_estimator = XGBRegressor(
         n_estimators=100,
         max_depth=3,
@@ -59,9 +66,12 @@ def impute_mixed_data(df, n_imputations=1):
         early_stopping_rounds=None,
         verbosity=0
     )
-    numeric_imputer = IterativeImputer(estimator=xgb_estimator, max_iter=100, random_state=42)
-    categorical_imputer = SimpleImputer(strategy="most_frequent")
-
+    numeric_imputer = IterativeImputer(estimator=xgb_estimator, max_iter=100, random_state=42,
+                                       sample_posterior=True) #need sample posterior for MI
+    categorical_imputer = SimpleImputer(strategy="constant") #fill_value=None, add_indicator=FALSE
+    #set missing values as their own category seems more sensible
+    
+    
     # Perform imputations
     imputations = []
     for _ in range(n_imputations):
@@ -80,22 +90,25 @@ def impute_mixed_data(df, n_imputations=1):
     if n_imputations == 1:
         return imputations[0]
     else:
-        # Aggregate multiple imputations
-        aggregated_df = imputations[0].copy()
-        
-        # Average numeric columns
-        for col in numeric_cols:
-            aggregated_df[col] = np.mean(
-                [imputed_df[col].astype(float) for imputed_df in imputations], axis=0
-            )
-        
-        # Mode for categorical columns
-        for col in categorical_cols:
-            aggregated_df[col] = pd.concat(
-                [imputed_df[col] for imputed_df in imputations], axis=1
-            ).mode(axis=1)[0]
-        
-        return aggregated_df
+        if(strategy=="aggregate"):
+            # Aggregate multiple imputations
+            aggregated_df = imputations[0].copy()
+            
+            # Average numeric columns
+            for col in numeric_cols:
+                aggregated_df[col] = np.mean(
+                    [imputed_df[col].astype(float) for imputed_df in imputations], axis=0
+                )
+            
+            # Mode for categorical columns
+            for col in categorical_cols:
+                aggregated_df[col] = pd.concat(
+                    [imputed_df[col] for imputed_df in imputations], axis=1
+                ).mode(axis=1)[0]
+            return aggregated_df
+        else: #stacking is defeault
+            stacking_df = pd.concat(imputations, axis=0, ignore_index=True)
+            return stacking_df
 
 
 
@@ -316,28 +329,29 @@ def call_llm_mv(content, role, tries=10):
 #function to add dummy missingness to the dataframe for all columns in indices
 def add_missingness_columns(df, indices):
     """
-    Adds missingness indicators for columns with missing values based on correlation with the response variable.
+    Adds missingness indicators for columns with missing values.
 
     Parameters:
         df (pd.DataFrame): The input DataFrame.
-        indices (list of ints): column indices to add missingness dummy columns
+        indices (list of ints): Column indices to add missingness dummy columns.
 
     Returns:
-        pd.DataFrame: The modified DataFrame with new columns
+        pd.DataFrame: The modified DataFrame with new columns.
     """
     # Copy the DataFrame to avoid modifying the original
     df = df.copy()
 
-    for col in indices:
+    for col_index in indices:
+        if col_index < 0 or col_index >= len(df.columns):
+            raise ValueError(f"Column index {col_index} is out of bounds for the DataFrame.")
+        
+        col_name = df.columns[col_index]
         # Create a missingness indicator (1 if missing, 0 otherwise)
-        missing_indicator = df[col].isnull().astype(int)
+        missing_indicator = df[col_name].isnull().astype(int)
 
-        if index < 0 or index >= len(df.columns):
-            raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
-
-        # Add the indicator as a new column if indicators are not all 0 or all 1
-        if not (all(x == 1 for x in missing_indicator) or all(x == 0 for x in missing_indicator)):
-            new_col_name = f"{col}_missing"
+        # Add the indicator as a new column if it contains both 0 and 1
+        if missing_indicator.nunique() > 1:
+            new_col_name = f"{col_name}_missing"
             df[new_col_name] = missing_indicator
 
     return df
