@@ -6,13 +6,30 @@ from xgboost import XGBRegressor
 import pandas as pd
 import numpy as np
 from ninept import qwen
+from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
+from sklearn.model_selection import cross_val_score
+from sklearn.metrics import make_scorer, mean_squared_error, accuracy_score
 
-## Additional information comes as imput from other group
+############################################ Data ##########################################
 
+
+# Additional information comes as imput from other group
 addInfo = ""
 dataSummary = ""
 colDescription = ""
+#description as dictionary?
+responseVar = "mpg" #testing data
+# Load the CSV file
+file_path = 'mtcars.csv'  
+mtcars_df = pd.read_csv(file_path)
 
+mtcars_df = mtcars_df.drop(mtcars_df.columns[0], axis=1)
+colnames_string = ", ".join(mtcars_df.columns)
+# original data
+#print(mtcars_df.head())
+
+
+######################################## Lots of Functions ####################################
 
 ### impute a dataframe n_imputations many times and return dataframe
 def impute_mixed_data(df, n_imputations=1):
@@ -159,31 +176,8 @@ def delete_values_with_exclusion(df, p, exclude_column):
     return df
 
 
-# Load the CSV file
-file_path = 'mtcars.csv'  # Replace with the actual path to the file
-mtcars_df = pd.read_csv(file_path)
 
-mtcars_df = mtcars_df.drop(mtcars_df.columns[0], axis=1)
 
-# original data
-print(mtcars_df.head())
-
-#ampute
-mtcars_df_mis = delete_values_with_exclusion(mtcars_df, 10, "mpg")
-print(mtcars_df_mis.head())
-
-#impute
-mtcars_df_imp = impute_mixed_data(mtcars_df_mis, 1)
-print(mtcars_df_imp.head())
-
-#complete cases
-complete_cases_df = mtcars_df_mis.dropna()
-
-#### compare with and without
-
-from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
-from sklearn.model_selection import cross_val_score
-from sklearn.metrics import make_scorer, mean_squared_error, accuracy_score
 
 def train_and_compare(df1, df2, response_variable):
     """
@@ -231,7 +225,6 @@ def train_and_compare(df1, df2, response_variable):
         print(f"Dataset 2 - Misclassification Rate: {1 - cv_scores2.mean():.4f}")
 
 
-#train_and_compare(mtcars_df_mis, mtcars_df_imp, "mpg")
 
 def add_missingness_correlation_vars(df, response, threshold):
     """
@@ -274,32 +267,8 @@ def add_missingness_correlation_vars(df, response, threshold):
     return df
 
 
-
-
-mtcars_inclMissingIndicator = add_missingness_correlation_vars(mtcars_df_mis, "mpg", 0.1)
-mtcars_inclMissingIndicator = add_missingness_correlation_vars(mtcars_df_mis, "mpg", 0.1)
-mtcars_inclMissingIndicator = impute_mixed_data(mtcars_inclMissingIndicator, 1)
-print(mtcars_inclMissingIndicator.head(10))
-
-train_and_compare(mtcars_df, mtcars_df_imp, "mpg")
-train_and_compare(mtcars_df, complete_cases_df, "mpg")
-train_and_compare(mtcars_df, mtcars_inclMissingIndicator, "mpg")
-
-
-#TODO compare with single imputation
-#implement missing as features (only makes sense for non MCAR)
-# early stopping not reached
-# how to impute categorical?
-
-
-
-# Ask Qwen which missingness structure could have an influence of the response
-colnames_string = ", ".join(mtcars_df.columns)
-
-query = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + " these additional information: " + addInfo +  " and try to have an educated guess, for which variable the indicator whether the value is missing or not could have predictive power on the response variable: mpg. Only output a single column index for which you think the column is the most relevant for predicting mpg, do not output anything else!"
-
-
-print(query)
+#query = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + " these additional information: " + addInfo +  " and try to have an educated guess, for which variable the indicator whether the value is missing or not could have predictive power on the response variable: " + responseVar + ". Only output a single column index for which you think the column is the most relevant for predicting:" + responseVar + ", do not output anything else!"
+#print(query)
 #print(qwen(query))
 
 
@@ -319,27 +288,8 @@ def call_llm(content, role, tries=10):
         else:
             return call_llm(content + f"The last string ('{outp}') was not a valid number. Please answer only with an integer number", role, tries - 1)
         
-print(call_llm(query, "data science expert"))
 
-#TODO 
-#return array of ints und nicht einzelnen int
-#print number of tries needed
-
-#paar comments yur praesi
-#naechste 2 wochen nach naechster frei
-#built pipeline with LLM feature engeeneering and imputation and compare results
-
-#ask Gwen which features should be used as polynomial or log transformed features
-#Binning, Interaction features
-#Handling Temporal Features
-#Extract Date Components: Extract day, month, year, or day of the week from timestamps.
-#Lag Features: Create features based on past values (useful in time-series data).
-#Rolling Statistics: Compute rolling means, sums, or standard deviations over time.
-
-#exclude indicator features and constant features by hand
-
-#also shoul indicate in query that it has the option to not return anything
-
+#print(call_llm(query, "data science expert"))
 
 # Imagine the response has to be an array of integers
 def read_mv(output):
@@ -362,6 +312,223 @@ def call_llm_mv(content, role, tries=10):
                 role,
                 tries - 1
             )
-query_mv = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + " these additional information: " + addInfo +  " and try to have an educated guess, for which variable the indicator whether the value is missing or not could have predictive power on the response variable: mpg. Only output the column indices for which you think the column is relevant for predicting mpg, so return a list of integers and do not output anything else!"
-print(query_mv)
-print(call_llm_mv(query_mv, "data science expert"))
+
+#function to add dummy missingness to the dataframe for all columns in indices
+def add_missingness_columns(df, indices):
+    """
+    Adds missingness indicators for columns with missing values based on correlation with the response variable.
+
+    Parameters:
+        df (pd.DataFrame): The input DataFrame.
+        indices (list of ints): column indices to add missingness dummy columns
+
+    Returns:
+        pd.DataFrame: The modified DataFrame with new columns
+    """
+    # Copy the DataFrame to avoid modifying the original
+    df = df.copy()
+
+    for col in indices:
+        # Create a missingness indicator (1 if missing, 0 otherwise)
+        missing_indicator = df[col].isnull().astype(int)
+
+        if index < 0 or index >= len(df.columns):
+            raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
+
+        # Add the indicator as a new column if indicators are not all 0 or all 1
+        if not (all(x == 1 for x in missing_indicator) or all(x == 0 for x in missing_indicator)):
+            new_col_name = f"{col}_missing"
+            df[new_col_name] = missing_indicator
+
+    return df
+
+
+
+def add_power_columns(df, column_indices, power):
+    """
+    Adds power versions of the specified columns to the DataFrame.
+
+    Parameters:
+        df (pd.DataFrame): The input DataFrame.
+        column_indices (list): List of column indices to be squared.
+        power (int):  e.g. squaring or cubing
+
+    Returns:
+        pd.DataFrame: A new DataFrame with additional power columns.
+    """
+    # Create a copy of the DataFrame to avoid modifying the original
+    df = df.copy()
+
+    for index in column_indices:
+        if index < 0 or index >= len(df.columns):
+            raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
+        
+        # Handle power-specific column naming
+        if power == 2:
+            new_column_name = f"{column_name}_squared"
+        elif power == 3:
+            new_column_name = f"{column_name}_cubed"
+        else:
+            new_column_name = f"{column_name}_power_{power}"
+        
+        # Ensure the column contains numeric data
+        if not pd.api.types.is_numeric_dtype(df[column_name]):
+            raise ValueError(f"Column '{column_name}' is not numeric and cannot be raised to a power.")
+
+        # Add the power-transformed column
+        df[new_column_name] = df[column_name] ** power
+
+    return df
+
+
+def add_log_columns(df, column_indices):
+    """
+    Adds log versions of the specified columns to the DataFrame.
+    Parameters:
+        df (pd.DataFrame): The input DataFrame.
+        column_indices (list): List of column indices to be squared.
+    Returns:
+        pd.DataFrame: A new DataFrame with additional log transformed columns.
+    """
+    # Create a copy of the DataFrame to avoid modifying the original
+    df = df.copy()
+
+    for index in column_indices:
+        if index < 0 or index >= len(df.columns):
+            raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
+        
+        if (df[index] <= 0).any():
+            raise ValueError("contains non-positive values, cannot compute log.")
+
+        column_name = df.columns[index]
+        new_column_name = f"{column_name}_log"
+        df[new_column_name] = np.log(df[column_name])
+
+    return df
+
+
+def add_interaction_columns(df, column_indices):
+    """
+    Adds interaction term of the specified columns to the DataFrame.
+    Parameters:
+        df (pd.DataFrame): The input DataFrame.
+        column_indices (list): List of lists with two integers each.
+    Returns:
+        pd.DataFrame: A new DataFrame with additional interaction columns.
+    """
+    # Create a copy of the DataFrame to avoid modifying the original
+    df = df.copy()
+
+    for pair in column_indices:
+        if len(pair) != 2:
+            raise ValueError("Only consider two way interactions.")
+        
+        column_name = ""
+        for index in pair:
+            if index < 0 or index >= len(df.columns):
+                raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
+
+            column_name = column_name + "_" + df.columns[index][:5]
+        new_column_name = f"{column_name}_intA"
+        df[new_column_name] = df[pair[0]] * df[pair[1]]
+
+    return df
+
+
+######################################### Plan ####################################################
+
+#built pipeline with LLM feature engeeneering and imputation and compare results
+#ask Gwen which features should be used as polynomial or log transformed features
+#Binning, Interaction features
+#Handling Temporal Features
+#Extract Date Components: Extract day, month, year, or day of the week from timestamps.
+#Lag Features: Create features based on past values (useful in time-series data).
+#Rolling Statistics: Compute rolling means, sums, or standard deviations over time.
+
+#Feature Engineering plan
+#Need from previous groups: (keep text strings short)
+    #preprocessed data in rectangular form. Removal of unimportant, constant, duplicate features
+    #addInfo = "" e.g. external knowledge
+    #dataSummary = ""
+    #colDescription = "" description of the columns, especially which contain time data, text data, anything unsual
+    #responseVar = "mpg" 
+    #task: regression or classification
+    #metric e.g. MSE or misclassification rate
+#Hard code: imputation, standadisation of numerical features, handling time date?,
+#   log-transform features with outliers?
+#Vincent: Ask Gwen about specific feature transformation, let it output column indices
+#   e.g. Adding squared and cubic terms
+#   what other standard feature transformation do you know?
+#Tim: Ask Gwen more generally, look at the data and additional information and output feature
+#   transformations as python Code, e.g. BMI as transformation of weight and height
+
+#Output to the next group: dataframe with additional features added
+
+#Both approaches work on a technical level
+#Questions: Does this actually improve predictive power? -> testing
+#   Which transformation, e.g. for time series data, can the LLM detect? -> testing
+
+
+
+
+
+
+################################################ LLM queries #################################################
+
+query_missing = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess, for which variable the indicator whether the value is missing or not could have predictive power on the response variable: " + responseVar + ". Only output the column indices for which you think the column is relevant for predicting " + responseVar + ", so return a list of integers and do not output anything else! If you don't find a useful column, return NULL."
+print(query_missing)
+answer_missing = call_llm_mv(query_missing, "data science expert")
+print(answer_missing)
+
+query_Ints = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess, for which variables an interaction term should be added as a new feature which could improve a prediction model on " + responseVar + ", so return a list of lists with two integers in each and do not output anything else! If you don't find anythign useful, return NULL."
+query_Squ = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess, for which variables a squared tern should be added as a new feature which could improve a prediction model on " + responseVar + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
+query_Cub = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess, for which variables a cubic term should be added as a new feature which could improve a prediction model on " + responseVar + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
+query_Log = "Have a look at the following columns: " + colnames_string + " . Also consider the dataframe description: " + dataSummary + " , the description of the columns: " + colDescription + ", these additional information: " + addInfo +  " and try to have an educated guess,  which variable should be log-tranformed  which could improve a prediction model on " + responseVar + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
+
+answer_Ints = call_llm_mv(query_Ints, "data science expert")
+answer_Squ = call_llm_mv(query_Squ, "data science expert")
+answer_Cub = call_llm_mv(query_Cub, "data science expert")
+answer_Loc = call_llm_mv(query_Log, "data science expert")
+
+
+
+
+
+############################################ TESTING ###################################################
+
+
+
+
+#ampute
+mtcars_df_mis = delete_values_with_exclusion(mtcars_df, 10, responseVar)
+#print(mtcars_df_mis.head())
+
+#impute
+#mtcars_df_imp = impute_mixed_data(mtcars_df_mis, 1)
+#print(mtcars_df_imp.head())
+
+#complete cases
+complete_cases_df = mtcars_df_mis.dropna()
+
+#use LLM to modify the datafreame
+mtcars_missCol = add_missingness_columns(mtcars_df_mis, answer_missing)
+mtcars_missCol_imp = impute_mixed_data(mtcars_missCol, 3)
+mtcars_missCol_imp = add_power_columns(mtcars_missCol_imp, answer_Squ, 2)
+mtcars_missCol_imp = add_power_columns(mtcars_missCol_imp, answer_Cub, 3)
+mtcars_missCol_imp = add_log_columns(mtcars_missCol_imp, answer_Log)
+mtcars_missCol_imp = add_interaction_columns(mtcars_missCol_imp, answer_Ints)
+
+#mtcars_inclMissingIndicator = add_missingness_correlation_vars(mtcars_df_mis, responseVar, 0.1)
+#mtcars_inclMissingIndicator = add_missingness_correlation_vars(mtcars_df_mis, responseVar, 0.1)
+#mtcars_inclMissingIndicator = impute_mixed_data(mtcars_inclMissingIndicator, 1)
+#print(mtcars_inclMissingIndicator.head(10))
+
+#train_and_compare(mtcars_df, mtcars_df_imp, responseVar)
+#train_and_compare(mtcars_df, complete_cases_df, responseVar)
+#train_and_compare(mtcars_df, mtcars_inclMissingIndicator, responseVar)
+
+
+#TODO
+#Test with LLM if it works technically
+#Improve imputation
+#write general function that works with all dataframes
