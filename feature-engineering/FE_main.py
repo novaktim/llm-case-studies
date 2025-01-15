@@ -1,6 +1,7 @@
 #### This is the function supposed to be called in the overall pipeline ######
 
 import sys
+import pandas
 sys.path.append('/feature-engineering')
 from  fe_vince_main import *
 import feature_generation #tim
