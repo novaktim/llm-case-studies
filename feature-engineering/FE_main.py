@@ -2,7 +2,7 @@
 
 import sys
 sys.path.append('/feature-engineering')
-import fe_vince_main
+from  fe_vince_main import *
 import feature_generation #tim
 #1 call imputation
 #2 call vince FE approach
@@ -12,12 +12,17 @@ import feature_generation #tim
 #fe_main performs feature engineering
 def fe_main(df, eda_summary, ext_info, response): 
     
-    print("Performing imputation and hard coded standard feature engineering steps")
-    df_new = vince_feature_engineering(df, eda_summary, ext_info, response) #including imputation
+    print("Performing imputation and hard coded standard feature engineering steps.\n")
+    fe_vince_results = vince_feature_engineering(df, eda_summary, ext_info, response) #including imputation
+    df_new = fe_vince_results[0]
+    trafos_summary = fe_vince_results[1]
+    
+    print("Performing flexible feature engineering steps.\n")
     df_new = tim_feature_engineering(df_new, eda_summary, ext_info, response)
     
+    #append trafos_summary from vince and tim
     
-    return df_new
+    return list(df_new, trafos_summary)
 
 
 np.random.seed(42)

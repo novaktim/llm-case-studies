@@ -11,6 +11,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.metrics import make_scorer, mean_squared_error, accuracy_score
 from sklearn.linear_model import BayesianRidge
 from scipy.stats import boxcox
+import ast
 
 ######################################## Lots of Functions ####################################
 
@@ -313,7 +314,7 @@ def call_llm_mv(content, role, tries=10):
 
 
 #### check LLM output for list of lists of integer pairs
-import ast
+
 
 def read_pairlist(output):
     """
@@ -368,6 +369,7 @@ def call_llm_pairlist(content, role, tries=10):
 def add_missingness_columns(df, indices):
     """
     Adds missingness indicators for columns with missing values.
+    Ignores categorical columns.
 
     Parameters:
         df (pd.DataFrame): The input DataFrame.
@@ -384,6 +386,12 @@ def add_missingness_columns(df, indices):
             raise ValueError(f"Column index {col_index} is out of bounds for the DataFrame.")
         
         col_name = df.columns[col_index]
+
+        # Skip categorical columns
+        if df[col_name].dtype == "object" or pd.api.types.is_categorical_dtype(df[col_name]):
+            print(f"Skipping categorical column: '{col_name}'")
+            continue
+
         # Create a missingness indicator (1 if missing, 0 otherwise)
         missing_indicator = df[col_name].isnull().astype(int)
 
@@ -527,5 +535,33 @@ def add_boxcox_columns(df, column_indices):
 
         # Print the optimal λ for the transformation
         print(f"Column '{column_name}' transformed with optimal λ = {lambda_optimal:.4f}")
+
+    return df
+
+def enrich_temporal_data(df):
+    """
+    Identifies temporal columns in the DataFrame, extracts relevant information,
+    and adds new columns for weekend status, day of the week, month, season, quarter, and year.
+
+    Parameters:
+        df (pd.DataFrame): The input DataFrame.
+
+    Returns:
+        pd.DataFrame: The modified DataFrame with additional temporal columns.
+    """
+    df = df.copy()  # Avoid modifying the original DataFrame
+
+    # Check each column for temporal data
+    for col in df.columns:
+        if pd.api.types.is_datetime64_any_dtype(df[col]):
+            print(f"Processing temporal column: '{col}'")
+
+            # Extract features from the datetime column
+            df[f"{col}_is_weekend"] = df[col].dt.dayofweek >= 5  # Saturday (5) or Sunday (6)
+            df[f"{col}_day_of_week"] = df[col].dt.day_name()
+            df[f"{col}_month"] = df[col].dt.month
+            df[f"{col}_season"] = df[col].dt.month % 12 // 3 + 1  # 1: Winter, 2: Spring, 3: Summer, 4: Fall
+            df[f"{col}_quarter"] = df[col].dt.quarter
+            df[f"{col}_year"] = df[col].dt.year
 
     return df

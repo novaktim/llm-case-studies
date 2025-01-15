@@ -1,6 +1,6 @@
 import sys
 sys.path.append('/feature-engineering')
-import fe_vince_functions
+from  fe_vince_functions import *
 
 
 ############################################ Data ##########################################
