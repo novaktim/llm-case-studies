@@ -107,7 +107,7 @@ def vince_feature_engineering(df,
 
         try:
             # Call the LLM to get the next pair of column indices
-            answer_Ints = call_llm_mv(updated_query, "data science expert")
+            answer_Ints = call_llm_mv_2(updated_query, "data science expert")
 
             # Validate the LLM output
             if not isinstance(answer_Ints, list) or len(answer_Ints) != 2 or not all(isinstance(i, int) for i in answer_Ints):

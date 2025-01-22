@@ -312,6 +312,39 @@ def call_llm_mv(content, role, tries=10):
                 tries - 1
             )
 
+def call_llm_mv_2(content, role, tries=10):
+    """
+    Calls the LLM with retry logic and ensures the response is a valid list of integers.
+
+    Parameters:
+        content (str): The input content/query for the LLM.
+        role (str): The role for the LLM (e.g., "data science expert").
+        tries (int): The maximum number of retry attempts.
+
+    Returns:
+        list: A list of integers parsed from the LLM response.
+
+    Raises:
+        Exception: If the maximum number of retries is reached without a valid response.
+    """
+    # Call the LLM
+    outp = qwen(content, role)
+
+    try:
+        # Attempt to parse the response
+        return read_mv(outp)
+    except Exception as e:
+        # Handle failed attempts
+        if tries == 0:
+            raise Exception(f"Failed to get a valid response from the LLM after multiple attempts. Last response: '{outp}'. Error: {e}")
+        else:
+            # Update content with feedback and retry
+            print(f"Retrying... {tries} attempts left. Last response was invalid: {outp}")
+            updated_content = (
+                content + 
+                f" The last string ('{outp}') was not a valid array of integers. Please answer only with a space-separated list of integers."
+            )
+            return call_llm_mv(updated_content, role, tries - 1)
 
 #### check LLM output for list of lists of integer pairs
 
