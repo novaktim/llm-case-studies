@@ -399,6 +399,7 @@ def add_missingness_columns(df, indices):
         if missing_indicator.nunique() > 1:
             new_col_name = f"{col_name}_missing"
             df[new_col_name] = missing_indicator
+            print(f"Missingness column has been added: {col_name}")
 
     return df
 
@@ -439,6 +440,7 @@ def add_power_columns(df, column_indices, power):
 
         # Add the power-transformed column
         df[new_column_name] = df[column_name] ** power
+        print(f"Power column has been added for: {column_name}")
 
     return df
 
@@ -472,9 +474,11 @@ def add_log_columns(df, column_indices):
         new_column_name = f"{column_name}_log"
         df[new_column_name] = np.log(df[column_name])
 
+        print(f"Loc column has been added for: {column_name}")
     return df
 
 
+#try to added a list of pairs but this approach failed
 def add_interaction_columns(df, column_indices):
     """
     Adds interaction term of the specified columns to the DataFrame.
@@ -499,8 +503,38 @@ def add_interaction_columns(df, column_indices):
             column_name = column_name + "_" + df.columns[index][:5]
         new_column_name = f"{column_name}_intA"
         df[new_column_name] = df[pair[0]] * df[pair[1]]
+        print(f"Interaction column has been added: {new_column_name}")
 
     return df
+
+def add_interaction_column_pair(df, column_pair):
+    """
+    Adds an interaction term for a pair of specified columns to the DataFrame.
+
+    Parameters:
+        df (pd.DataFrame): The input DataFrame.
+        column_pair (list): A list of exactly two integers representing column indices.
+
+    Returns:
+        tuple: A tuple containing the updated DataFrame and the pair of columns handled.
+    """
+    if len(column_pair) != 2:
+        raise ValueError("column_pair must contain exactly two integers.")
+    
+    for index in column_pair:
+        if index < 0 or index >= len(df.columns):
+            raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
+    
+    # Generate the name for the new column
+    col1_name = df.columns[column_pair[0]]
+    col2_name = df.columns[column_pair[1]]
+    new_column_name = f"{col1_name[:5]}_{col2_name[:5]}_intA"
+
+    # Add the interaction column
+    df[new_column_name] = df.iloc[:, column_pair[0]] * df.iloc[:, column_pair[1]]
+
+    print(f"Added interaction column '{new_column_name}' as the product of '{col1_name}' and '{col2_name}'.")
+    return df, column_pair
 
 
 def add_boxcox_columns(df, column_indices):
