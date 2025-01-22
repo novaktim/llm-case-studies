@@ -16,10 +16,10 @@ def fe_main(df, eda_summary, ext_info, response):
     
     print("Performing imputation and hard coded standard feature engineering steps")
     df_new = vince_feature_engineering(df, eda_summary, ext_info, response) #including imputation
-    df_new = tim_feature_engineering(df_new, eda_summary, ext_info, response)
+    df_new, generation_info = feature_generation.feature_generation(df_new, eda_summary, ext_info, response)
     
     
-    return df_new
+    return df_new, generation_info
 
 
 
@@ -27,7 +27,7 @@ def fe_main(df, eda_summary, ext_info, response):
 # df = medical_dataset()
 
 df = pandas.read_csv("EDA/EDA/melb_data.csv")
-transformedDataset = feature_generation.feature_generation(df)
+transformed_dataset, generation_info = feature_generation.feature_generation(df, eda_summary="", ext_info="", response="")
 
 print("Finished")
 
