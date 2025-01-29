@@ -84,7 +84,9 @@ def vince_feature_engineering(df,
     '''
     
     excluded_cols = []
-
+    print(f"Excluded cols: {excluded_cols}")
+    
+    
     # Initial query
     query_Ints = (
         "Have a look at the following columns: " + colnames_string +
@@ -93,7 +95,7 @@ def vince_feature_engineering(df,
         " and try to have an educated guess, for which 2 variables an interaction term "
         "should be added as a new feature which could improve a prediction model on " +
         response + ", so return a list of exactly two integers and do not output anything else! "
-        "Example output: [2, 5]"
+       # "Example output: [2, 5]"
     )
 
     max_iterations = len(colnames_string) #safety break
@@ -130,7 +132,15 @@ def vince_feature_engineering(df,
     
     #Ask LLM which transformations have been performed
     new_colnames =  ", ".join(df_new.columns)
-    query_trafos = "Have we performed a few feature engineering transformations, as indicated by the column names ending e.g. in _Squ when the orginal column was added squared, _log for a logtransformation, _missing for adding a dummy encoded column indicate if the observation has a missing value in the orginal variable, etc? Compare the orginal column names: " + colnames_string + " with the new column names: " + new_colnames + "and describe the potentially performed transformation very briefly! If you do not find indicated transformations, report that it has NOT be done."
+    
+    query_trafos = "Have we performed a few feature engineering transformations, as indicated by "
+    "the column names ending e.g. in _Squ when the orginal column was added squared, _log for a "
+    "logtransformation, _missing for adding a dummy encoded column indicate if the observation has "
+    "a missing value in the orginal variable, etc? Compare the orginal "
+    "column names:" + colnames_string + " with the new column names: " + new_colnames + "and describe"
+    "the potentially performed transformation very briefly! If you do not find indicated "
+    "transformations, report that it has NOT be done."
+    
     answer_trafos = qwen(query_trafos)
     print(answer_trafos + "\n")
 
@@ -142,7 +152,7 @@ def vince_feature_engineering(df,
     #TODO report temporal trafo
     #TODO report missingness info e.g. missingness columns and number of values
     
-    df_new.to_csv("mtcars_new.csv", index=False)
+    
     
     #return transformed dataframe and a description of performed transformations
     results = {
@@ -161,4 +171,5 @@ mtcars_df_mis = delete_values_with_exclusion(mtcars_df, 25, "mpg")
 print(mtcars_df_mis)
 
 results = vince_feature_engineering(mtcars_df_mis)
-print(results["transformed data"])
+#print(results["transformed data"])
+results["transformed data"].to_csv("test_new.csv", index=False)

@@ -10,6 +10,10 @@ import feature_generation #tim
 #3 call Tim FE approach
 #4 aggregate and return
 
+##### info for the preprocessing group:
+# if the data contains temporal data, e.g. the date, it should be in datetime64_any_dtype format.
+# See enrich_temporal_data() function in fe_vince_functions.py for more details
+
 #fe_main performs feature engineering
 def fe_main(df, eda_summary, ext_info, response): 
     
