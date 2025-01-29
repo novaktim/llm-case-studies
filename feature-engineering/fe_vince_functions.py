@@ -339,7 +339,7 @@ def call_llm_mv_2(content, role, tries=10):
             raise Exception(f"Failed to get a valid response from the LLM after multiple attempts. Last response: '{outp}'. Error: {e}")
         else:
             # Update content with feedback and retry
-            print(f"Retrying... {tries} attempts left. Last response was invalid: {outp}")
+            #print(f"Retrying... {tries} attempts left. Last response was invalid: {outp}")
             updated_content = (
                 content + 
                 f" The last string ('{outp}') was not a valid array of integers. Please answer only with a space-separated list of integers."
@@ -533,7 +533,7 @@ def add_interaction_columns(df, column_indices):
             if index < 0 or index >= len(df.columns):
                 raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
 
-            column_name = column_name + "_" + df.columns[index][:5]
+            column_name = column_name + "_" + df.columns[index]
         new_column_name = f"{column_name}_intA"
         df[new_column_name] = df[pair[0]] * df[pair[1]]
         print(f"Interaction column has been added: {new_column_name}")
@@ -632,3 +632,42 @@ def enrich_temporal_data(df):
             df[f"{col}_year"] = df[col].dt.year
 
     return df
+
+def determine_imputations(missing_frequency, n):
+    """
+    Determines the appropriate number of imputations based on missing data frequency and dataset size.
+    
+    Parameters:
+        missing_frequency (float): Proportion of missing values in the dataset (0 to 1).
+        n (int): Number of rows in the dataset.
+
+    Returns:
+        int: Recommended number of imputations (1, 3, 5, or 10).
+        string: Explanation on what and why was performed.
+    """
+    if missing_frequency < 0.05:
+        num_imputations = 1
+        reason = "Low missingness, single imputation is sufficient."
+    elif missing_frequency < 0.2:
+        num_imputations = 3
+        reason = "Moderate missingness, a small number of imputations improves stability."
+    elif missing_frequency < 0.4:
+        num_imputations = 5
+        reason = "High missingness, multiple imputations are needed."
+    else:
+        num_imputations = 10
+        reason = "Very high missingness, many imputations are required for robustness."
+
+    # Adjust for dataset size
+    if n > 10000 and num_imputations > 3:
+        num_imputations = 3
+        reason += " Large dataset detected, limiting imputations to 3 to reduce computation time."
+    elif n > 50000 and num_imputations > 1:
+        num_imputations = 1
+        reason += " Very large dataset detected, using single imputation to keep it computationally feasible."
+
+    print(f"Missing frequency: {missing_frequency:.2%}, Dataset size: {n}")
+    print(f"Recommended number of imputations: {num_imputations}")
+    print(f"Reason: {reason}")
+
+    return num_imputations, reason

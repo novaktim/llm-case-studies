@@ -12,6 +12,7 @@ def vince_feature_engineering(df,
     
     colnames_string = ", ".join(df.columns) 
     
+    missing_frequency = df.isnull().sum().sum() / df.size
     
     #### imputation: First add missing columns for numerical variables, then impute
     query_missing = "Have a look at the following columns: " + colnames_string + " . Also consider the results from the explanatory data analysis: " + eda_summary + " , these additional information: " + ext_info +  " and try to have an educated guess, for which numerical variables the indicator whether the value is missing or not could have predictive power on the response variable: " + response + ". Ignore categorical variables. Return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
@@ -24,7 +25,10 @@ def vince_feature_engineering(df,
         df_new = df
         print(f"Failed to add missing columns: {e}")    
         
-    df_new = impute_mixed_data(df_new, n_imputations = 5) #this should never fail
+    
+    #the numfer of imputations depend on the size of the dataset and the missingness rate
+    n_imputations, explanation = determine_imputations(missing_frequency, df.shape[0])
+    df_new = impute_mixed_data(df_new, n_imputations = n_imputations) #this should never fail
     
     
     #### handle temporal data if the df contains temporal data
@@ -84,7 +88,7 @@ def vince_feature_engineering(df,
     '''
     
     excluded_cols = []
-    print(f"Excluded cols: {excluded_cols}")
+    
     
     
     # Initial query
@@ -104,7 +108,9 @@ def vince_feature_engineering(df,
             break
         max_iterations  = max_iterations - 1
         
+       
         excluded_info = f" The following column pairs have already been excluded: {excluded_cols}."
+        print(f"Excluded cols: {excluded_cols}")
         updated_query = query_Ints + excluded_info
 
         try:
@@ -113,12 +119,15 @@ def vince_feature_engineering(df,
 
             # Validate the LLM output
             if not isinstance(answer_Ints, list) or len(answer_Ints) != 2 or not all(isinstance(i, int) for i in answer_Ints):
-                raise ValueError(f"Invalid response from LLM: {answer_Ints}. Expected a list of two integers.")
+                #raise ValueError(f"Invalid response from LLM: {answer_Ints}. Expected a list of two integers.")
+                raise ValueError(f"Invalid response from LLM:  Expected a list of two integers.")
 
             # Try to add the interaction column
             tmp = add_interaction_column_pair(df_new, answer_Ints)
             df_new = tmp[0]
-            excluded_cols.append(tmp[1])  # Update excluded_cols with the handled pair
+            #excluded_cols.append(tmp[1])  # Update excluded_cols with the handled pair
+            excluded_cols.extend(tmp[1] if isinstance(tmp[1], list) else [tmp[1]])  # Ensure list format
+            excluded_cols = [col for pair in excluded_cols for col in pair] #flatten
             print(f"Successfully applied interaction columns for pair: {tmp[1]}")
 
         except ValueError as ve:
@@ -133,31 +142,29 @@ def vince_feature_engineering(df,
     #Ask LLM which transformations have been performed
     new_colnames =  ", ".join(df_new.columns)
     
-    query_trafos = "Have we performed a few feature engineering transformations, as indicated by "
-    "the column names ending e.g. in _Squ when the orginal column was added squared, _log for a "
-    "logtransformation, _missing for adding a dummy encoded column indicate if the observation has "
-    "a missing value in the orginal variable, etc? Compare the orginal "
-    "column names:" + colnames_string + " with the new column names: " + new_colnames + "and describe"
-    "the potentially performed transformation very briefly! If you do not find indicated "
-    "transformations, report that it has NOT be done."
+    query_trafos = "Which feature engineering transformations have been done?"
+    "Look at the column names" + new_colnames + "and have an educated guess "
+    " based on the column name endings: "
+    "the column names ending e.g. in _squared when the orginal column was added squared, _log for a "
+    "log-transformation, _missing for adding a dummy encoded column indicating if the observation has "
+    "a missing value in the orginal variable. _is_weekend, _day_of_week, etc, are indicators that"
+    "date data was enriched with furhter information. _intA indicate an added interaction term. "
     
     answer_trafos = qwen(query_trafos)
     print(answer_trafos + "\n")
 
-    #TODO fix interaction query
+    #TODO fix interaction query x?
     #TODO research more standardish feature engineering stuff e.g. temporal data hardcoding
-    #TODO test everything
-    #TODO save columns indices which have been transformed
+    #TODO save explanations
     #TODO also use these to add interactions iteratively
-    #TODO report temporal trafo
-    #TODO report missingness info e.g. missingness columns and number of values
+
     
     
     
     #return transformed dataframe and a description of performed transformations
     results = {
     "transformed data": df_new,
-    "explanation": answer_trafos
+    "explanation": answer_trafos + explanation
     }
     return results
 
