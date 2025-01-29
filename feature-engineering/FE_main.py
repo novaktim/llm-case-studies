@@ -3,6 +3,7 @@
 import sys
 import pandas
 sys.path.append('/feature-engineering')
+from sklearn.preprocessing import StandardScaler
 from  fe_vince_main import *
 import feature_generation #tim
 #1 call imputation
@@ -15,7 +16,7 @@ import feature_generation #tim
 # See enrich_temporal_data() function in fe_vince_functions.py for more details
 
 #fe_main performs feature engineering
-def fe_main(df, eda_summary, ext_info, response): 
+def fe_main(df, eda_summary, ext_info, response, apply_standardization=True): 
     """
     Main function to apply feature engineering to a dataset.
 
@@ -36,6 +37,9 @@ def fe_main(df, eda_summary, ext_info, response):
         response (str): 
             The name of the target variable in the dataset. Used during transformations to ensure
             relevance for predictive modeling tasks.
+        apply_standardization (bool): 
+            If the features of the dataset should be standardized in the last step.
+            This means, to transform every variable to have mean 0 and variance 1.
 
     Returns:
         list: A list containing three elements:
@@ -46,6 +50,13 @@ def fe_main(df, eda_summary, ext_info, response):
                  feature engineering steps.
     """
     
+    # Only apply feature engineering if the name of the response variable is found
+    if response not in df.columns:
+        print(f"Response variable '{response}' not found in the dataset.")
+        return list(df, 
+                    "No feature engineering was made, because the response variable was not found.", 
+                    "No feature generation was made, because the response variable was not found.")
+
     print("Performing imputation and hard coded standard feature engineering steps.\n")
     fe_vince_results = vince_feature_engineering(df, eda_summary, ext_info, response) #including imputation
     df_new = fe_vince_results[0]
@@ -54,6 +65,18 @@ def fe_main(df, eda_summary, ext_info, response):
     print("Performing flexible feature engineering steps.\n")
     df_new, generation_summary = feature_generation.feature_generation(df_new, eda_summary, ext_info, response)
     
+    if apply_standardization:
+        try:
+            print("Performing standardization.\n")
+            scaler = StandardScaler()
+            features_to_standardize = df_new.drop(columns=[response])  # Exclude the response variable if necessary
+            df_standardized = pd.DataFrame(scaler.fit_transform(features_to_standardize), columns=features_to_standardize.columns)
+            # If you want to keep the response variable in the standardized DataFrame:
+            df_standardized[response] = df_new[response].values
+            df_new = df_standardized
+        except:
+            print("There was an error in applying Standardization.")
+
     return list(df_new, trafos_summary, generation_summary)
 
 
