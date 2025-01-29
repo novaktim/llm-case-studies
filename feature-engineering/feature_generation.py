@@ -91,7 +91,7 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
     Returns:
         tuple: A tuple containing:
             - transformed_dataset (pandas.DataFrame): The modified dataset after applying feature engineering.
-            - generation_info (str): A summary of changes made by the LLM-generated transformation script.
+            - generation_summary (str): A summary of changes made by the LLM-generated transformation script.
     """
     
     # Copy dataset in case an error happens
@@ -127,16 +127,16 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
         # Ask gwen what changes to the dataset were made.
         query = "Write a summary of the features that were generated or changed by this code: " + exec_code
         print("Asking gwen:", query + "\n")
-        generation_info = qwen(query)
+        generation_summary = qwen(query)
 
     except:
         transformed_dataset = original_dataset
-        generation_info = "No changes to the dataset where made."
+        generation_summary = "No changes to the dataset where made."
     
     # Output what transformations were made by the LLM
-    print(generation_info)
+    print(generation_summary)
     print("\nFinished with feature generation.\n")
-    return transformed_dataset, generation_info
+    return transformed_dataset, generation_summary
     
 
     
