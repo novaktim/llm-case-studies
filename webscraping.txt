@@ -1,0 +1,103 @@
+
+import requests
+from bs4 import BeautifulSoup
+from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
+from sentence_transformers import SentenceTransformer
+import faiss
+import numpy as np
+import time
+
+# Initialize the Qwen model with trust_remote_code=True
+tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen-7B-Chat", trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen-7B-Chat", trust_remote_code=True)
+qa_pipeline = pipeline("text-generation", model=model, tokenizer=tokenizer)
+
+# Initialize the Sentence Transformer model for embedding sentences
+embedder = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+
+# Function to perform a web search and scrape the results
+def web_search(query, num_results=10):  # Increase num_results to 10
+    search_url = f"https://www.bing.com/search?q={query.replace(' ', '+')}"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+    }
+    response = requests.get(search_url, headers=headers)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    results = soup.find_all('li', {'class': 'b_algo'}, limit=num_results)
+    links = [result.find('a')['href'] for result in results if result.find('a')]
+    return links
+
+# Function to scrape content from a URL
+def scrape_website(url):
+    try:
+        response = requests.get(url)
+        time.sleep(2)  # Wait 2 seconds between requests to avoid rate limiting
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'html.parser')
+            paragraphs = soup.find_all('p')
+            content = ' '.join([para.get_text() for para in paragraphs])
+            return content
+        else:
+            print(f"Failed to retrieve content from {url}")
+            return ""
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return ""
+
+# Function to retrieve relevant documents based on a query
+def retrieve_relevant_documents(query, k=10):  # Increase k to 10 to retrieve 10 websites
+    search_results = web_search(query, num_results=k)
+    documents = []
+    websites_browsed = 0  # Track the number of websites browsed
+
+    for url in search_results:
+        content = scrape_website(url)
+        if content:
+            documents.append(content)
+            websites_browsed += 1  # Increment the website count
+
+    return documents, websites_browsed
+
+# Embed the documents using the Sentence Transformer model
+def embed_documents(documents):
+    # Ensure that all documents are strings and print the content for debugging
+    if not all(isinstance(doc, str) for doc in documents):
+        raise ValueError("All documents must be strings. Found non-string values.")
+    
+    print("Documents to be embedded:")
+    for doc in documents[:3]:  # Print first 3 documents for inspection
+        print(doc)
+    
+    # Embedding documents
+    return embedder.encode(documents, convert_to_tensor=True).cpu().detach().numpy()
+
+# Build a FAISS index for efficient similarity search
+def build_faiss_index(document_embeddings):
+    index = faiss.IndexFlatL2(document_embeddings.shape[1])
+    index.add(document_embeddings)
+    return index
+
+# Function to answer questions based on the retrieved documents
+def answer_question(question):
+    documents, websites_browsed = retrieve_relevant_documents(question)
+
+    if not documents:
+        return f"No relevant documents found. Websites browsed: {websites_browsed}"
+
+    document_embeddings = embed_documents(documents)
+    index = build_faiss_index(document_embeddings)
+
+    query_embedding = embedder.encode(question, convert_to_tensor=True).cpu().detach().numpy().reshape(1, -1)
+    distances, indices = index.search(query_embedding, k=1)
+    best_document = documents[indices[0][0]]
+
+    result = qa_pipeline(question + " " + best_document, max_length=512)
+    
+    return f"Answer: {result[0]['generated_text']}\nWebsites browsed: {websites_browsed}"
+
+# Example question to test the setup
+test_question = "What is artificial intelligence?"
+
+# Answer the test question
+answer = answer_question(test_question)
+print(answer)
