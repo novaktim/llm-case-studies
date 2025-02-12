@@ -21,12 +21,12 @@ The following Python libraries are required:
 - **`duckduckgo-search`**: To perform web searches via DuckDuckGo's API wrapper.
 - **`ninept`**: To integrate with Qwen AI for query enhancement and summarization.
 
-See [`Requirements_ExternalKnowledge.txt`](./requirements.txt) for exact versions of these dependencies.
+See [`requirements.txt`](./External_Knowledge/requirements.txt) for exact versions of these dependencies.
 
 ---
 
 ##Install Dependencies 
-pip install -r Requirements_ExternalKnowledge.txt
+pip install -r requirements.txt
 
 
 ## Example Workflow
