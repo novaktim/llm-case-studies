@@ -3,7 +3,7 @@
 The data extraction procedure is done using Kaggle API to retrieve the datasets from the active competitions from Kaggle Competition. After getting the dataset from Kaggle Competition, we retreive the metadata of the Kaggle Competition which contains all the information regarding that particular competition and the evaluation criteria for that competition. Finally, all of this metadata(information) is given to our Qwen LLM which will generate us the code for the evaluation criteria for the competition and our code will create a new llm_evaluation_code.py file on the root location which is basically our final output.
 ## Requirements:
 You need to first create an account on Kaggle and you need to get the Kaggle API in order to retrieve the datasets from Kaggle Competition. You can use the following steps to get Kaggle API. After creating an account, go to settings, then go to API and create a new token and download it.
-Then you need to accept the terms and conditions for the Kaggle Competitions otherwise you cannot download the datasets using Kaggle API. We have narrowed down to six competitions and these are the links:
+Then you need to accept the terms and conditions for the Kaggle Competitions otherwise you cannot download the datasets using Kaggle API. We have narrowed down to six competitions and these are the links: <br />
         https://www.kaggle.com/competitions/digit-recognizer <br />
         https://www.kaggle.com/competitions/equity-post-HCT-survival-predictions <br />
         https://www.kaggle.com/competitions/home-data-for-ml-course <br />
