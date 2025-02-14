@@ -1,0 +1,2 @@
+DATASET_DIRECTORY="Datasets/Classification Dataset/"
+DATA_FILE_NAME="loan_data.csv"
