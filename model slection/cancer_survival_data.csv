@@ -1,0 +1,1001 @@
+Age,Gender,Tumor Size (cm),Histological Type,Cancer Stage,Treatment Type,Comorbidities,Smoking Status,Family History,Survival after 5 Years
+68,Female,4.841353509893779,Sarcoma,Stage III,Chemotherapy,1,1,1,1
+81,Female,8.889988400762046,Squamous,Stage I,Chemotherapy,1,0,1,1
+58,Male,4.757554756251029,Lymphoma,Stage II,Surgery,0,1,1,1
+44,Female,5.157485655180288,Adenocarcinoma,Stage II,Surgery,1,0,0,1
+72,Male,9.913071820075993,Lymphoma,Stage II,Radiation Therapy,1,0,0,0
+37,Female,1.0021377121829613,Squamous,Stage IV,Surgery,1,1,0,1
+50,Female,2.669256186190502,Adenocarcinoma,Stage IV,Radiation Therapy,0,0,1,1
+68,Female,4.455675009277532,Adenocarcinoma,Stage II,Radiation Therapy,0,0,1,0
+87,Female,9.393309184827276,Squamous,Stage III,Radiation Therapy,1,0,0,0
+48,Female,1.6302673517272392,Squamous,Stage II,Chemotherapy,0,1,1,0
+52,Male,1.0853689026564828,Squamous,Stage III,Chemotherapy,1,0,1,1
+40,Male,1.4741545237950573,Squamous,Stage III,Surgery,1,1,0,0
+40,Female,1.7968906955225634,Squamous,Stage IV,Radiation Therapy,0,1,0,0
+53,Female,1.338370958856348,Adenocarcinoma,Stage III,Chemotherapy,1,0,1,0
+82,Male,5.318031941708543,Squamous,Stage II,Chemotherapy,1,0,1,1
+65,Female,6.22681486504595,Adenocarcinoma,Stage IV,Chemotherapy,0,1,1,0
+69,Female,3.445182739621037,Adenocarcinoma,Stage I,Chemotherapy,1,1,0,1
+53,Male,4.58458645578072,Squamous,Stage I,Chemotherapy,1,0,0,1
+32,Female,1.8252940160028712,Squamous,Stage IV,Radiation Therapy,1,0,0,1
+51,Female,4.027334174455799,Sarcoma,Stage II,Radiation Therapy,0,1,0,1
+82,Male,5.702672724710708,Adenocarcinoma,Stage I,Radiation Therapy,1,1,0,0
+31,Male,7.590446264661806,Squamous,Stage I,Radiation Therapy,0,1,1,0
+53,Male,1.030117258386813,Squamous,Stage III,Surgery,1,1,1,1
+73,Female,5.205796898838873,Squamous,Stage III,Radiation Therapy,1,1,1,0
+59,Male,3.6730258880939397,Sarcoma,Stage II,Chemotherapy,1,0,0,0
+67,Male,8.675396395227112,Sarcoma,Stage IV,Radiation Therapy,1,1,0,1
+31,Male,7.439979837108178,Lymphoma,Stage II,Surgery,0,1,0,0
+89,Male,6.301976810238053,Adenocarcinoma,Stage IV,Chemotherapy,0,0,1,1
+50,Male,3.4953908112709624,Lymphoma,Stage I,Radiation Therapy,1,0,0,0
+62,Male,9.193051918517808,Squamous,Stage III,Radiation Therapy,1,1,0,1
+41,Female,1.4059060949829085,Sarcoma,Stage II,Radiation Therapy,1,1,1,1
+87,Female,1.9852083881120364,Sarcoma,Stage II,Chemotherapy,1,0,0,1
+51,Male,4.524671264863205,Lymphoma,Stage IV,Chemotherapy,1,1,1,0
+73,Male,2.119938015671707,Sarcoma,Stage IV,Surgery,1,1,0,1
+54,Male,9.607741278034824,Squamous,Stage II,Chemotherapy,1,0,0,1
+78,Female,8.18190389929045,Sarcoma,Stage IV,Chemotherapy,1,1,1,1
+56,Female,3.330843864416323,Lymphoma,Stage II,Radiation Therapy,0,0,1,0
+88,Female,6.296988060759208,Squamous,Stage II,Chemotherapy,0,0,1,1
+71,Female,9.840974635720734,Lymphoma,Stage II,Radiation Therapy,0,0,1,1
+57,Female,8.957790803183526,Sarcoma,Stage I,Radiation Therapy,1,0,1,1
+89,Female,6.407186017979782,Lymphoma,Stage IV,Chemotherapy,1,1,1,1
+45,Female,9.133515704577434,Lymphoma,Stage III,Surgery,1,0,0,0
+44,Female,9.90266418832023,Adenocarcinoma,Stage III,Surgery,0,1,0,1
+76,Female,7.690175406042617,Sarcoma,Stage IV,Chemotherapy,1,1,1,1
+80,Male,1.5848776853460462,Sarcoma,Stage II,Surgery,0,1,0,1
+73,Male,4.614222127829387,Lymphoma,Stage III,Radiation Therapy,1,1,1,1
+84,Male,8.54043161754921,Adenocarcinoma,Stage III,Radiation Therapy,0,1,0,1
+81,Male,3.075122762245171,Sarcoma,Stage IV,Chemotherapy,0,0,1,1
+86,Female,8.475782659755621,Squamous,Stage III,Surgery,0,0,0,0
+32,Female,2.0830488583149633,Lymphoma,Stage II,Surgery,1,0,0,0
+66,Male,1.4225082143303172,Sarcoma,Stage IV,Radiation Therapy,0,0,0,1
+80,Female,4.456815503421247,Squamous,Stage II,Chemotherapy,1,1,0,1
+36,Male,1.3305874368395227,Sarcoma,Stage III,Surgery,1,0,0,0
+50,Female,9.61543236684993,Squamous,Stage III,Chemotherapy,1,1,1,0
+38,Male,8.435851262145693,Lymphoma,Stage II,Surgery,1,1,1,0
+68,Female,8.206927184168876,Sarcoma,Stage I,Radiation Therapy,1,0,1,1
+47,Female,6.668001306965378,Sarcoma,Stage III,Radiation Therapy,0,0,0,0
+33,Male,2.9469162073289814,Adenocarcinoma,Stage I,Chemotherapy,1,0,1,1
+54,Female,5.66434330008753,Lymphoma,Stage III,Radiation Therapy,1,0,0,1
+89,Male,6.37546665187307,Squamous,Stage I,Surgery,1,1,0,1
+43,Male,5.725283507742414,Sarcoma,Stage I,Radiation Therapy,1,1,0,1
+79,Male,3.3421003115637458,Sarcoma,Stage I,Chemotherapy,1,0,1,1
+87,Male,5.637231318832533,Squamous,Stage II,Chemotherapy,0,1,0,0
+38,Female,5.420677067817639,Lymphoma,Stage I,Chemotherapy,0,1,1,1
+55,Female,9.967021982260519,Adenocarcinoma,Stage I,Surgery,1,1,1,1
+82,Female,9.076925332415835,Adenocarcinoma,Stage I,Surgery,0,0,0,1
+31,Male,5.170426733940579,Sarcoma,Stage III,Surgery,0,1,0,0
+49,Female,6.606436446416068,Squamous,Stage I,Surgery,1,0,1,0
+57,Male,7.730844436830057,Sarcoma,Stage III,Surgery,0,0,1,0
+76,Female,1.313786442104424,Squamous,Stage I,Radiation Therapy,1,1,1,0
+89,Female,9.05429297105056,Adenocarcinoma,Stage I,Surgery,0,1,1,1
+36,Female,8.741141347761314,Lymphoma,Stage II,Surgery,0,0,1,0
+73,Male,5.116888879963366,Squamous,Stage III,Radiation Therapy,0,1,1,1
+37,Female,4.520527894723418,Adenocarcinoma,Stage I,Surgery,1,1,0,0
+76,Female,3.4566343737068346,Sarcoma,Stage III,Chemotherapy,0,0,1,0
+64,Male,5.290091454973315,Squamous,Stage III,Surgery,0,0,1,1
+43,Female,1.399389971799131,Lymphoma,Stage IV,Surgery,1,0,1,0
+46,Male,8.66974180012307,Sarcoma,Stage II,Chemotherapy,1,0,1,0
+65,Female,1.3188013157669056,Sarcoma,Stage II,Chemotherapy,0,1,0,1
+79,Male,3.961462288328839,Adenocarcinoma,Stage II,Chemotherapy,1,1,0,1
+69,Male,9.384305394870909,Squamous,Stage IV,Chemotherapy,0,0,1,0
+33,Female,7.616913890711075,Sarcoma,Stage IV,Surgery,0,0,1,1
+31,Male,3.532518645197741,Lymphoma,Stage II,Chemotherapy,1,0,1,1
+35,Male,3.273841845647966,Squamous,Stage IV,Chemotherapy,1,1,0,1
+83,Male,1.0457392583622336,Lymphoma,Stage IV,Radiation Therapy,1,0,0,0
+71,Male,7.261428635647752,Sarcoma,Stage IV,Chemotherapy,0,1,0,0
+33,Male,1.4390522350585577,Lymphoma,Stage II,Chemotherapy,1,0,0,0
+83,Male,5.793422674606859,Adenocarcinoma,Stage II,Radiation Therapy,0,0,0,0
+58,Female,9.659097753328448,Lymphoma,Stage II,Radiation Therapy,1,0,0,1
+47,Male,1.985219740490085,Squamous,Stage IV,Surgery,0,1,1,1
+55,Male,9.050319378712606,Lymphoma,Stage II,Radiation Therapy,1,1,0,1
+73,Female,9.923278016305433,Lymphoma,Stage IV,Surgery,0,1,0,0
+63,Female,1.5536532361531155,Adenocarcinoma,Stage I,Radiation Therapy,1,0,1,1
+39,Female,8.946156422237152,Lymphoma,Stage IV,Radiation Therapy,0,1,0,0
+65,Female,5.64471118399255,Lymphoma,Stage III,Surgery,1,1,1,1
+43,Female,9.158623475001221,Sarcoma,Stage II,Radiation Therapy,1,0,0,1
+60,Female,6.141870477276167,Sarcoma,Stage II,Surgery,0,0,1,1
+77,Female,6.959008090959082,Squamous,Stage III,Radiation Therapy,1,1,1,1
+44,Male,5.894010171976594,Sarcoma,Stage IV,Chemotherapy,0,1,1,0
+37,Male,8.780435922766136,Sarcoma,Stage I,Radiation Therapy,0,1,1,1
+43,Female,7.605189270583315,Sarcoma,Stage III,Surgery,1,1,1,1
+52,Male,5.691342809623734,Sarcoma,Stage III,Radiation Therapy,0,0,0,1
+89,Male,8.813447236463922,Adenocarcinoma,Stage IV,Surgery,1,0,0,1
+86,Male,3.207569790298011,Sarcoma,Stage II,Surgery,1,0,1,1
+69,Female,2.416065937322734,Adenocarcinoma,Stage IV,Chemotherapy,0,1,1,0
+50,Female,2.4436009479706486,Adenocarcinoma,Stage III,Chemotherapy,1,1,1,1
+45,Male,4.006079908707141,Sarcoma,Stage III,Surgery,0,0,0,0
+74,Female,3.1482102817091575,Lymphoma,Stage II,Radiation Therapy,0,0,1,1
+47,Male,9.370813154587648,Adenocarcinoma,Stage II,Surgery,1,1,1,1
+76,Male,1.952506844457256,Lymphoma,Stage II,Surgery,1,1,1,0
+82,Male,7.290916642356289,Lymphoma,Stage IV,Radiation Therapy,0,0,1,1
+53,Male,2.702993858065053,Sarcoma,Stage II,Radiation Therapy,0,0,0,0
+55,Female,8.934734194933151,Squamous,Stage III,Radiation Therapy,1,0,1,1
+54,Female,9.651837593664167,Sarcoma,Stage III,Radiation Therapy,1,1,1,1
+89,Female,5.189230078929852,Squamous,Stage I,Surgery,1,1,0,1
+89,Male,8.911643322053184,Squamous,Stage IV,Surgery,1,1,1,1
+89,Female,1.046306536792433,Sarcoma,Stage I,Chemotherapy,0,1,1,1
+74,Male,8.379522256672901,Sarcoma,Stage III,Surgery,1,1,0,0
+70,Female,3.0576264537243114,Squamous,Stage I,Radiation Therapy,0,1,0,1
+58,Male,9.178311783424311,Sarcoma,Stage III,Chemotherapy,0,0,0,1
+44,Male,1.0100810033209853,Squamous,Stage I,Radiation Therapy,1,0,1,0
+74,Male,6.0056356153578125,Lymphoma,Stage II,Surgery,0,1,1,0
+30,Female,7.809722234064412,Sarcoma,Stage I,Chemotherapy,1,0,0,0
+54,Female,3.328194976281172,Lymphoma,Stage II,Radiation Therapy,0,1,0,0
+36,Female,2.7381957812856377,Adenocarcinoma,Stage II,Chemotherapy,1,0,0,1
+38,Female,1.7568840202118619,Lymphoma,Stage IV,Chemotherapy,0,1,1,1
+53,Male,3.9379021885296366,Lymphoma,Stage II,Surgery,0,0,1,1
+30,Female,6.038598810779465,Squamous,Stage II,Radiation Therapy,1,0,0,0
+73,Female,2.042594711022319,Lymphoma,Stage I,Chemotherapy,1,1,1,0
+37,Male,4.390258257881189,Sarcoma,Stage III,Chemotherapy,0,1,0,0
+53,Male,1.0816516418745246,Squamous,Stage IV,Radiation Therapy,0,0,1,1
+40,Male,8.368114784498577,Adenocarcinoma,Stage II,Chemotherapy,1,0,1,1
+80,Female,2.156038462838722,Sarcoma,Stage IV,Chemotherapy,0,1,1,1
+46,Male,3.5500865343902346,Adenocarcinoma,Stage I,Chemotherapy,1,0,1,1
+37,Male,1.165849468643957,Lymphoma,Stage II,Radiation Therapy,0,1,0,1
+64,Male,4.890167055032611,Sarcoma,Stage I,Radiation Therapy,1,1,1,1
+64,Female,8.56109352467097,Sarcoma,Stage IV,Radiation Therapy,0,0,1,1
+62,Male,4.529360903006769,Adenocarcinoma,Stage I,Radiation Therapy,1,1,0,1
+88,Female,2.6154759108145007,Sarcoma,Stage IV,Surgery,1,0,1,0
+34,Female,7.783289506454673,Sarcoma,Stage I,Chemotherapy,0,0,0,1
+71,Male,8.099262836836697,Sarcoma,Stage IV,Radiation Therapy,1,1,0,1
+68,Male,2.563781277768101,Lymphoma,Stage III,Chemotherapy,0,0,1,1
+87,Female,7.937686976868908,Adenocarcinoma,Stage I,Chemotherapy,1,1,1,0
+70,Male,9.525680994307042,Sarcoma,Stage I,Surgery,1,1,0,1
+57,Male,2.497398282390451,Squamous,Stage III,Radiation Therapy,1,1,0,1
+36,Female,7.93885863278922,Squamous,Stage III,Radiation Therapy,0,0,0,0
+38,Female,7.3771480414236645,Squamous,Stage I,Chemotherapy,1,1,1,1
+37,Male,5.262164995915796,Squamous,Stage III,Radiation Therapy,0,0,0,0
+41,Female,1.5212841450291847,Lymphoma,Stage II,Chemotherapy,1,1,0,0
+63,Male,1.6722497598206862,Sarcoma,Stage IV,Chemotherapy,0,1,0,0
+62,Male,8.671731932787829,Adenocarcinoma,Stage IV,Surgery,0,1,1,0
+77,Male,9.911335354755824,Sarcoma,Stage IV,Surgery,0,0,0,1
+84,Female,7.0844703146807895,Lymphoma,Stage II,Surgery,1,0,1,0
+52,Male,5.013624763092893,Squamous,Stage III,Chemotherapy,0,1,1,0
+53,Male,6.828162790617168,Lymphoma,Stage III,Radiation Therapy,1,1,0,0
+66,Male,6.349562733056908,Sarcoma,Stage I,Surgery,0,0,1,0
+64,Female,4.452510343650596,Adenocarcinoma,Stage III,Radiation Therapy,0,0,0,0
+73,Female,1.5906353011661165,Lymphoma,Stage I,Surgery,0,0,1,1
+69,Female,8.393616526666968,Adenocarcinoma,Stage II,Surgery,0,1,1,0
+51,Female,4.346501763148521,Lymphoma,Stage IV,Chemotherapy,1,0,0,1
+56,Female,8.369070790213843,Adenocarcinoma,Stage IV,Surgery,0,1,0,1
+64,Male,3.27257874719544,Adenocarcinoma,Stage IV,Surgery,0,0,0,0
+30,Female,1.0092653186107006,Squamous,Stage III,Chemotherapy,1,1,1,1
+64,Female,2.430444549490809,Adenocarcinoma,Stage I,Radiation Therapy,0,1,1,0
+66,Female,5.216854750917259,Squamous,Stage I,Surgery,0,1,0,0
+76,Male,9.498732714620468,Sarcoma,Stage II,Chemotherapy,0,0,0,0
+43,Female,1.9197425772434709,Sarcoma,Stage III,Surgery,0,0,1,0
+32,Female,8.687887970154094,Squamous,Stage II,Chemotherapy,1,0,1,1
+30,Male,5.743216865906759,Squamous,Stage I,Radiation Therapy,1,1,1,1
+34,Female,8.43328689219907,Lymphoma,Stage I,Radiation Therapy,0,1,0,0
+55,Male,3.6853698789099334,Lymphoma,Stage IV,Chemotherapy,1,0,1,1
+84,Male,8.559524482052247,Lymphoma,Stage III,Chemotherapy,1,1,0,0
+43,Male,7.9554050201512405,Sarcoma,Stage I,Chemotherapy,0,1,1,1
+68,Male,3.0704831472829053,Lymphoma,Stage IV,Radiation Therapy,1,1,1,0
+56,Male,2.1820161376844025,Adenocarcinoma,Stage III,Surgery,0,0,0,0
+38,Female,8.812488902790637,Adenocarcinoma,Stage II,Radiation Therapy,1,1,0,0
+44,Male,9.669129880961187,Lymphoma,Stage III,Chemotherapy,1,0,0,0
+44,Male,1.281720823727646,Adenocarcinoma,Stage III,Chemotherapy,1,0,1,1
+55,Female,7.58143060276317,Sarcoma,Stage I,Radiation Therapy,0,0,1,1
+71,Male,9.185720598530365,Adenocarcinoma,Stage I,Chemotherapy,1,0,1,0
+89,Female,8.716240828832488,Sarcoma,Stage III,Radiation Therapy,0,0,0,1
+42,Female,9.680684250431877,Squamous,Stage I,Chemotherapy,0,1,1,1
+80,Female,7.840846705942875,Squamous,Stage I,Surgery,1,0,0,1
+61,Male,4.980688861428193,Squamous,Stage I,Surgery,0,0,0,0
+68,Male,3.807567914456174,Squamous,Stage IV,Chemotherapy,1,0,0,1
+78,Male,3.886684663943147,Adenocarcinoma,Stage IV,Radiation Therapy,0,1,1,1
+81,Female,7.519804053527053,Lymphoma,Stage III,Surgery,0,1,1,1
+61,Male,7.712533108278679,Adenocarcinoma,Stage I,Radiation Therapy,1,1,0,0
+33,Male,2.803232291938414,Sarcoma,Stage IV,Chemotherapy,1,1,1,0
+59,Male,8.81310532141478,Adenocarcinoma,Stage III,Radiation Therapy,1,0,0,0
+66,Female,7.434316361820229,Adenocarcinoma,Stage I,Surgery,1,0,0,1
+52,Female,6.064752577090443,Sarcoma,Stage II,Radiation Therapy,0,1,1,1
+68,Male,5.243792140922614,Squamous,Stage I,Radiation Therapy,0,1,0,0
+74,Male,5.889095252109623,Squamous,Stage I,Chemotherapy,0,1,0,1
+44,Male,2.4332116445133805,Squamous,Stage IV,Chemotherapy,1,1,1,1
+72,Male,2.8333112434864676,Lymphoma,Stage III,Chemotherapy,0,0,0,1
+58,Female,1.820480413655725,Sarcoma,Stage III,Surgery,1,1,0,1
+65,Female,2.382922343450014,Sarcoma,Stage IV,Surgery,0,1,0,1
+42,Female,5.083242711447544,Adenocarcinoma,Stage I,Chemotherapy,1,1,0,0
+61,Female,5.773189543554305,Lymphoma,Stage II,Chemotherapy,0,1,0,1
+36,Male,1.1607570323048744,Squamous,Stage I,Surgery,0,1,0,0
+88,Male,8.171180450776248,Lymphoma,Stage I,Surgery,1,1,0,0
+80,Male,3.6475117600913007,Sarcoma,Stage II,Surgery,0,1,1,0
+51,Female,9.2065243146392,Sarcoma,Stage IV,Surgery,1,0,1,0
+57,Male,9.707601372524,Adenocarcinoma,Stage III,Chemotherapy,0,0,0,0
+31,Female,2.669129872089889,Adenocarcinoma,Stage IV,Surgery,0,0,0,0
+71,Female,5.1588756168909455,Sarcoma,Stage IV,Chemotherapy,1,0,1,1
+74,Male,1.011086516497833,Squamous,Stage I,Radiation Therapy,1,0,1,0
+86,Male,6.384945386101842,Squamous,Stage III,Radiation Therapy,0,0,1,1
+82,Male,6.465758034364041,Lymphoma,Stage III,Surgery,0,1,1,0
+35,Female,3.2278596004303766,Sarcoma,Stage IV,Radiation Therapy,0,1,1,1
+57,Male,6.025714053248781,Sarcoma,Stage II,Radiation Therapy,0,0,0,1
+57,Female,3.029861281993619,Squamous,Stage IV,Radiation Therapy,0,1,1,0
+73,Male,2.4474292217037106,Squamous,Stage II,Surgery,0,0,1,1
+73,Female,6.863675201220382,Sarcoma,Stage III,Surgery,1,1,1,1
+49,Female,3.933329175568674,Adenocarcinoma,Stage IV,Radiation Therapy,1,1,0,1
+59,Male,6.312375449970602,Sarcoma,Stage I,Chemotherapy,1,1,0,1
+40,Female,4.899220740744901,Sarcoma,Stage IV,Radiation Therapy,0,1,0,1
+87,Female,9.859162666626135,Squamous,Stage III,Surgery,0,1,0,1
+84,Male,2.346225784008092,Squamous,Stage I,Surgery,0,1,0,1
+57,Female,5.181387369722291,Adenocarcinoma,Stage I,Surgery,1,0,0,0
+54,Male,7.124109637233927,Adenocarcinoma,Stage II,Radiation Therapy,1,0,1,1
+68,Female,4.559905754919718,Lymphoma,Stage I,Chemotherapy,0,1,0,0
+62,Male,9.772298666836209,Sarcoma,Stage I,Surgery,0,0,0,1
+30,Male,7.4969886513424155,Squamous,Stage IV,Surgery,1,1,1,0
+86,Female,6.912854718080437,Adenocarcinoma,Stage III,Radiation Therapy,1,0,0,1
+56,Female,7.81353340850101,Lymphoma,Stage II,Chemotherapy,1,1,1,1
+86,Female,9.573837742348454,Lymphoma,Stage IV,Radiation Therapy,0,0,1,0
+81,Female,9.17036787686176,Squamous,Stage I,Surgery,0,1,0,0
+42,Female,7.518567773137707,Squamous,Stage I,Chemotherapy,0,0,1,1
+70,Male,7.742454751911548,Lymphoma,Stage II,Chemotherapy,1,1,1,1
+32,Female,2.3132986663163093,Adenocarcinoma,Stage III,Surgery,1,0,1,1
+68,Male,1.925131640433991,Lymphoma,Stage II,Chemotherapy,0,1,1,0
+35,Male,6.1381405165974785,Sarcoma,Stage IV,Chemotherapy,0,1,0,1
+37,Female,1.1653087324648599,Sarcoma,Stage II,Radiation Therapy,1,1,1,1
+56,Male,5.341207433964324,Squamous,Stage I,Surgery,0,0,0,0
+38,Male,2.893146219269817,Adenocarcinoma,Stage IV,Surgery,1,0,1,0
+66,Male,4.114149108803556,Adenocarcinoma,Stage I,Surgery,1,0,1,1
+62,Male,7.982242622136605,Sarcoma,Stage III,Surgery,0,1,1,0
+80,Female,9.471137538091478,Lymphoma,Stage I,Surgery,1,0,0,0
+71,Male,1.6517464493170735,Squamous,Stage I,Chemotherapy,0,1,0,1
+73,Female,5.8081798537880065,Lymphoma,Stage II,Radiation Therapy,1,0,0,0
+53,Female,8.942801372376401,Lymphoma,Stage I,Surgery,1,0,1,1
+44,Male,1.7425768099637915,Lymphoma,Stage IV,Radiation Therapy,0,0,1,0
+88,Female,8.420626422071503,Adenocarcinoma,Stage IV,Radiation Therapy,1,0,1,1
+83,Female,4.2202121583544425,Sarcoma,Stage III,Chemotherapy,0,1,1,1
+61,Female,3.898852319974018,Adenocarcinoma,Stage IV,Surgery,0,0,0,0
+61,Male,9.797197476833071,Sarcoma,Stage II,Chemotherapy,1,0,1,1
+53,Female,2.8077318087606473,Squamous,Stage III,Surgery,0,1,0,0
+70,Female,7.2387454674041285,Squamous,Stage IV,Chemotherapy,0,1,1,1
+81,Female,8.392966552088797,Lymphoma,Stage II,Radiation Therapy,0,0,0,1
+78,Male,1.370651457513445,Sarcoma,Stage IV,Surgery,0,0,0,1
+78,Female,7.0334691251897095,Sarcoma,Stage IV,Radiation Therapy,0,1,1,1
+87,Male,9.563949769197942,Sarcoma,Stage I,Radiation Therapy,0,1,1,0
+81,Male,2.1179797005525343,Lymphoma,Stage IV,Chemotherapy,1,1,0,1
+41,Male,9.065991724165345,Lymphoma,Stage IV,Surgery,0,0,1,0
+68,Male,6.352989736392425,Squamous,Stage II,Radiation Therapy,1,0,1,0
+31,Male,6.5494412367622665,Adenocarcinoma,Stage II,Chemotherapy,1,0,0,1
+32,Male,6.516497573790454,Sarcoma,Stage I,Surgery,0,1,0,0
+78,Female,3.6895229770358244,Sarcoma,Stage IV,Surgery,1,1,0,1
+66,Male,9.416816337695137,Adenocarcinoma,Stage I,Radiation Therapy,1,1,0,0
+78,Female,9.52615416367935,Sarcoma,Stage IV,Surgery,0,0,1,1
+85,Female,6.62774194192553,Lymphoma,Stage III,Radiation Therapy,0,1,0,0
+46,Male,8.050804533474532,Lymphoma,Stage III,Surgery,0,0,0,0
+88,Female,6.5103218729304215,Sarcoma,Stage I,Chemotherapy,1,1,0,1
+78,Female,5.359586028166365,Lymphoma,Stage I,Radiation Therapy,1,0,1,1
+31,Female,6.947381064693256,Lymphoma,Stage I,Radiation Therapy,0,0,0,1
+31,Female,5.977013073327626,Sarcoma,Stage II,Surgery,0,1,1,0
+57,Male,6.37728276368737,Squamous,Stage II,Surgery,1,0,0,0
+83,Female,8.054492980769759,Adenocarcinoma,Stage II,Radiation Therapy,1,1,0,1
+52,Male,5.328134483040864,Lymphoma,Stage I,Surgery,1,0,1,1
+66,Female,1.3667869548322549,Squamous,Stage IV,Chemotherapy,1,1,0,0
+61,Female,2.475995328905475,Lymphoma,Stage III,Surgery,0,1,0,1
+62,Male,4.9474649484058455,Lymphoma,Stage I,Chemotherapy,1,0,1,1
+30,Female,7.523439038866525,Adenocarcinoma,Stage II,Chemotherapy,1,1,0,1
+48,Female,6.3395078347916085,Lymphoma,Stage II,Chemotherapy,1,0,0,1
+31,Female,6.852647672861085,Adenocarcinoma,Stage I,Chemotherapy,1,1,0,1
+82,Male,5.313510357186585,Adenocarcinoma,Stage I,Chemotherapy,0,1,0,0
+73,Female,6.541678197480185,Adenocarcinoma,Stage II,Surgery,0,1,1,0
+55,Male,3.9611569403319598,Squamous,Stage IV,Chemotherapy,1,1,0,1
+61,Female,5.231643334269986,Sarcoma,Stage II,Surgery,1,0,1,1
+35,Male,7.698511590354601,Squamous,Stage II,Chemotherapy,0,1,0,1
+61,Male,8.84649501075809,Sarcoma,Stage I,Radiation Therapy,0,1,1,0
+84,Female,4.9028980056075,Sarcoma,Stage IV,Chemotherapy,1,0,0,1
+33,Female,1.3929549193662507,Adenocarcinoma,Stage II,Radiation Therapy,1,0,1,1
+84,Male,2.455052897321224,Lymphoma,Stage II,Chemotherapy,0,0,0,0
+40,Male,1.187750253623843,Adenocarcinoma,Stage III,Chemotherapy,0,0,1,0
+85,Female,6.879367173135971,Lymphoma,Stage I,Chemotherapy,0,0,1,1
+88,Male,3.99083162819598,Sarcoma,Stage III,Radiation Therapy,0,0,0,1
+46,Female,5.882307721474308,Adenocarcinoma,Stage III,Radiation Therapy,0,1,1,0
+67,Female,5.439491621054196,Lymphoma,Stage II,Chemotherapy,0,0,0,1
+53,Female,1.7337384059718404,Squamous,Stage I,Surgery,1,1,0,1
+34,Female,4.629352250114486,Lymphoma,Stage IV,Chemotherapy,0,0,0,1
+81,Male,2.9850501243009093,Adenocarcinoma,Stage II,Radiation Therapy,0,1,0,0
+63,Female,4.765598098008875,Squamous,Stage IV,Chemotherapy,0,1,0,1
+35,Male,2.832204523080184,Lymphoma,Stage IV,Radiation Therapy,0,1,1,0
+51,Female,8.564071656492402,Lymphoma,Stage I,Radiation Therapy,1,0,0,1
+40,Male,2.5677400292042827,Lymphoma,Stage III,Radiation Therapy,1,0,0,0
+77,Female,9.647024963382792,Lymphoma,Stage I,Chemotherapy,0,0,0,1
+45,Male,4.743166295322467,Lymphoma,Stage IV,Radiation Therapy,1,0,0,0
+62,Male,8.616207628171445,Squamous,Stage II,Radiation Therapy,1,1,0,1
+38,Female,6.658883363853506,Sarcoma,Stage IV,Chemotherapy,1,0,0,1
+89,Female,7.618152687991774,Squamous,Stage II,Radiation Therapy,1,1,1,0
+88,Female,7.909514992601022,Squamous,Stage II,Chemotherapy,1,1,1,1
+35,Female,5.54360393703716,Squamous,Stage I,Radiation Therapy,1,0,0,0
+45,Male,5.889704710269595,Sarcoma,Stage IV,Surgery,0,0,1,0
+58,Female,5.625962810278525,Adenocarcinoma,Stage III,Surgery,0,0,0,1
+32,Male,6.292525402810713,Sarcoma,Stage IV,Radiation Therapy,0,1,0,0
+49,Male,1.2645500118085655,Squamous,Stage IV,Surgery,0,0,0,1
+89,Female,4.559636528641137,Lymphoma,Stage III,Chemotherapy,0,1,0,1
+88,Male,6.455698422050544,Lymphoma,Stage I,Surgery,1,0,0,1
+65,Male,6.379512087302779,Squamous,Stage IV,Radiation Therapy,0,1,1,0
+48,Male,8.136604851450684,Lymphoma,Stage IV,Radiation Therapy,0,0,1,1
+55,Male,6.895084049488977,Squamous,Stage II,Chemotherapy,1,0,1,1
+32,Female,9.929199847066052,Lymphoma,Stage IV,Radiation Therapy,1,1,1,0
+48,Female,3.5546907574778053,Sarcoma,Stage III,Chemotherapy,0,0,0,1
+49,Female,4.232359266996083,Adenocarcinoma,Stage II,Surgery,1,0,1,0
+61,Female,4.454624366810167,Adenocarcinoma,Stage I,Surgery,1,0,0,1
+36,Male,5.192315263182237,Sarcoma,Stage II,Chemotherapy,1,0,1,0
+81,Male,8.523982574030885,Sarcoma,Stage III,Chemotherapy,1,0,1,1
+70,Female,3.1221288456328886,Squamous,Stage III,Radiation Therapy,0,0,1,1
+62,Female,7.984001863318865,Squamous,Stage II,Surgery,1,0,1,0
+69,Female,4.64779164777169,Squamous,Stage I,Chemotherapy,0,1,0,0
+68,Male,6.416698452958077,Lymphoma,Stage II,Surgery,0,1,1,1
+47,Female,6.692864799036755,Squamous,Stage I,Chemotherapy,1,0,1,1
+69,Female,4.3556377347004105,Sarcoma,Stage II,Surgery,1,0,0,0
+30,Female,5.613536846852247,Adenocarcinoma,Stage III,Radiation Therapy,1,0,0,0
+40,Male,4.7172805718292725,Lymphoma,Stage IV,Surgery,0,1,1,1
+57,Male,1.622195075679575,Squamous,Stage IV,Surgery,1,1,0,1
+86,Male,4.934488499351438,Lymphoma,Stage I,Surgery,1,0,0,1
+54,Male,1.8765405329819695,Lymphoma,Stage I,Surgery,1,1,0,1
+79,Male,4.6451871917228935,Squamous,Stage I,Surgery,1,0,1,0
+52,Male,6.336265598486037,Lymphoma,Stage III,Radiation Therapy,1,0,0,1
+60,Male,6.214734094091507,Adenocarcinoma,Stage II,Chemotherapy,0,0,1,1
+59,Male,6.963591511074883,Sarcoma,Stage III,Surgery,1,0,1,0
+71,Female,1.8573535715916365,Sarcoma,Stage IV,Radiation Therapy,1,1,1,1
+64,Female,6.869109209773941,Adenocarcinoma,Stage I,Surgery,1,1,1,1
+36,Male,3.8093325102680238,Lymphoma,Stage II,Surgery,0,0,0,0
+89,Male,4.591413515234,Squamous,Stage IV,Chemotherapy,1,1,1,1
+45,Female,8.72187628530435,Lymphoma,Stage IV,Surgery,0,1,0,0
+55,Male,1.0812736371659524,Adenocarcinoma,Stage IV,Radiation Therapy,0,0,1,1
+77,Male,6.295713700065449,Lymphoma,Stage III,Radiation Therapy,1,1,0,1
+86,Male,6.388425820900968,Sarcoma,Stage I,Chemotherapy,1,0,1,0
+81,Female,4.569937987092057,Lymphoma,Stage IV,Surgery,1,0,0,0
+89,Female,3.1332507139750256,Adenocarcinoma,Stage I,Radiation Therapy,0,0,1,1
+78,Female,3.11206634435396,Sarcoma,Stage III,Surgery,0,0,1,1
+31,Female,8.953387026946773,Lymphoma,Stage IV,Surgery,0,1,0,1
+30,Female,4.978219364045717,Lymphoma,Stage III,Surgery,0,0,1,1
+77,Male,3.9780042669025475,Sarcoma,Stage III,Chemotherapy,0,1,1,1
+41,Female,5.038998164482628,Squamous,Stage I,Surgery,0,0,1,1
+34,Male,7.0245136131342525,Sarcoma,Stage IV,Radiation Therapy,1,0,0,1
+66,Male,2.3118091142027652,Squamous,Stage III,Surgery,1,1,1,0
+61,Female,5.044904516923639,Adenocarcinoma,Stage IV,Radiation Therapy,0,0,1,1
+88,Female,6.290959339993482,Adenocarcinoma,Stage I,Surgery,1,1,0,1
+84,Male,9.537250193662903,Sarcoma,Stage III,Radiation Therapy,1,1,0,1
+38,Male,3.2727500386787733,Sarcoma,Stage I,Radiation Therapy,0,0,0,1
+70,Male,4.23325673124621,Adenocarcinoma,Stage IV,Surgery,0,0,0,1
+64,Female,4.414227309301814,Squamous,Stage IV,Surgery,1,0,0,1
+48,Female,6.449843418803946,Adenocarcinoma,Stage I,Radiation Therapy,0,0,1,0
+77,Female,4.210588477360015,Sarcoma,Stage II,Chemotherapy,0,0,1,0
+45,Female,5.80160732769726,Adenocarcinoma,Stage III,Surgery,1,0,1,1
+32,Female,8.036112968605265,Sarcoma,Stage IV,Chemotherapy,0,1,0,0
+49,Male,7.348470347009832,Sarcoma,Stage IV,Surgery,1,1,1,0
+53,Female,5.01731781861327,Adenocarcinoma,Stage III,Surgery,1,0,0,0
+83,Male,8.77794559906752,Squamous,Stage I,Surgery,1,1,0,1
+85,Male,6.023262246344766,Lymphoma,Stage I,Surgery,1,1,1,1
+62,Male,5.859152555519913,Adenocarcinoma,Stage I,Chemotherapy,1,0,0,1
+53,Female,1.3076898934524235,Lymphoma,Stage II,Surgery,0,0,0,1
+81,Female,9.880236823214455,Adenocarcinoma,Stage II,Radiation Therapy,0,1,1,0
+40,Female,2.1067372767666406,Lymphoma,Stage IV,Radiation Therapy,0,0,0,1
+78,Male,3.0801782118488195,Squamous,Stage I,Chemotherapy,0,1,0,1
+37,Male,1.4652715351737426,Squamous,Stage III,Surgery,1,0,1,1
+65,Male,6.760026701532223,Adenocarcinoma,Stage IV,Radiation Therapy,1,1,0,0
+67,Male,3.02231059275412,Sarcoma,Stage III,Chemotherapy,0,1,0,0
+69,Male,2.6200939372545116,Lymphoma,Stage IV,Surgery,1,1,1,0
+49,Male,1.7970002580091724,Sarcoma,Stage II,Radiation Therapy,0,1,1,1
+64,Female,1.929780614116141,Sarcoma,Stage IV,Radiation Therapy,0,0,1,1
+77,Female,6.262036303983298,Sarcoma,Stage II,Chemotherapy,0,0,1,1
+54,Female,7.193870792799359,Squamous,Stage IV,Surgery,1,1,0,1
+64,Female,4.576410896179609,Adenocarcinoma,Stage I,Surgery,1,1,0,1
+54,Male,5.319073734328659,Adenocarcinoma,Stage III,Radiation Therapy,1,0,1,1
+58,Male,7.173709623846857,Squamous,Stage I,Radiation Therapy,1,0,0,0
+47,Female,1.1564181116693169,Squamous,Stage IV,Radiation Therapy,0,1,0,0
+75,Male,3.908175913632507,Adenocarcinoma,Stage IV,Surgery,1,1,1,1
+47,Female,9.757879732633118,Sarcoma,Stage IV,Chemotherapy,1,1,1,0
+31,Female,6.221010067259212,Lymphoma,Stage II,Chemotherapy,1,1,0,1
+83,Female,3.2880212190774394,Lymphoma,Stage III,Surgery,0,1,1,1
+64,Male,5.695570419725918,Lymphoma,Stage III,Chemotherapy,0,0,1,1
+45,Female,4.083881393088238,Sarcoma,Stage IV,Radiation Therapy,1,1,1,1
+70,Female,5.790204899436692,Adenocarcinoma,Stage IV,Chemotherapy,1,0,0,1
+65,Female,2.1316736062598394,Squamous,Stage II,Chemotherapy,1,0,1,1
+62,Male,2.1944318843734965,Adenocarcinoma,Stage I,Chemotherapy,1,0,0,0
+33,Male,2.2918812583545356,Sarcoma,Stage I,Radiation Therapy,0,1,0,0
+62,Female,9.458378127341575,Squamous,Stage III,Surgery,1,0,0,0
+43,Male,7.5960902650720765,Sarcoma,Stage II,Radiation Therapy,1,0,1,1
+50,Male,2.461437051960888,Lymphoma,Stage IV,Surgery,1,0,1,0
+77,Male,2.6951417538904128,Lymphoma,Stage III,Surgery,0,0,1,0
+49,Male,7.577465273837888,Sarcoma,Stage II,Surgery,0,1,1,0
+85,Male,2.4054746031295653,Squamous,Stage I,Chemotherapy,1,1,1,1
+37,Male,3.111051640013458,Squamous,Stage II,Chemotherapy,1,0,0,1
+36,Male,9.670121495383592,Adenocarcinoma,Stage I,Surgery,1,0,0,1
+32,Male,3.2977587225558866,Lymphoma,Stage II,Surgery,1,1,0,1
+46,Male,6.95469115334032,Adenocarcinoma,Stage III,Chemotherapy,1,1,1,1
+62,Male,9.807681586604774,Adenocarcinoma,Stage I,Radiation Therapy,0,1,0,1
+77,Female,4.368670904258134,Sarcoma,Stage III,Surgery,0,0,0,1
+41,Female,1.15764391775856,Sarcoma,Stage III,Radiation Therapy,0,1,1,1
+88,Male,3.197325613801368,Adenocarcinoma,Stage I,Chemotherapy,1,0,1,0
+80,Female,8.477894722075348,Lymphoma,Stage I,Surgery,0,0,0,1
+51,Female,8.78147952359533,Sarcoma,Stage IV,Radiation Therapy,0,1,0,0
+84,Male,7.916674280714121,Adenocarcinoma,Stage IV,Radiation Therapy,0,0,1,1
+51,Male,2.017988371689157,Adenocarcinoma,Stage IV,Radiation Therapy,1,1,1,1
+75,Male,8.159593345267629,Adenocarcinoma,Stage III,Chemotherapy,1,0,1,0
+59,Female,9.268100172941539,Adenocarcinoma,Stage III,Chemotherapy,0,1,1,0
+67,Female,6.405485882916125,Adenocarcinoma,Stage IV,Radiation Therapy,1,0,0,1
+67,Male,9.467878207042583,Adenocarcinoma,Stage III,Radiation Therapy,0,0,0,0
+74,Male,8.441549953406897,Sarcoma,Stage III,Chemotherapy,0,1,1,1
+80,Male,7.0027436529181655,Lymphoma,Stage I,Radiation Therapy,0,1,0,1
+83,Female,6.194667130405733,Adenocarcinoma,Stage I,Radiation Therapy,0,1,0,1
+37,Female,4.137163005177735,Squamous,Stage III,Chemotherapy,1,1,1,1
+56,Female,2.4335870071852463,Sarcoma,Stage IV,Radiation Therapy,1,0,0,1
+56,Female,6.4445853042148675,Sarcoma,Stage II,Radiation Therapy,1,1,0,1
+63,Male,3.8630039825630753,Adenocarcinoma,Stage IV,Radiation Therapy,1,1,0,1
+50,Male,8.797948007748808,Sarcoma,Stage II,Chemotherapy,0,0,1,1
+59,Male,9.940032436227657,Adenocarcinoma,Stage IV,Radiation Therapy,1,1,1,1
+62,Male,7.771849863540153,Lymphoma,Stage I,Chemotherapy,0,1,0,1
+57,Female,1.8143352575834566,Lymphoma,Stage III,Chemotherapy,1,0,1,0
+76,Female,3.598170359775743,Sarcoma,Stage III,Surgery,1,1,1,1
+62,Male,1.9819866858917474,Sarcoma,Stage I,Surgery,1,1,1,1
+34,Male,6.854604830125442,Squamous,Stage II,Radiation Therapy,0,1,0,0
+89,Female,7.886717781002062,Sarcoma,Stage II,Chemotherapy,0,1,0,0
+77,Male,9.331073477926406,Squamous,Stage II,Surgery,0,1,1,1
+48,Female,4.943551117707889,Lymphoma,Stage I,Radiation Therapy,0,1,0,0
+33,Male,9.112380846295999,Lymphoma,Stage II,Surgery,1,0,0,0
+64,Male,8.901020431371947,Adenocarcinoma,Stage I,Surgery,0,1,0,1
+78,Male,3.8547614508885872,Lymphoma,Stage IV,Chemotherapy,0,0,0,1
+46,Male,8.82010562986514,Squamous,Stage IV,Chemotherapy,1,0,0,0
+73,Male,4.381050266935539,Sarcoma,Stage I,Surgery,1,0,1,1
+57,Male,3.671823471042527,Adenocarcinoma,Stage III,Surgery,0,0,0,1
+59,Male,6.841671929149538,Squamous,Stage IV,Chemotherapy,1,1,0,1
+58,Female,3.9554310509657293,Sarcoma,Stage II,Radiation Therapy,0,1,0,0
+75,Female,6.671878734962298,Adenocarcinoma,Stage I,Chemotherapy,1,1,1,1
+82,Female,6.4884862494882505,Lymphoma,Stage II,Surgery,0,0,1,1
+35,Female,6.070950346136129,Squamous,Stage II,Radiation Therapy,0,1,1,1
+64,Female,4.42377733809518,Sarcoma,Stage III,Surgery,0,1,0,1
+89,Male,5.936497494863291,Adenocarcinoma,Stage II,Radiation Therapy,0,1,1,1
+70,Male,6.368369274868794,Adenocarcinoma,Stage III,Surgery,0,0,1,0
+66,Female,5.911181996459261,Lymphoma,Stage IV,Radiation Therapy,1,0,1,1
+53,Male,4.999775074760814,Sarcoma,Stage I,Radiation Therapy,0,1,1,0
+58,Female,1.1320035134163744,Lymphoma,Stage II,Surgery,0,0,0,1
+78,Female,6.283555369310359,Lymphoma,Stage I,Radiation Therapy,0,0,1,1
+75,Male,2.5159994662844767,Sarcoma,Stage II,Chemotherapy,0,1,1,0
+82,Male,6.783183720524707,Sarcoma,Stage I,Surgery,0,0,0,1
+60,Male,7.834098951305794,Sarcoma,Stage II,Chemotherapy,1,0,0,0
+64,Female,5.504007782176673,Squamous,Stage II,Surgery,1,1,1,0
+89,Male,5.881272984817645,Sarcoma,Stage II,Radiation Therapy,0,0,0,1
+62,Female,9.56330703699392,Adenocarcinoma,Stage II,Radiation Therapy,1,0,1,0
+81,Female,8.624506252353168,Lymphoma,Stage II,Radiation Therapy,0,0,0,1
+50,Female,9.22812864356323,Squamous,Stage II,Surgery,1,0,0,0
+61,Male,8.323896594876278,Sarcoma,Stage II,Chemotherapy,1,0,1,1
+52,Male,1.980265076620583,Squamous,Stage II,Chemotherapy,0,0,0,1
+62,Female,2.3409267037317525,Sarcoma,Stage II,Surgery,1,0,1,1
+32,Male,5.739614175420636,Squamous,Stage I,Surgery,1,0,0,1
+47,Male,3.2146269291819842,Lymphoma,Stage III,Chemotherapy,0,1,1,1
+54,Male,5.290259275370433,Lymphoma,Stage II,Chemotherapy,0,1,0,0
+71,Female,4.549287914365152,Adenocarcinoma,Stage III,Chemotherapy,1,1,0,0
+60,Female,5.94472814587408,Adenocarcinoma,Stage II,Chemotherapy,1,1,0,1
+83,Male,7.7218814452224045,Sarcoma,Stage II,Surgery,1,0,0,0
+87,Female,7.43941816389347,Lymphoma,Stage I,Surgery,0,1,0,1
+32,Male,5.691107192368009,Squamous,Stage IV,Radiation Therapy,1,1,1,0
+69,Male,8.401540769353524,Squamous,Stage IV,Chemotherapy,1,0,0,1
+75,Male,4.8777588238423,Squamous,Stage I,Radiation Therapy,1,0,1,1
+53,Male,9.070428608561102,Adenocarcinoma,Stage III,Surgery,0,0,1,0
+79,Female,1.641522430496475,Squamous,Stage IV,Surgery,0,0,1,1
+61,Female,9.591940270299768,Adenocarcinoma,Stage I,Radiation Therapy,0,0,0,0
+76,Female,6.892237732882133,Adenocarcinoma,Stage I,Chemotherapy,0,1,1,1
+51,Male,4.420670580434848,Sarcoma,Stage IV,Chemotherapy,1,0,0,0
+52,Male,2.774387139155896,Squamous,Stage III,Chemotherapy,0,1,1,1
+31,Male,5.312649064992399,Squamous,Stage I,Chemotherapy,1,1,1,1
+56,Female,2.7510249086677088,Lymphoma,Stage II,Radiation Therapy,1,0,1,0
+71,Male,2.4969844696882793,Sarcoma,Stage III,Radiation Therapy,1,1,1,0
+31,Female,6.556165816716768,Lymphoma,Stage III,Surgery,1,1,1,1
+55,Female,5.707762521236062,Sarcoma,Stage IV,Chemotherapy,0,0,0,0
+46,Female,7.030864311498475,Squamous,Stage IV,Chemotherapy,0,1,1,1
+69,Female,9.366452896797902,Adenocarcinoma,Stage II,Chemotherapy,0,1,1,1
+62,Female,5.790341920051361,Adenocarcinoma,Stage I,Radiation Therapy,0,1,0,0
+38,Female,6.228388479365179,Adenocarcinoma,Stage IV,Chemotherapy,0,0,0,1
+72,Male,1.806637052394479,Adenocarcinoma,Stage IV,Radiation Therapy,1,0,0,1
+83,Male,7.458722073177666,Adenocarcinoma,Stage III,Chemotherapy,0,0,1,1
+77,Female,4.599146861237406,Lymphoma,Stage IV,Chemotherapy,0,1,1,1
+68,Female,9.79052714796321,Sarcoma,Stage IV,Surgery,0,0,1,0
+58,Male,8.408566140360943,Squamous,Stage IV,Chemotherapy,0,1,1,0
+71,Female,5.702329364645065,Lymphoma,Stage IV,Chemotherapy,1,0,1,1
+84,Female,2.1090038875494943,Sarcoma,Stage III,Surgery,1,1,1,1
+55,Male,8.734742139525302,Adenocarcinoma,Stage II,Radiation Therapy,1,0,0,0
+64,Female,8.198029858816195,Sarcoma,Stage II,Radiation Therapy,1,0,0,1
+79,Female,2.661266165833297,Sarcoma,Stage I,Chemotherapy,1,1,1,1
+54,Female,3.6575046029827907,Adenocarcinoma,Stage IV,Radiation Therapy,0,0,1,0
+53,Male,8.140665323330536,Adenocarcinoma,Stage III,Chemotherapy,1,1,1,1
+42,Male,2.667056018926687,Adenocarcinoma,Stage I,Surgery,1,0,1,0
+89,Male,9.259772402542396,Squamous,Stage I,Surgery,1,0,1,1
+87,Female,4.820746826767257,Adenocarcinoma,Stage II,Chemotherapy,0,1,0,0
+36,Female,1.7833506632889278,Squamous,Stage III,Surgery,0,1,0,1
+86,Male,8.341737791538527,Adenocarcinoma,Stage III,Surgery,1,1,1,0
+65,Female,4.361587147345489,Squamous,Stage III,Chemotherapy,0,0,0,1
+74,Female,5.738492747384029,Sarcoma,Stage II,Chemotherapy,0,1,1,1
+49,Female,2.0107390997009724,Lymphoma,Stage II,Surgery,1,0,1,0
+30,Female,1.0232561336048414,Sarcoma,Stage II,Radiation Therapy,0,1,1,1
+37,Female,6.741866852139679,Sarcoma,Stage II,Radiation Therapy,0,1,0,1
+75,Male,5.636576533003584,Adenocarcinoma,Stage II,Chemotherapy,0,1,0,0
+45,Female,6.341847122108325,Squamous,Stage IV,Chemotherapy,1,1,1,1
+43,Male,8.143694653424646,Lymphoma,Stage IV,Radiation Therapy,1,1,0,0
+41,Female,6.819453220805741,Adenocarcinoma,Stage III,Surgery,1,1,0,1
+80,Male,2.5729609854463944,Adenocarcinoma,Stage I,Radiation Therapy,0,0,1,1
+52,Female,4.246952671995398,Adenocarcinoma,Stage III,Radiation Therapy,1,1,0,1
+44,Male,9.153019943089843,Sarcoma,Stage I,Radiation Therapy,0,0,0,0
+57,Female,7.92950230226511,Squamous,Stage II,Radiation Therapy,0,1,1,1
+63,Male,6.009733521430455,Squamous,Stage I,Chemotherapy,0,1,1,1
+31,Female,3.3008049802834507,Lymphoma,Stage III,Chemotherapy,1,1,0,1
+61,Male,3.7185445165131554,Squamous,Stage III,Surgery,1,0,1,1
+52,Female,7.587622608270711,Squamous,Stage I,Surgery,1,0,0,1
+51,Male,8.660568347674937,Adenocarcinoma,Stage IV,Surgery,1,1,1,0
+80,Male,7.042822025775529,Adenocarcinoma,Stage II,Surgery,0,0,1,0
+54,Female,8.285769781915976,Sarcoma,Stage II,Radiation Therapy,1,1,1,0
+87,Female,7.899905216803654,Adenocarcinoma,Stage III,Chemotherapy,0,1,1,0
+51,Male,2.3473357116126197,Adenocarcinoma,Stage IV,Chemotherapy,1,0,0,0
+87,Female,4.8155033162197185,Adenocarcinoma,Stage I,Surgery,1,0,1,0
+87,Male,2.3768542074570638,Adenocarcinoma,Stage II,Surgery,1,0,1,0
+51,Male,3.1171202632178634,Sarcoma,Stage IV,Radiation Therapy,0,0,1,0
+78,Male,8.823336621859472,Adenocarcinoma,Stage II,Radiation Therapy,0,1,0,0
+81,Female,5.256027690698639,Lymphoma,Stage IV,Surgery,0,0,0,0
+71,Male,5.818222916583948,Lymphoma,Stage IV,Chemotherapy,0,0,1,0
+35,Male,2.6060136870499493,Lymphoma,Stage III,Chemotherapy,0,1,1,1
+44,Female,3.810446074439164,Lymphoma,Stage II,Chemotherapy,1,0,1,1
+83,Female,3.0722155158508295,Adenocarcinoma,Stage I,Surgery,0,0,1,0
+72,Female,2.8556754806658375,Lymphoma,Stage III,Chemotherapy,0,0,1,1
+89,Female,6.741647139843731,Adenocarcinoma,Stage III,Radiation Therapy,0,0,1,0
+66,Male,3.311954628811433,Sarcoma,Stage I,Radiation Therapy,0,1,0,0
+62,Male,6.688139374183766,Lymphoma,Stage III,Surgery,1,1,1,0
+37,Male,1.5260915269769852,Squamous,Stage IV,Radiation Therapy,0,0,1,1
+82,Male,2.2759695417439167,Lymphoma,Stage IV,Surgery,1,0,1,1
+89,Female,3.4708622860011284,Lymphoma,Stage II,Chemotherapy,1,1,1,0
+73,Male,6.373422252061225,Adenocarcinoma,Stage II,Chemotherapy,1,0,1,0
+73,Male,7.082571205786384,Lymphoma,Stage I,Chemotherapy,0,0,1,1
+34,Female,4.984452701015744,Squamous,Stage II,Radiation Therapy,1,0,0,0
+68,Male,5.0121182311950605,Adenocarcinoma,Stage IV,Surgery,0,0,0,0
+33,Male,7.520651662587563,Adenocarcinoma,Stage I,Chemotherapy,0,0,0,1
+35,Male,1.142389825890242,Sarcoma,Stage I,Surgery,0,0,0,1
+74,Male,4.069810220267985,Sarcoma,Stage II,Chemotherapy,0,0,0,1
+61,Male,8.368363514073096,Lymphoma,Stage IV,Radiation Therapy,0,0,0,1
+81,Male,6.42897469192035,Sarcoma,Stage I,Radiation Therapy,1,0,1,0
+59,Female,4.035044194798783,Sarcoma,Stage IV,Surgery,1,1,1,0
+76,Female,9.149723130967065,Sarcoma,Stage IV,Radiation Therapy,0,1,1,1
+64,Male,7.953604547044443,Adenocarcinoma,Stage IV,Radiation Therapy,1,1,1,0
+84,Male,3.384059025130601,Adenocarcinoma,Stage II,Surgery,0,0,1,1
+69,Female,6.807608537731452,Adenocarcinoma,Stage III,Chemotherapy,1,0,1,1
+81,Male,6.36175655370061,Sarcoma,Stage III,Radiation Therapy,1,1,0,1
+45,Male,4.610691226350844,Adenocarcinoma,Stage I,Surgery,1,0,1,0
+42,Male,4.3026047128432054,Sarcoma,Stage IV,Radiation Therapy,1,1,0,1
+79,Female,4.092044272981336,Adenocarcinoma,Stage II,Radiation Therapy,1,0,0,1
+89,Male,6.554402050560821,Adenocarcinoma,Stage IV,Radiation Therapy,0,1,1,1
+71,Female,4.981689428326026,Squamous,Stage IV,Radiation Therapy,0,1,1,0
+59,Male,8.486768019262797,Lymphoma,Stage II,Surgery,1,1,1,0
+48,Female,7.026423545205657,Sarcoma,Stage III,Surgery,0,0,1,0
+46,Female,1.6293844513849072,Squamous,Stage IV,Surgery,1,1,1,0
+85,Male,6.761514014453494,Adenocarcinoma,Stage IV,Radiation Therapy,0,0,1,0
+48,Female,3.4403269285016633,Sarcoma,Stage III,Radiation Therapy,1,0,1,1
+57,Male,6.335307924880804,Adenocarcinoma,Stage II,Radiation Therapy,1,0,0,1
+87,Female,7.1211873799310625,Lymphoma,Stage I,Surgery,1,0,1,0
+84,Male,3.0774627023861085,Squamous,Stage III,Radiation Therapy,0,0,1,1
+55,Male,5.111727803923317,Lymphoma,Stage I,Chemotherapy,0,0,0,0
+66,Female,2.71292376537161,Squamous,Stage I,Radiation Therapy,1,0,1,1
+55,Male,1.471049882078575,Adenocarcinoma,Stage III,Chemotherapy,1,1,1,1
+82,Male,4.406287811372822,Lymphoma,Stage IV,Radiation Therapy,0,1,0,1
+52,Female,4.266498446613928,Lymphoma,Stage I,Surgery,0,1,1,1
+38,Male,9.959324416338314,Adenocarcinoma,Stage I,Radiation Therapy,0,0,1,0
+41,Male,5.01717116077878,Lymphoma,Stage II,Chemotherapy,0,0,1,0
+82,Female,4.002125945249803,Sarcoma,Stage IV,Chemotherapy,0,0,1,1
+30,Female,6.224275060450072,Squamous,Stage I,Radiation Therapy,1,0,1,1
+87,Male,1.7989065469699161,Squamous,Stage II,Chemotherapy,0,1,1,0
+87,Male,9.654991623593318,Squamous,Stage IV,Chemotherapy,1,0,0,0
+30,Female,6.714640410319298,Sarcoma,Stage III,Surgery,1,1,1,1
+76,Female,7.79354037946763,Squamous,Stage III,Radiation Therapy,0,0,1,0
+63,Male,2.534301443565258,Adenocarcinoma,Stage II,Radiation Therapy,0,1,0,1
+61,Female,4.685300677046835,Lymphoma,Stage III,Radiation Therapy,1,0,0,1
+83,Male,4.804202020565706,Sarcoma,Stage I,Chemotherapy,0,1,1,0
+77,Male,8.396257995109782,Squamous,Stage IV,Radiation Therapy,1,0,0,0
+54,Male,1.011130117834685,Adenocarcinoma,Stage I,Radiation Therapy,0,1,1,1
+69,Male,3.707677975179296,Lymphoma,Stage I,Surgery,0,0,1,1
+74,Male,9.831127369098734,Lymphoma,Stage III,Surgery,0,1,0,1
+82,Female,5.273978891555967,Sarcoma,Stage I,Surgery,1,1,1,0
+30,Female,4.442736522196075,Sarcoma,Stage III,Chemotherapy,0,0,1,0
+45,Female,2.078461018158817,Sarcoma,Stage IV,Radiation Therapy,1,1,0,1
+68,Female,9.76748165765214,Adenocarcinoma,Stage IV,Surgery,0,0,0,1
+34,Male,1.1802372033324202,Adenocarcinoma,Stage I,Surgery,1,0,0,0
+51,Male,7.634622025065188,Sarcoma,Stage II,Surgery,0,0,0,1
+58,Male,7.917398243096576,Squamous,Stage III,Radiation Therapy,1,1,1,0
+84,Male,3.1929104445747996,Lymphoma,Stage III,Radiation Therapy,1,1,0,0
+32,Female,7.044025992517335,Lymphoma,Stage I,Radiation Therapy,1,0,0,0
+41,Male,1.8363622994145095,Adenocarcinoma,Stage III,Chemotherapy,1,0,0,0
+55,Male,3.313425397888719,Lymphoma,Stage III,Chemotherapy,1,1,0,1
+45,Female,8.091117894630385,Squamous,Stage II,Surgery,1,1,0,1
+80,Female,8.782175728301862,Lymphoma,Stage II,Radiation Therapy,0,1,1,1
+66,Female,6.476377713938122,Adenocarcinoma,Stage I,Surgery,1,0,0,1
+51,Female,5.561545886384343,Adenocarcinoma,Stage II,Radiation Therapy,1,0,1,0
+86,Male,2.433736185570823,Squamous,Stage I,Radiation Therapy,1,0,0,0
+58,Male,1.5679812977123515,Squamous,Stage IV,Radiation Therapy,0,0,0,0
+43,Female,2.0588412562620277,Lymphoma,Stage I,Chemotherapy,0,0,0,0
+57,Male,3.046215700864889,Lymphoma,Stage IV,Chemotherapy,0,1,0,1
+34,Male,4.075070517072287,Adenocarcinoma,Stage I,Radiation Therapy,1,0,0,1
+76,Male,4.428185729598885,Squamous,Stage III,Surgery,0,1,0,1
+78,Female,4.116895917301032,Squamous,Stage II,Radiation Therapy,0,1,0,0
+59,Male,3.1514979897753905,Squamous,Stage IV,Radiation Therapy,1,0,0,0
+75,Female,5.587518220765284,Lymphoma,Stage I,Surgery,1,1,1,1
+81,Male,8.427574974096071,Squamous,Stage II,Radiation Therapy,0,0,0,0
+34,Male,3.517331846243313,Adenocarcinoma,Stage I,Surgery,1,1,1,1
+41,Male,9.481483171920098,Adenocarcinoma,Stage II,Chemotherapy,1,0,0,1
+45,Female,8.86002995551463,Lymphoma,Stage II,Chemotherapy,1,0,1,0
+55,Male,2.4558779021689867,Sarcoma,Stage I,Surgery,1,1,0,1
+55,Female,8.07648361081385,Lymphoma,Stage IV,Chemotherapy,0,0,0,1
+77,Female,6.1712864408599,Sarcoma,Stage IV,Chemotherapy,1,1,0,0
+50,Female,6.099178259542767,Squamous,Stage III,Surgery,0,0,1,1
+68,Male,4.51938486752357,Lymphoma,Stage II,Chemotherapy,0,0,1,0
+65,Male,5.510376992638087,Adenocarcinoma,Stage III,Radiation Therapy,0,0,1,0
+62,Male,4.574608996862899,Squamous,Stage III,Radiation Therapy,0,1,1,1
+59,Male,5.857593568839485,Adenocarcinoma,Stage I,Surgery,1,1,0,1
+66,Female,6.651550474953723,Squamous,Stage I,Chemotherapy,1,0,0,0
+52,Female,7.068734257681435,Lymphoma,Stage I,Radiation Therapy,1,1,0,0
+87,Female,5.792330733034835,Sarcoma,Stage II,Radiation Therapy,0,0,1,1
+39,Male,7.492798605958585,Squamous,Stage I,Chemotherapy,0,1,0,1
+83,Female,2.271502443479552,Sarcoma,Stage I,Chemotherapy,0,1,1,1
+34,Male,2.907842418120147,Squamous,Stage II,Radiation Therapy,1,0,1,0
+65,Female,8.36861503666843,Adenocarcinoma,Stage II,Radiation Therapy,0,0,1,1
+63,Male,3.902751800617737,Adenocarcinoma,Stage IV,Surgery,1,0,1,0
+81,Male,1.2060444247850821,Squamous,Stage I,Surgery,1,0,1,1
+60,Female,2.3841203470122796,Sarcoma,Stage I,Radiation Therapy,1,0,0,0
+39,Female,3.0125299104668013,Lymphoma,Stage I,Surgery,1,1,1,1
+87,Female,9.615905991051285,Lymphoma,Stage IV,Radiation Therapy,0,1,1,0
+48,Female,6.157372860377643,Adenocarcinoma,Stage I,Radiation Therapy,1,0,0,1
+87,Male,9.394576664286294,Lymphoma,Stage IV,Surgery,0,0,1,0
+61,Female,6.176470154469625,Adenocarcinoma,Stage III,Surgery,1,0,1,0
+30,Female,5.3141899612406664,Lymphoma,Stage IV,Chemotherapy,0,1,0,1
+85,Female,3.823549220746864,Squamous,Stage III,Chemotherapy,0,0,0,1
+34,Male,6.457338499900381,Adenocarcinoma,Stage I,Chemotherapy,1,0,0,1
+74,Male,2.2527822215577684,Adenocarcinoma,Stage III,Radiation Therapy,1,1,1,0
+33,Female,9.084354645634354,Squamous,Stage IV,Surgery,1,1,0,1
+45,Male,8.463991646271554,Adenocarcinoma,Stage II,Radiation Therapy,0,1,0,1
+53,Female,3.8577830308906336,Lymphoma,Stage III,Surgery,1,1,0,0
+45,Male,9.57517774841165,Lymphoma,Stage III,Radiation Therapy,1,0,1,0
+84,Male,8.426806906740113,Adenocarcinoma,Stage I,Chemotherapy,0,1,0,1
+31,Male,6.996761972515357,Lymphoma,Stage IV,Chemotherapy,1,1,1,1
+78,Male,2.0958572001274733,Sarcoma,Stage III,Chemotherapy,0,0,1,1
+57,Female,5.304106207432651,Adenocarcinoma,Stage III,Radiation Therapy,1,0,0,1
+61,Female,5.554967993620758,Squamous,Stage III,Surgery,0,0,1,1
+56,Female,3.092962225288421,Sarcoma,Stage III,Surgery,0,1,1,0
+49,Male,1.7196885492337175,Adenocarcinoma,Stage II,Chemotherapy,1,0,0,1
+53,Female,7.990512674245235,Squamous,Stage IV,Chemotherapy,0,1,1,1
+41,Female,2.098315469119555,Lymphoma,Stage I,Chemotherapy,1,1,0,0
+79,Female,6.348616755055972,Squamous,Stage I,Chemotherapy,1,1,1,1
+64,Male,9.428042564952944,Sarcoma,Stage II,Surgery,0,0,1,0
+89,Male,8.884946733382382,Lymphoma,Stage IV,Radiation Therapy,1,1,0,1
+62,Male,3.49977361374335,Adenocarcinoma,Stage III,Radiation Therapy,0,0,0,0
+62,Female,8.663037737961389,Lymphoma,Stage II,Radiation Therapy,0,0,1,0
+80,Female,1.0029925550844045,Adenocarcinoma,Stage IV,Radiation Therapy,0,0,1,0
+72,Female,1.159190286519315,Adenocarcinoma,Stage III,Chemotherapy,0,1,0,1
+66,Male,6.4229784745857845,Squamous,Stage II,Chemotherapy,0,1,1,0
+41,Male,4.283183972300765,Squamous,Stage IV,Chemotherapy,0,1,1,1
+32,Female,4.478147570432324,Squamous,Stage I,Radiation Therapy,0,0,1,1
+30,Male,6.0799698161099425,Sarcoma,Stage I,Chemotherapy,0,1,1,1
+62,Male,2.726042100326745,Sarcoma,Stage IV,Chemotherapy,1,1,0,0
+69,Male,2.905798155989305,Squamous,Stage I,Surgery,1,1,0,1
+39,Male,5.361414283169783,Sarcoma,Stage IV,Surgery,0,1,0,0
+72,Female,7.788281899094767,Lymphoma,Stage III,Chemotherapy,1,1,0,1
+73,Male,6.575479762668289,Lymphoma,Stage IV,Surgery,1,0,0,0
+58,Male,3.67619543413155,Sarcoma,Stage III,Surgery,1,0,0,1
+42,Male,4.873034597580291,Sarcoma,Stage II,Chemotherapy,1,0,1,1
+41,Male,2.5359828269499856,Lymphoma,Stage IV,Chemotherapy,1,0,0,1
+60,Female,1.6716683290337353,Adenocarcinoma,Stage II,Chemotherapy,1,1,1,1
+75,Female,8.044264366697343,Lymphoma,Stage I,Chemotherapy,0,0,1,0
+31,Male,3.388486682693751,Lymphoma,Stage III,Radiation Therapy,1,1,1,0
+80,Male,2.5998974906612338,Sarcoma,Stage IV,Radiation Therapy,1,0,0,1
+79,Male,7.224562500123874,Lymphoma,Stage II,Chemotherapy,1,0,1,1
+64,Male,6.5624650685846735,Sarcoma,Stage III,Surgery,1,0,0,0
+52,Male,6.6987066341211765,Sarcoma,Stage III,Chemotherapy,0,1,1,1
+46,Male,3.0600514436195225,Squamous,Stage I,Chemotherapy,0,1,1,1
+55,Female,3.093809847064129,Lymphoma,Stage I,Surgery,0,0,0,1
+37,Male,2.9872236680707522,Adenocarcinoma,Stage III,Radiation Therapy,0,1,1,0
+58,Female,2.5637733609606506,Squamous,Stage III,Chemotherapy,1,0,1,0
+55,Female,6.901513053054907,Sarcoma,Stage IV,Chemotherapy,0,0,1,0
+39,Male,8.632142967244611,Sarcoma,Stage III,Radiation Therapy,0,0,1,1
+55,Female,7.518857227089951,Adenocarcinoma,Stage IV,Radiation Therapy,0,1,0,1
+63,Female,8.128842703844889,Sarcoma,Stage III,Surgery,0,0,1,1
+80,Female,4.643185861766798,Lymphoma,Stage I,Radiation Therapy,1,0,1,1
+70,Female,6.886682158347983,Squamous,Stage IV,Radiation Therapy,0,0,0,1
+36,Female,4.188126164002971,Sarcoma,Stage II,Radiation Therapy,1,1,1,1
+33,Female,5.72954159771776,Sarcoma,Stage I,Surgery,0,0,1,1
+87,Male,5.334713618813761,Adenocarcinoma,Stage IV,Radiation Therapy,1,1,1,0
+82,Female,2.5919843062946897,Lymphoma,Stage IV,Radiation Therapy,1,0,1,1
+79,Female,4.483708843020677,Sarcoma,Stage II,Surgery,0,1,0,1
+74,Female,9.674400479341159,Adenocarcinoma,Stage IV,Radiation Therapy,0,0,1,0
+40,Male,3.237222319434479,Sarcoma,Stage III,Radiation Therapy,0,0,0,0
+58,Female,2.2042336265153986,Adenocarcinoma,Stage II,Surgery,0,1,1,0
+85,Male,4.767225594615418,Adenocarcinoma,Stage I,Chemotherapy,1,1,1,1
+65,Female,8.113039622741333,Lymphoma,Stage I,Surgery,1,0,1,1
+54,Male,6.23933406801975,Sarcoma,Stage III,Radiation Therapy,0,1,0,1
+50,Male,7.128773445144201,Lymphoma,Stage I,Radiation Therapy,0,0,1,1
+86,Female,2.707253633572095,Adenocarcinoma,Stage IV,Radiation Therapy,1,0,1,0
+65,Female,6.570533737069494,Squamous,Stage IV,Surgery,0,0,0,0
+39,Male,3.911503554203264,Sarcoma,Stage III,Radiation Therapy,1,1,0,0
+66,Female,8.508730293592908,Squamous,Stage I,Radiation Therapy,0,0,0,1
+38,Male,6.663689254096625,Sarcoma,Stage I,Surgery,1,1,0,0
+53,Male,2.789706499977663,Lymphoma,Stage III,Chemotherapy,1,0,1,1
+64,Male,1.5815501185967753,Lymphoma,Stage II,Chemotherapy,1,1,1,1
+78,Male,1.3836988835832946,Lymphoma,Stage I,Radiation Therapy,1,1,1,1
+64,Male,4.342677108851267,Lymphoma,Stage II,Surgery,1,0,1,0
+77,Female,3.392660229888821,Lymphoma,Stage I,Radiation Therapy,0,1,0,1
+65,Male,6.814811111162572,Squamous,Stage I,Surgery,1,0,1,1
+47,Male,5.494004514807564,Lymphoma,Stage I,Surgery,0,0,1,0
+78,Female,3.3941735020484263,Adenocarcinoma,Stage I,Chemotherapy,1,0,1,1
+68,Male,2.343140001551585,Adenocarcinoma,Stage IV,Chemotherapy,1,0,1,1
+61,Female,2.1447978641870464,Squamous,Stage II,Surgery,0,0,0,0
+53,Female,8.78194352926376,Sarcoma,Stage II,Radiation Therapy,0,1,1,1
+52,Female,3.1913017156438053,Adenocarcinoma,Stage I,Chemotherapy,0,0,1,0
+61,Male,6.865395831198715,Sarcoma,Stage I,Radiation Therapy,0,1,1,1
+66,Male,8.296173351876396,Squamous,Stage II,Chemotherapy,1,1,0,0
+41,Male,6.526731800662625,Sarcoma,Stage IV,Chemotherapy,0,0,0,1
+78,Female,8.736087084822511,Sarcoma,Stage III,Radiation Therapy,1,1,1,0
+84,Male,4.531543493756271,Sarcoma,Stage III,Chemotherapy,0,0,1,1
+42,Female,9.605999715840534,Sarcoma,Stage II,Chemotherapy,0,1,1,1
+52,Male,2.1983050376028723,Squamous,Stage I,Radiation Therapy,1,1,0,1
+54,Female,1.9193457669178429,Adenocarcinoma,Stage I,Chemotherapy,1,1,1,1
+64,Male,6.928229315866992,Lymphoma,Stage IV,Chemotherapy,0,0,1,1
+70,Male,9.485480272719355,Sarcoma,Stage III,Chemotherapy,1,1,1,0
+59,Male,8.279951154726952,Adenocarcinoma,Stage IV,Radiation Therapy,1,0,0,0
+46,Female,1.6877517349424629,Adenocarcinoma,Stage III,Surgery,1,1,1,1
+78,Female,3.5143094254124474,Squamous,Stage II,Radiation Therapy,1,1,1,0
+49,Male,9.372869963540413,Adenocarcinoma,Stage III,Surgery,1,1,0,0
+77,Male,3.277525895207061,Squamous,Stage IV,Chemotherapy,1,1,0,1
+54,Female,8.030533814082274,Sarcoma,Stage IV,Surgery,1,0,1,0
+51,Female,8.426189763358334,Sarcoma,Stage IV,Radiation Therapy,1,0,0,0
+42,Female,5.4590689311488365,Lymphoma,Stage II,Radiation Therapy,0,1,1,1
+88,Male,4.47714018863484,Lymphoma,Stage III,Chemotherapy,1,1,0,1
+48,Female,5.051119891777836,Lymphoma,Stage III,Surgery,0,0,0,1
+78,Male,3.0426822492882772,Adenocarcinoma,Stage IV,Chemotherapy,1,0,1,1
+65,Female,9.004518245159598,Sarcoma,Stage III,Chemotherapy,1,0,1,1
+41,Male,5.055576910567821,Squamous,Stage I,Radiation Therapy,1,0,1,1
+70,Female,8.942134964104898,Lymphoma,Stage I,Surgery,1,1,0,0
+48,Female,1.9512413191564668,Squamous,Stage I,Surgery,0,1,1,0
+41,Female,9.894477439001182,Squamous,Stage III,Surgery,0,0,1,1
+38,Female,4.989457786992564,Lymphoma,Stage II,Surgery,1,0,1,1
+36,Female,1.430477383546949,Sarcoma,Stage II,Chemotherapy,0,0,1,1
+57,Male,1.3421966341370943,Lymphoma,Stage II,Chemotherapy,1,0,1,0
+43,Female,7.715865317336547,Squamous,Stage II,Radiation Therapy,1,0,0,0
+60,Female,6.931319807833127,Lymphoma,Stage I,Chemotherapy,0,0,1,1
+81,Female,8.219175023148289,Squamous,Stage I,Chemotherapy,0,1,1,0
+48,Male,1.9483078055752536,Squamous,Stage IV,Radiation Therapy,1,1,0,1
+87,Female,1.3201378033199351,Lymphoma,Stage III,Radiation Therapy,1,1,1,0
+76,Male,5.577213605028206,Adenocarcinoma,Stage III,Radiation Therapy,0,0,1,0
+45,Female,4.488357083344926,Lymphoma,Stage II,Chemotherapy,1,0,1,1
+82,Female,5.157522430038602,Adenocarcinoma,Stage I,Chemotherapy,0,0,1,1
+34,Male,9.924295679832467,Squamous,Stage II,Radiation Therapy,1,1,1,0
+64,Female,9.736749619036031,Squamous,Stage IV,Radiation Therapy,1,0,0,0
+41,Male,9.480838507058735,Adenocarcinoma,Stage III,Radiation Therapy,0,0,0,1
+54,Male,8.054584090909064,Squamous,Stage III,Chemotherapy,0,1,0,0
+81,Female,4.193572242312014,Adenocarcinoma,Stage II,Chemotherapy,0,0,1,1
+88,Male,4.709178372364944,Adenocarcinoma,Stage IV,Surgery,1,1,0,1
+50,Female,5.946544393470321,Squamous,Stage III,Chemotherapy,1,1,1,0
+65,Female,8.47481010764356,Sarcoma,Stage IV,Chemotherapy,1,0,1,1
+82,Male,1.6184154926644099,Adenocarcinoma,Stage IV,Chemotherapy,1,1,1,0
+52,Male,4.818671972963993,Lymphoma,Stage II,Radiation Therapy,0,0,0,1
+45,Male,1.7435589711334183,Lymphoma,Stage I,Chemotherapy,1,1,0,0
+86,Male,5.631918279161604,Squamous,Stage II,Radiation Therapy,1,0,0,1
+68,Female,9.090107416056119,Sarcoma,Stage I,Surgery,1,1,1,0
+74,Female,8.042364321075441,Squamous,Stage IV,Surgery,0,0,0,0
+82,Male,3.05058175788799,Sarcoma,Stage I,Radiation Therapy,1,1,1,1
+71,Female,9.783917646389131,Adenocarcinoma,Stage IV,Radiation Therapy,1,1,0,1
+87,Female,7.006153582417856,Adenocarcinoma,Stage III,Radiation Therapy,0,1,0,1
+68,Female,1.0938492945766276,Adenocarcinoma,Stage III,Chemotherapy,1,0,1,0
+43,Female,3.2987213621669755,Adenocarcinoma,Stage III,Surgery,1,0,1,1
+60,Male,3.3464196992792488,Lymphoma,Stage II,Radiation Therapy,0,1,0,0
+87,Male,1.6232887565727394,Lymphoma,Stage II,Chemotherapy,1,0,0,0
+34,Female,9.638438662683361,Squamous,Stage IV,Surgery,1,1,0,1
+64,Male,5.3042976511833135,Sarcoma,Stage III,Chemotherapy,1,0,1,0
+52,Male,9.062331376346938,Adenocarcinoma,Stage II,Surgery,0,1,1,1
+58,Male,3.899939531001655,Adenocarcinoma,Stage III,Chemotherapy,1,0,0,1
+72,Female,2.127102133895444,Sarcoma,Stage II,Surgery,1,1,0,1
+40,Female,5.269024989155925,Sarcoma,Stage I,Surgery,0,1,1,1
+47,Female,2.0256097124288543,Squamous,Stage I,Chemotherapy,0,1,0,1
+76,Male,5.374139526797859,Sarcoma,Stage III,Radiation Therapy,1,1,1,0
+41,Female,9.28267463097467,Adenocarcinoma,Stage IV,Surgery,1,0,1,1
+38,Female,5.686913276507914,Adenocarcinoma,Stage II,Radiation Therapy,1,1,1,0
+39,Male,6.548497542055752,Adenocarcinoma,Stage II,Chemotherapy,1,0,1,0
+87,Female,2.4097459327642747,Adenocarcinoma,Stage I,Radiation Therapy,0,0,1,1
+73,Female,1.3936206329197254,Adenocarcinoma,Stage I,Radiation Therapy,1,1,1,1
+46,Male,1.9972716596182634,Squamous,Stage IV,Radiation Therapy,0,0,0,1
+67,Male,6.386784181159291,Adenocarcinoma,Stage IV,Radiation Therapy,0,0,1,0
+36,Male,1.855105290930742,Squamous,Stage IV,Radiation Therapy,1,0,1,1
+75,Female,4.383936009471803,Adenocarcinoma,Stage III,Surgery,1,1,0,0
+42,Female,5.950827464123404,Lymphoma,Stage I,Surgery,0,0,1,1
+69,Female,4.497875187668623,Lymphoma,Stage III,Surgery,0,0,0,1
+71,Male,2.4731542131877133,Lymphoma,Stage I,Chemotherapy,1,1,1,1
+38,Male,3.464121767626959,Lymphoma,Stage I,Radiation Therapy,0,1,0,0
+79,Female,9.354857795637193,Squamous,Stage II,Surgery,1,0,0,0
+56,Female,7.083840480277198,Squamous,Stage I,Chemotherapy,1,1,1,0
+87,Male,5.464430548118979,Sarcoma,Stage I,Surgery,0,0,1,1
+31,Male,1.1144340098820416,Adenocarcinoma,Stage III,Surgery,0,0,1,1
+34,Male,9.931738604405231,Lymphoma,Stage I,Radiation Therapy,1,0,1,0
+58,Male,7.043094414051789,Squamous,Stage III,Chemotherapy,0,1,0,1
+66,Female,3.8523022961045044,Adenocarcinoma,Stage IV,Radiation Therapy,1,0,0,1
+67,Male,8.913417939980544,Adenocarcinoma,Stage I,Radiation Therapy,1,1,0,1
+48,Female,3.325884582626363,Squamous,Stage I,Surgery,1,1,1,1
+37,Female,5.896149212644764,Lymphoma,Stage III,Radiation Therapy,0,0,0,1
+77,Female,6.724636873568426,Sarcoma,Stage IV,Chemotherapy,1,1,1,0
+74,Male,2.989570343083556,Adenocarcinoma,Stage II,Radiation Therapy,1,1,1,0
+30,Male,9.805575509205363,Sarcoma,Stage IV,Radiation Therapy,1,1,0,0
+51,Male,7.733727153810978,Lymphoma,Stage III,Radiation Therapy,1,1,1,1
+81,Male,6.020319029599629,Lymphoma,Stage IV,Surgery,1,1,0,1
+46,Female,2.625351383577708,Sarcoma,Stage III,Chemotherapy,1,0,1,1
+36,Male,1.4847238629822352,Lymphoma,Stage III,Surgery,1,1,0,0
+54,Male,3.880538492688851,Adenocarcinoma,Stage II,Surgery,1,0,1,1
+74,Female,7.778686023220625,Sarcoma,Stage I,Surgery,1,0,0,0
+33,Male,3.4239816847182256,Lymphoma,Stage III,Surgery,1,0,0,0
+65,Female,5.8560059844595465,Sarcoma,Stage III,Surgery,1,0,1,1
+35,Female,7.551524590576689,Adenocarcinoma,Stage II,Chemotherapy,0,0,1,1
+89,Female,1.9714934318181792,Lymphoma,Stage III,Radiation Therapy,1,0,0,1
+60,Female,7.1676821450428605,Adenocarcinoma,Stage I,Surgery,1,1,1,1
+48,Female,1.8268379893904023,Lymphoma,Stage II,Surgery,1,1,1,0
+73,Female,9.686167679142969,Squamous,Stage I,Chemotherapy,0,1,1,0
+83,Female,5.395547170584456,Lymphoma,Stage I,Chemotherapy,1,0,0,0
+68,Female,2.3560849693888963,Sarcoma,Stage II,Radiation Therapy,0,1,0,1
+56,Male,4.0814527243019185,Lymphoma,Stage III,Chemotherapy,1,1,1,1
+39,Male,4.720748043657353,Adenocarcinoma,Stage I,Radiation Therapy,1,1,1,0
+55,Male,7.823665099688836,Adenocarcinoma,Stage I,Surgery,0,0,0,1
+48,Male,7.6908140746894835,Lymphoma,Stage I,Surgery,1,1,1,0
+68,Female,6.507464548035979,Sarcoma,Stage I,Radiation Therapy,0,0,0,0
+32,Male,1.9533764130264366,Squamous,Stage II,Chemotherapy,0,1,1,1
+74,Female,2.3641243442890625,Sarcoma,Stage II,Radiation Therapy,1,0,1,0
+42,Male,1.8438122858100097,Squamous,Stage IV,Chemotherapy,1,0,1,1
+79,Male,6.194555049587951,Adenocarcinoma,Stage IV,Surgery,1,0,0,1
+57,Male,8.894245973602636,Sarcoma,Stage I,Chemotherapy,1,1,0,1
+87,Female,4.904204610292946,Squamous,Stage III,Radiation Therapy,0,1,0,0
+49,Male,2.4476335656197157,Lymphoma,Stage I,Radiation Therapy,0,0,0,0
+57,Female,6.022380926340703,Adenocarcinoma,Stage III,Surgery,1,1,1,1
+37,Female,8.305769951791389,Lymphoma,Stage I,Chemotherapy,0,0,1,0
+70,Male,7.67540855361637,Adenocarcinoma,Stage IV,Chemotherapy,0,0,0,0
+68,Male,8.933057017075193,Sarcoma,Stage IV,Chemotherapy,1,1,1,1
+30,Male,3.5011188752398104,Sarcoma,Stage III,Surgery,0,1,1,1
+32,Female,2.745584805409974,Adenocarcinoma,Stage I,Chemotherapy,0,1,0,1
+42,Male,8.91834837347745,Adenocarcinoma,Stage III,Radiation Therapy,1,0,1,0
+57,Female,6.918042815002208,Adenocarcinoma,Stage IV,Chemotherapy,0,0,1,1
+86,Female,3.7983603700679875,Sarcoma,Stage I,Surgery,1,1,0,0
+89,Male,7.681132455152583,Squamous,Stage I,Chemotherapy,0,0,1,0
+78,Male,8.336065460323312,Lymphoma,Stage III,Chemotherapy,1,1,1,1
+54,Female,6.534804163070191,Lymphoma,Stage II,Radiation Therapy,0,0,1,1
+85,Female,7.190956988919236,Sarcoma,Stage III,Chemotherapy,0,1,0,1
+62,Female,4.377339139983997,Lymphoma,Stage IV,Radiation Therapy,1,1,0,1
+67,Male,5.848261006087352,Adenocarcinoma,Stage IV,Radiation Therapy,1,0,1,1
+82,Female,5.71743253653546,Squamous,Stage IV,Surgery,1,1,1,1
+35,Male,8.632430120176947,Lymphoma,Stage IV,Radiation Therapy,1,1,1,1
+87,Female,8.559675822539642,Squamous,Stage IV,Radiation Therapy,0,0,0,1
+73,Female,8.49412422412339,Adenocarcinoma,Stage II,Surgery,0,1,0,1
+74,Male,1.0992845283621921,Lymphoma,Stage I,Radiation Therapy,0,0,0,1
+61,Female,7.745909360219994,Sarcoma,Stage III,Surgery,1,1,1,1
+74,Male,7.828087510999044,Squamous,Stage III,Chemotherapy,0,0,1,0
+76,Male,7.105409405696276,Adenocarcinoma,Stage IV,Surgery,0,1,1,1
+50,Female,7.806381921023073,Squamous,Stage III,Radiation Therapy,1,1,1,0
+45,Male,8.577733343470378,Lymphoma,Stage IV,Surgery,1,1,1,1
+83,Male,5.232871486916071,Lymphoma,Stage II,Radiation Therapy,0,1,0,0
+50,Female,5.518451921396024,Sarcoma,Stage II,Chemotherapy,1,0,1,1
+40,Male,2.122426512202514,Adenocarcinoma,Stage I,Surgery,0,0,1,1
+89,Male,4.468382947426257,Adenocarcinoma,Stage II,Chemotherapy,0,0,1,0
+66,Male,6.790286619206059,Sarcoma,Stage II,Radiation Therapy,1,0,0,0
+65,Female,8.02359798532547,Sarcoma,Stage I,Radiation Therapy,0,0,1,0
+64,Male,2.954881879220895,Adenocarcinoma,Stage III,Chemotherapy,1,0,0,1
+48,Female,2.2404060924331186,Squamous,Stage IV,Surgery,1,0,0,0
+49,Female,6.96737804050443,Squamous,Stage IV,Surgery,0,1,0,0
+86,Male,1.0169189517241959,Sarcoma,Stage III,Radiation Therapy,0,1,0,0
+47,Male,2.6053532587659687,Squamous,Stage I,Chemotherapy,0,1,0,1
+76,Male,1.2616424230955836,Adenocarcinoma,Stage III,Chemotherapy,1,1,1,0
+70,Female,2.5019660606938383,Lymphoma,Stage II,Surgery,0,0,1,1
+78,Male,2.631873519329547,Lymphoma,Stage I,Surgery,1,0,0,0
+43,Male,4.489062352753548,Squamous,Stage I,Surgery,1,0,0,1
+44,Male,4.6209441221790035,Sarcoma,Stage I,Chemotherapy,0,1,0,0
+60,Male,8.868362235492139,Sarcoma,Stage IV,Surgery,1,0,1,1
+30,Male,5.590987412489427,Sarcoma,Stage III,Surgery,0,1,1,0
+82,Female,7.510642890510576,Sarcoma,Stage I,Radiation Therapy,0,0,0,1
+83,Female,1.9372362212825869,Sarcoma,Stage I,Surgery,0,0,1,1
+83,Male,3.0289487991732447,Squamous,Stage I,Surgery,0,0,1,1
+32,Male,7.326490968808091,Lymphoma,Stage III,Chemotherapy,0,0,0,1
+45,Male,1.475235644216753,Lymphoma,Stage IV,Chemotherapy,0,1,0,1
+52,Male,5.379378960193778,Squamous,Stage II,Radiation Therapy,0,1,1,1
+86,Female,6.3943206909664045,Sarcoma,Stage IV,Surgery,1,0,1,1
+40,Male,6.419310796472329,Squamous,Stage I,Radiation Therapy,0,1,1,0
+41,Female,1.2063953014123783,Lymphoma,Stage IV,Chemotherapy,1,0,0,1
+39,Female,3.8989720380626696,Adenocarcinoma,Stage IV,Radiation Therapy,1,0,0,1
+61,Male,6.728415859442387,Squamous,Stage II,Chemotherapy,1,0,0,0
+45,Female,2.3409976253431912,Sarcoma,Stage III,Radiation Therapy,0,0,1,0
+37,Female,7.258740834952479,Lymphoma,Stage III,Radiation Therapy,1,1,1,0
+67,Female,7.713326879323071,Lymphoma,Stage IV,Surgery,1,0,0,1
+41,Female,9.837722714015307,Lymphoma,Stage IV,Radiation Therapy,0,0,1,0
+53,Male,2.888577953707685,Lymphoma,Stage III,Surgery,0,1,0,0
+57,Male,8.426176008995036,Sarcoma,Stage III,Surgery,1,0,1,0
+82,Female,5.682669192267887,Adenocarcinoma,Stage II,Surgery,0,1,0,1
+37,Male,4.3611633652975605,Lymphoma,Stage I,Surgery,0,0,1,1
+87,Male,2.1013908159266013,Squamous,Stage IV,Radiation Therapy,0,0,1,0
+57,Male,7.619550458387838,Adenocarcinoma,Stage III,Chemotherapy,0,0,0,0
+65,Male,3.1227183922931836,Lymphoma,Stage IV,Chemotherapy,1,0,0,0
+55,Male,4.342798016857412,Adenocarcinoma,Stage IV,Chemotherapy,0,0,0,1
+37,Female,1.562880042076316,Squamous,Stage III,Radiation Therapy,0,0,0,1
+87,Male,8.21230224237567,Lymphoma,Stage II,Surgery,0,1,0,1
+89,Male,7.89929671574479,Squamous,Stage IV,Chemotherapy,1,0,1,0
+79,Male,7.602542470380812,Sarcoma,Stage II,Radiation Therapy,1,1,0,1
+57,Male,3.69499159442698,Lymphoma,Stage III,Surgery,0,1,0,1
+57,Female,2.5613206683936154,Lymphoma,Stage I,Chemotherapy,0,0,0,0
+66,Female,6.737979380232067,Lymphoma,Stage I,Surgery,1,1,0,0
+70,Female,5.465497457018975,Lymphoma,Stage IV,Chemotherapy,0,0,0,0
+65,Female,2.6042722021417744,Sarcoma,Stage III,Chemotherapy,0,1,1,1
+56,Male,7.173201439448773,Lymphoma,Stage II,Chemotherapy,1,0,0,1
+83,Female,9.920137886391734,Adenocarcinoma,Stage IV,Surgery,0,1,0,1
+46,Male,7.724976289678339,Lymphoma,Stage III,Radiation Therapy,0,1,0,1
+38,Male,7.659877480170506,Sarcoma,Stage III,Surgery,1,0,1,0
+62,Male,9.552814776375325,Lymphoma,Stage II,Chemotherapy,1,1,1,1
+82,Male,2.82642730817412,Adenocarcinoma,Stage IV,Surgery,0,0,0,1
+49,Male,6.0899496842929635,Sarcoma,Stage III,Radiation Therapy,1,0,0,0
+42,Female,9.816820435304951,Sarcoma,Stage III,Surgery,0,0,1,1
+57,Female,2.487646998731571,Adenocarcinoma,Stage III,Radiation Therapy,0,0,1,0
+77,Female,7.302267635000689,Adenocarcinoma,Stage II,Radiation Therapy,0,0,1,0
+58,Female,6.272291313747117,Adenocarcinoma,Stage IV,Surgery,1,1,0,1
+42,Male,6.278311829698363,Adenocarcinoma,Stage IV,Chemotherapy,1,1,0,1
+75,Female,7.279035647680677,Adenocarcinoma,Stage IV,Radiation Therapy,0,1,1,1
+64,Male,9.366552305881157,Sarcoma,Stage IV,Surgery,0,0,0,0
+35,Female,8.043237458662041,Sarcoma,Stage I,Radiation Therapy,1,1,1,1
+47,Male,1.50522493074589,Lymphoma,Stage I,Chemotherapy,1,1,1,1
+80,Male,8.6745521788814,Lymphoma,Stage IV,Surgery,1,1,1,1
+34,Female,3.0298719693315936,Squamous,Stage II,Surgery,0,1,0,1
+76,Male,4.392227482627348,Lymphoma,Stage I,Surgery,1,1,1,1
+54,Male,5.15559532251144,Lymphoma,Stage III,Chemotherapy,1,0,1,0
+31,Female,5.328154006777627,Adenocarcinoma,Stage I,Radiation Therapy,0,0,0,1
+39,Male,4.916623593298211,Adenocarcinoma,Stage III,Surgery,0,1,1,0
+85,Female,9.43617964794278,Lymphoma,Stage IV,Radiation Therapy,0,0,0,0
+59,Female,7.354171068976221,Squamous,Stage I,Radiation Therapy,1,0,1,1
+79,Female,6.680535813610357,Adenocarcinoma,Stage II,Chemotherapy,0,1,0,1
+88,Male,1.4485782500464741,Lymphoma,Stage I,Surgery,0,1,1,0
+74,Male,9.135219972343371,Lymphoma,Stage I,Radiation Therapy,0,0,1,1
+34,Male,9.184511728075567,Sarcoma,Stage I,Surgery,0,1,1,0
+84,Female,8.02191757087092,Squamous,Stage IV,Surgery,1,0,1,1
+85,Male,1.0632628343225723,Sarcoma,Stage II,Chemotherapy,0,0,1,1
+62,Female,1.5155222596986102,Squamous,Stage I,Surgery,1,1,0,1
+83,Female,3.027013320416408,Adenocarcinoma,Stage II,Surgery,1,0,0,0
+30,Male,2.18214467330416,Squamous,Stage IV,Radiation Therapy,1,0,1,1
+47,Female,4.589524267333565,Lymphoma,Stage III,Chemotherapy,0,0,1,1
+61,Male,9.303607522790108,Lymphoma,Stage I,Surgery,1,1,1,1
+76,Male,5.2485439077729845,Squamous,Stage II,Radiation Therapy,0,1,0,1
+78,Male,1.1206236378894905,Squamous,Stage II,Chemotherapy,0,1,0,1
+40,Male,3.544711206208858,Squamous,Stage IV,Chemotherapy,0,1,1,0
+50,Male,1.4013541753566539,Sarcoma,Stage I,Radiation Therapy,1,0,0,1
+55,Female,1.3265886035215195,Squamous,Stage III,Radiation Therapy,0,1,1,1
+54,Female,3.48147867785997,Adenocarcinoma,Stage II,Radiation Therapy,0,1,1,0
+51,Female,3.480511048110509,Sarcoma,Stage I,Radiation Therapy,0,1,1,1
+88,Male,8.084139423414436,Sarcoma,Stage III,Radiation Therapy,1,1,0,0
+56,Male,9.773511875030007,Squamous,Stage II,Surgery,1,0,1,1
+78,Male,4.340863845009984,Adenocarcinoma,Stage II,Surgery,1,0,1,1
+42,Female,4.859981909749347,Sarcoma,Stage III,Chemotherapy,0,0,1,0
+62,Male,8.603104926574193,Lymphoma,Stage III,Surgery,1,1,0,1
+63,Female,3.4132511808596204,Sarcoma,Stage IV,Surgery,0,1,0,0
+70,Female,2.4074362396310316,Squamous,Stage I,Surgery,0,0,0,0
+64,Male,8.677806610632853,Adenocarcinoma,Stage I,Radiation Therapy,1,1,1,0
+30,Male,1.4185052779605893,Squamous,Stage IV,Chemotherapy,0,1,0,1
+50,Female,6.577294961794741,Lymphoma,Stage II,Chemotherapy,1,0,1,0
+77,Male,6.057935627201261,Lymphoma,Stage III,Chemotherapy,0,0,0,1
+84,Female,4.113284027515249,Lymphoma,Stage III,Chemotherapy,1,1,1,1
+35,Male,3.836705689876231,Squamous,Stage III,Surgery,0,1,0,0
+57,Male,7.946719535634592,Sarcoma,Stage II,Surgery,0,1,1,1
+46,Female,1.7778214968629182,Squamous,Stage III,Radiation Therapy,0,0,0,1
+34,Male,3.1310587838024686,Adenocarcinoma,Stage III,Chemotherapy,0,0,0,1
+60,Female,7.592038586542808,Sarcoma,Stage IV,Surgery,0,0,0,0
+34,Male,5.934885253537818,Lymphoma,Stage II,Surgery,1,0,1,0
+67,Female,2.1518938768022773,Squamous,Stage I,Radiation Therapy,0,1,0,0
+32,Female,8.939220528538542,Lymphoma,Stage IV,Radiation Therapy,1,0,0,0
+82,Male,4.541030619072324,Lymphoma,Stage IV,Radiation Therapy,1,0,0,0
+52,Female,8.450815377899556,Adenocarcinoma,Stage I,Surgery,1,1,0,0
+66,Male,8.08941713974938,Sarcoma,Stage IV,Surgery,0,1,1,0
+82,Male,6.619829018245552,Adenocarcinoma,Stage II,Radiation Therapy,0,1,0,0
+66,Male,5.450330181655836,Adenocarcinoma,Stage III,Chemotherapy,0,0,1,0
+39,Female,9.815957563435813,Adenocarcinoma,Stage II,Radiation Therapy,1,1,1,0
+39,Female,2.304685651418353,Lymphoma,Stage I,Radiation Therapy,0,1,1,1
+48,Male,7.526401547960033,Adenocarcinoma,Stage I,Radiation Therapy,0,0,1,0
+46,Male,2.720716313183101,Adenocarcinoma,Stage IV,Radiation Therapy,1,0,0,1
+50,Female,4.044367947991136,Sarcoma,Stage II,Surgery,1,1,1,0
+43,Male,3.778288690358757,Sarcoma,Stage II,Chemotherapy,1,0,1,1
+38,Male,9.523323889648507,Adenocarcinoma,Stage I,Radiation Therapy,1,1,1,0
+75,Female,9.706205600094476,Sarcoma,Stage II,Chemotherapy,1,1,1,1
+30,Male,2.6471389981125446,Sarcoma,Stage I,Chemotherapy,1,0,0,1
+80,Female,1.1983164426775377,Adenocarcinoma,Stage II,Chemotherapy,0,1,0,0
+74,Male,7.480072356968018,Lymphoma,Stage II,Radiation Therapy,1,0,1,1
+42,Female,4.761909404834359,Adenocarcinoma,Stage II,Surgery,0,0,1,1
+33,Male,1.7995622057880793,Sarcoma,Stage I,Radiation Therapy,0,0,1,0
+30,Male,7.153786950193383,Lymphoma,Stage IV,Chemotherapy,0,1,0,1
+78,Female,5.905949754346297,Squamous,Stage II,Chemotherapy,1,0,0,1
+69,Male,9.824651398009955,Lymphoma,Stage I,Surgery,0,0,0,1
+61,Female,3.0466854627524103,Sarcoma,Stage I,Radiation Therapy,1,1,0,0
