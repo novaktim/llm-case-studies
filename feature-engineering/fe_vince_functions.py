@@ -41,7 +41,7 @@ def impute_mixed_data(df, n_imputations=1, strategy = "stacking"):
     categorical_cols = df.select_dtypes(include=["object", "category"]).columns
     ignored_cols = df.columns.difference(numeric_cols.union(categorical_cols))
 
-    # Define imputer
+    # Define imputer. Extreme gradient boosted tree ensembles as a default
     xgb_estimator = XGBRegressor(
         n_estimators=100,
         max_depth=3,
@@ -50,16 +50,16 @@ def impute_mixed_data(df, n_imputations=1, strategy = "stacking"):
         early_stopping_rounds=None,
         verbosity=0
     )
-    #numeric_imputer = IterativeImputer(estimator=xgb_estimator, max_iter=100, random_state=42,
-    #                                   sample_posterior=True) #need sample posterior for MI
-    
-    #rather use Bayesian Ridge since we need posterior estimation with std estimate
-    numeric_imputer = IterativeImputer(
-    estimator=BayesianRidge(),
-    max_iter=100,
-    random_state=42,
-    sample_posterior=True  # Use posterior sampling
-    )
+    if n_imputations == 1:
+        numeric_imputer = IterativeImputer(estimator=xgb_estimator, max_iter=100, random_state=42)
+    else:   
+        #rather use Bayesian Ridge since we need posterior estimation with std estimate when MI is used, not SI
+        numeric_imputer = IterativeImputer(
+        estimator=BayesianRidge(),
+        max_iter=100,
+        random_state=42,
+        sample_posterior=True  # Use posterior sampling
+        )
     categorical_imputer = SimpleImputer(strategy="constant") #fill_value=None, add_indicator=FALSE
     #set missing values as their own category seems more sensible
     
@@ -312,7 +312,45 @@ def call_llm_mv(content, role, tries=10):
                 tries - 1
             )
 
-def call_llm_mv_2(content, role, tries=10):
+import ast
+import re
+
+def read_mv_general(output):
+    """
+    Tries to parse a string as a list of two integers. If parsing fails,
+    it extracts the first two integers from the string.
+
+    Parameters:
+        output (str): The input string containing two integers.
+
+    Returns:
+        list: A list containing exactly two integers.
+
+    Raises:
+        ValueError: If less than two integers are found.
+    """
+    output = output.strip()
+    output = output.replace(",", ".")  # If commas are meant as decimal points
+
+    # Try parsing as a list of integers (e.g., "[1, 2]")
+    try:
+        parsed = ast.literal_eval(output)
+        if isinstance(parsed, list) and len(parsed) == 2 and all(isinstance(x, int) for x in parsed):
+            return parsed
+    except (ValueError, SyntaxError):
+        pass  # Fall back to extracting from string
+
+    # Fallback: Extract integers from the string
+    ints = re.findall(r"-?\d+", output)
+    ints = [int(x) for x in ints]
+
+    if len(ints) < 2:
+        raise ValueError(f"Failed to find at least two integers in: {output}")
+
+    return ints[:2]  # Return the first two integers
+
+
+def call_llm_mv_2(content, role, tries=25):
     """
     Calls the LLM with retry logic and ensures the response is a valid list of integers.
 
@@ -332,19 +370,19 @@ def call_llm_mv_2(content, role, tries=10):
 
     try:
         # Attempt to parse the response
-        return read_mv(outp)
+        return read_mv_general(outp)
     except Exception as e:
         # Handle failed attempts
         if tries == 0:
             raise Exception(f"Failed to get a valid response from the LLM after multiple attempts. Last response: '{outp}'. Error: {e}")
         else:
             # Update content with feedback and retry
-            #print(f"Retrying... {tries} attempts left. Last response was invalid: {outp}")
+            print(f"Retrying... {tries} attempts left. Last response was invalid: {outp}")
             updated_content = (
                 content + 
-                f" The last string ('{outp}') was not a valid array of integers. Please answer only with a space-separated list of integers."
+                f" The last string ('{outp}') was not a valid array of integers. Please answer only with a comma-separated list of integers. Example output: [2, 5]."
             )
-            return call_llm_mv(updated_content, role, tries - 1)
+            return call_llm_mv_2(updated_content, role, tries - 1)
 
 #### check LLM output for list of lists of integer pairs
 
@@ -507,7 +545,7 @@ def add_log_columns(df, column_indices):
         new_column_name = f"{column_name}_log"
         df[new_column_name] = np.log(df[column_name])
 
-        print(f"Loc column has been added for: {column_name}")
+        print(f"Log-column has been added for: {column_name}")
     return df
 
 
@@ -556,12 +594,13 @@ def add_interaction_column_pair(df, column_pair):
     
     for index in column_pair:
         if index < 0 or index >= len(df.columns):
+            print(column_pair)
             raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
     
     # Generate the name for the new column
     col1_name = df.columns[column_pair[0]]
     col2_name = df.columns[column_pair[1]]
-    new_column_name = f"{col1_name[:5]}_{col2_name[:5]}_intA"
+    new_column_name = f"{col1_name[:5]}*{col2_name[:5]}"
 
     # Add the interaction column
     df[new_column_name] = df.iloc[:, column_pair[0]] * df.iloc[:, column_pair[1]]
@@ -583,6 +622,7 @@ def add_boxcox_columns(df, column_indices):
     """
     # Create a copy of the DataFrame to avoid modifying the original
     df = df.copy()
+    
 
     for index in column_indices:
         if index < 0 or index >= len(df.columns):

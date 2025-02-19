@@ -4,7 +4,7 @@ import sys
 import pandas
 sys.path.append('/feature-engineering')
 from sklearn.preprocessing import StandardScaler
-from  fe_vince_main import *
+from  fe_vince import *
 import feature_generation #tim
 #1 call imputation
 #2 call vince FE approach
@@ -58,12 +58,16 @@ def fe_main(df, eda_summary, ext_info, response, apply_standardization=True):
                     "No feature generation was made, because the response variable was not found.")
 
     print("Performing imputation and hard coded standard feature engineering steps.\n")
-    fe_vince_results = vince_feature_engineering(df, eda_summary, ext_info, response) #including imputation
-    df_new = fe_vince_results[0]
-    trafos_summary = fe_vince_results[1]
+    fe_vince_results = vince_feature_engineering(df, eda_summary, ext_info, response, print_details=True) #including imputation
+    df_new = fe_vince_results["transformed data"]
+    trafos_summary = fe_vince_results["explanation"]
     
     print("Performing flexible feature engineering steps.\n")
-    df_new, generation_summary = feature_generation.feature_generation(df_new, eda_summary, ext_info, response)
+    #df_new, generation_summary = feature_generation.feature_generation(df_new, eda_summary, ext_info, response)
+    df_tim, generation_summary = feature_generation.feature_generation(df, eda_summary, ext_info, response) #rather do the FE seperately
+    
+    df_new = pd.concat([df_new, df_tim], axis=1)
+    df_new = df_new.loc[:, ~df_new.T.duplicated()] #remove duplicates
     
     if apply_standardization:
         try:
@@ -77,14 +81,14 @@ def fe_main(df, eda_summary, ext_info, response, apply_standardization=True):
         except:
             print("There was an error in applying Standardization.")
 
-    return list(df_new, trafos_summary, generation_summary)
+        results = {
+            "df_new": df_new,
+            "fe_summary": trafos_summary + generation_summary
+        }
+    return results
 
 
 
-#TODO
-#implementation summary return for model selection
-#description, what feature engineering what was done
-#description what we did with missing values
-#test with real EDA results - tell them to push
+
 
     
