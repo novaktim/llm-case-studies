@@ -14,35 +14,33 @@ def vince_feature_engineering(df,
     colnames_string = ", ".join(df.columns) 
     col_num = len(df.columns)
     
-    
-    
-    
+    df_new = df.copy()
     #### imputation: First add missing columns for numerical variables, then impute
-    query_missing = ("Have a look at the following columns: " + colnames_string + 
-                     " . Also consider the results from the explanatory data analysis: " + eda_summary +
-                     " , these additional information: " + ext_info +  
-                     " and try to have an educated guess, for which numerical variables the indicator whether the value is missing or not could have predictive power on the response variable: " + response + 
-                     ". Ignore categorical variables. Return a list of integers and do not output anything else!  If you don't find a useful column, return NULL.")
-    try:
-        answer_missing = call_llm_mv(query_missing, "data science expert")
-    except Exception:
-        print("Could not ask LLM for missingness columns.")
-        answer_missing = ""
-    if print_details:
-        print(answer_missing)
+    # query_missing = ("Have a look at the following columns: " + colnames_string + 
+    #                  " . Also consider the results from the explanatory data analysis: " + eda_summary +
+    #                  " , these additional information: " + ext_info +  
+    #                  " and try to have an educated guess, for which numerical variables the indicator whether the value is missing or not could have predictive power on the response variable: " + response + 
+    #                  ". Ignore categorical variables. Return a list of integers and do not output anything else!  If you don't find a useful column, return NULL.")
+    # try:
+    #     answer_missing = call_llm_mv(query_missing, "data science expert")
+    # except Exception:
+    #     print("Could not ask LLM for missingness columns.")
+    #     answer_missing = ""
+    # if print_details:
+    #     print(answer_missing)
         
-    try:
-        df_new = add_missingness_columns(df, answer_missing)
-        print("Successfully added missingness columns.")
-    except Exception as e:
-        df_new = df
-        print(f"Failed to add missing columns: {e}")    
+    # try:
+    #     df_new = add_missingness_columns(df, answer_missing)
+    #     print("Successfully added missingness columns.")
+    # except Exception as e:
+    #     df_new = df
+    #     print(f"Failed to add missing columns: {e}")    
         
     
-    #the number of imputations depend on the size of the dataset and the missingness rate
-    missing_frequency = df.isnull().sum().sum() / df.size
-    n_imputations, explanation = determine_imputations(missing_frequency, df.shape[0])
-    df_new = impute_mixed_data(df_new, n_imputations = n_imputations) #this should never fail
+    # #the number of imputations depend on the size of the dataset and the missingness rate
+    # missing_frequency = df.isnull().sum().sum() / df.size
+    # n_imputations, explanation = determine_imputations(missing_frequency, df.shape[0])
+    # df_new = impute_mixed_data(df_new, n_imputations = n_imputations) #this should never fail
         
     
     #### handle temporal data if the df contains temporal data
@@ -77,32 +75,44 @@ def vince_feature_engineering(df,
    # query_temp = "Have a look at the following columns: " + colnames_string + " . Also consider the results from the explanatory data analysis: " + eda_summary + " , these additional information: " + ext_info +  " and tell me, which columns contain temporal data, e.g. the date, so return a list of integers and do not output anything else!  If you don't find a column with temporal data, return NULL."
     
     #answer_Ints = call_llm_mv(query_Ints, "data science expert")
-    answer_Squ = call_llm_mv(query_Squ, "data science expert")
-    answer_Cub = call_llm_mv(query_Cub, "data science expert")
-    answer_Log = call_llm_mv(query_Log, "data science expert")
-    
-    if print_details:
-        print(answer_Squ)
-        print(answer_Cub)
-        print(answer_Log)
+    # try:
+    #     answer_Squ = call_llm_mv(query_Squ, "data science expert")
+    # except Exception:
+    #     answer_Squ = list()
+    # try:
+    #     answer_Cub = call_llm_mv(query_Cub, "data science expert")
+    # except Exception:
+    #     answer_Cub = list()
+    # try:
+    #     answer_Log = call_llm_mv(query_Log, "data science expert")
+    # except Exception:
+    #     answer_Log = list()
+        
+    # if print_details:
+    #     print(answer_Squ)
+    #     print(answer_Cub)
+    #     print(answer_Log)
     #answer_temp = call_llm_mv(query_temp, "data science expert")
     #answer_boxCox = call_llm_mv(query_boxCox, "data science expert")
      
     
     #Try to perform transformation without crashing the main
     try:
+        answer_Squ = call_llm_mv(query_Squ, "data science expert")
         df_new = add_power_columns(df_new, answer_Squ, 2)
         print("Successfully applied squared power columns.")
     except Exception as e:
         print(f"Failed to add squared power columns: {e}")
 
     try:
+        answer_Cub = call_llm_mv(query_Cub, "data science expert")
         df_new = add_power_columns(df_new, answer_Cub, 3)
         print("Successfully applied cubed power columns.")
     except Exception as e:
         print(f"Failed to add cubed power columns: {e}")
 
     try:
+        answer_Log = call_llm_mv(query_Log, "data science expert")
         df_new = add_log_columns(df_new, answer_Log)
         print("Successfully applied log columns.")
     except Exception as e:
@@ -201,16 +211,57 @@ def vince_feature_engineering(df,
                     "in _Squ when the orginal column was added squared, _log for a logtransformation etc. Compare the orginal column names: " + colnames_string + 
                     " with the new column names: " + new_colnames + "and describe the performed transformation very briefly!")
     answer_trafos = qwen(query_trafos)
-    print(answer_trafos + "\n")
     
+    if print_details:
+        print(answer_trafos + "\n")
     
     #return transformed dataframe and a description of performed transformations
     results = {
     "transformed data": df_new,
-    "explanation": answer_trafos + explanation
+    "explanation": answer_trafos
     }
     return results
 
+
+def imputation_by_LLM(df, 
+                            eda_summary = "", #from EDA
+                            ext_info = "", #from external knowledge group
+                            response = "mpg",
+                            print_details = False):
+    df_new = df.copy()
+    
+    colnames_string = ", ".join(df_new.columns) 
+    
+        #### imputation: First add missing columns for numerical variables, then impute
+    query_missing = ("Have a look at the following columns: " + colnames_string + 
+                     " . Also consider the results from the explanatory data analysis: " + eda_summary +
+                     " , these additional information: " + ext_info +  
+                     " and try to have an educated guess, for which numerical variables the indicator whether the value is missing or not could have predictive power on the response variable: " + response + 
+                     ". Ignore categorical variables. Return a list of integers and do not output anything else!  If you don't find a useful column, return NULL.")
+    try:
+        answer_missing = call_llm_mv(query_missing, "data science expert")
+    except Exception:
+        print("Could not ask LLM for missingness columns.")
+        answer_missing = ""
+    if print_details:
+        print(answer_missing)
+        
+    try:
+        df_new = add_missingness_columns(df_new, answer_missing)
+        print("Successfully added missingness columns.")
+    except Exception as e:
+        print(f"Failed to add missing columns: {e}")    
+        
+    
+    #the number of imputations depend on the size of the dataset and the missingness rate
+    missing_frequency = df.isnull().sum().sum() / df.size
+    n_imputations, explanation = determine_imputations(missing_frequency, df.shape[0])
+    
+    try:
+        df_new = impute_mixed_data(df_new, n_imputations = n_imputations) #this should never fail
+    except:
+        df_new = df
+    return df_new
 
 #### short test
 # file_path = 'data/mtcars.csv'  

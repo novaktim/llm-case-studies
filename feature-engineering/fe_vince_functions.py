@@ -685,7 +685,7 @@ def determine_imputations(missing_frequency, n):
         int: Recommended number of imputations (1, 3, 5, or 10).
         string: Explanation on what and why was performed.
     """
-    if missing_frequency < 0.05:
+    if missing_frequency < 0.10:
         num_imputations = 1
         reason = "Low missingness, single imputation is sufficient."
     elif missing_frequency < 0.2:

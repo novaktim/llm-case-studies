@@ -16,7 +16,7 @@ import feature_generation #tim
 # See enrich_temporal_data() function in fe_vince_functions.py for more details
 
 #fe_main performs feature engineering
-def fe_main(df, eda_summary, ext_info, response, apply_standardization=True): 
+def fe_main(df, eda_summary, ext_info, response, apply_standardization=True, print_details = False): 
     """
     Main function to apply feature engineering to a dataset.
 
@@ -57,16 +57,27 @@ def fe_main(df, eda_summary, ext_info, response, apply_standardization=True):
                     "No feature engineering was made, because the response variable was not found.", 
                     "No feature generation was made, because the response variable was not found.")
 
+    # If the description is too long, shorten it
+    if len(eda_summary) > 2000:
+        eda_summary = eda_summary[:2000] + "...\n"
+        print("Unfortunately, the EDA summary is too large and had to be shortened...")
+    if len(ext_info) > 2000:
+        ext_info = ext_info[:2000] + "...\n"
+        print("Unfortunately, the external information string is too large and had to be shortened...")
+        
+    print("Performing imputation")
+    df_imp = imputation_by_LLM(df, eda_summary = eda_summary, ext_info = ext_info, response=response)
+    
     print("Performing imputation and hard coded standard feature engineering steps.\n")
-    fe_vince_results = vince_feature_engineering(df, eda_summary, ext_info, response, print_details=True) #including imputation
-    df_new = fe_vince_results["transformed data"]
+    fe_vince_results = vince_feature_engineering(df_imp, eda_summary, ext_info, response, print_details=print_details) #including imputation
+    df_vince = fe_vince_results["transformed data"]
     trafos_summary = fe_vince_results["explanation"]
     
     print("Performing flexible feature engineering steps.\n")
     #df_new, generation_summary = feature_generation.feature_generation(df_new, eda_summary, ext_info, response)
-    df_tim, generation_summary = feature_generation.feature_generation(df, eda_summary, ext_info, response) #rather do the FE seperately
+    df_tim, generation_summary = feature_generation.feature_generation(df_imp, eda_summary, ext_info, response) #rather do the FE seperately
     
-    df_new = pd.concat([df_new, df_tim], axis=1)
+    df_new = pd.concat([df_vince, df_tim], axis=1)
     df_new = df_new.loc[:, ~df_new.T.duplicated()] #remove duplicates
     
     if apply_standardization:

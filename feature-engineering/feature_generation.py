@@ -97,11 +97,7 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
     # Copy dataset in case an error happens
     transformed_dataset = original_dataset.copy()
 
-    # If the description is too long, shorten it
-    if len(eda_summary) > 2000:
-        eda_summary = eda_summary[:2000] + "...\n"
-    if len(ext_info) > 2000:
-        ext_info = ext_info[:2000] + "...\n"
+
 
     # Build the query for feature generation including additional information about the dataset    
     query = "Apply feature engineering to the pandas dataset \"dataset\". "
