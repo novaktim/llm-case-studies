@@ -511,7 +511,7 @@ def llm_output():
 
         
         cross_validation_results = CrossValidationHelper.perform_cross_validation(cross_validation, model, target_variable_type)
-        
+        print(cross_validation_results)
         
              
     else:
