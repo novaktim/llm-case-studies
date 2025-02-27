@@ -61,7 +61,7 @@ def ask_llm_python(dataset, query, role, tries=3):
     exec_code = extract_code_or_keep(output)
     try:
         exec(exec_code)
-        print("Sucessfully executed the python code: \n" + exec_code)
+        # print("Sucessfully executed the python code: \n" + exec_code)
         return dataset, exec_code
     except:
         if tries == 0:
@@ -116,13 +116,13 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
             "to derive the new interesting variables for machine learning: " 
             + header.to_string()
     )
-    print("Asking gwen:", query + "\n")
+    # print("Asking gwen:", query + "\n")
     try:
         transformed_dataset, exec_code = ask_llm_python(transformed_dataset, query, role="You are a python program", tries=3)
 
         # Ask gwen what changes to the dataset were made.
         query = "Write a summary of the features that were generated or changed by this code: " + exec_code
-        print("Asking gwen:", query + "\n")
+        # print("Asking gwen:", query + "\n")
         generation_summary = qwen(query)
 
     except:
@@ -130,8 +130,8 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
         generation_summary = "No changes to the dataset where made."
     
     # Output what transformations were made by the LLM
-    print(generation_summary)
-    print("\nFinished with feature generation.\n")
+    # print(generation_summary)
+    # print("\nFinished with feature generation.\n")
     return transformed_dataset, generation_summary
     
 
