@@ -492,7 +492,7 @@ def llm_output():
         
         model=best_model_name
         feature_type = get_feature_data_types(path_to_dataset)
-        target_variable_type = ProblemType.CLASSIFICATION #TODO: Still mising target_variable_type from EDA group
+        target_variable_type = ProblemType.CLASSIFICATION.value #TODO: Still mising target_variable_type from EDA group
         
         # we require a target variable type to be passed to the function
         # following types are available:
