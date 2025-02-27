@@ -14,6 +14,12 @@ from  FE_main import *
 import feature_generation #tim
 import json
 import PyPDF2
+
+from cross_validation.helper.datatype_extraction import get_feature_data_types, get_target_data_types
+from cross_validation.classes.ProblemType import ProblemType
+from cross_validation.helper.prompt import generate_qwen_prompt_with_values
+from cross_validation.helper.qwen import get_cross_validation_technique
+from cross_validation.classes.CV import CrossValidationHelper
 # Run all the other python files as a process
 
 #Data part
@@ -403,6 +409,7 @@ def llm_output():
     result = llm_evaluation(file_path, selected_dataset)
     print("Hello! This is your QWEN LLM Agent !!!")
     #print(result)
+    path_to_dataset = f"/main/ahmed/kaggle_datasets/{selected_dataset}"
     dataset_path = f"/main/ahmed/kaggle_datasets/{selected_dataset}"
     csv_files = [f for f in os.listdir(dataset_path) if f.endswith('.csv')]
     train_file = next((f for f in csv_files if 'train' in f.lower()), None)
@@ -480,7 +487,32 @@ def llm_output():
             save_script_to_json(best_model_script, "best_model_script.json")
         else:
             print("❌ Failed to generate the best model script.")
+            
+        ### Cross validation - Evaluation###
+        
+        model=best_model_name
+        feature_type = get_feature_data_types(path_to_dataset)
+        target_variable_type = ProblemType.CLASSIFICATION #TODO: Still mising target_variable_type from EDA group
+        
+        # we require a target variable type to be passed to the function
+        # following types are available:
+        # class ProblemType(Enum):
+        #     REGRESSION = "regression"
+        #     CLASSIFICATION = "classification"
 
+        model = "LinearRegression()" #TODO: still missing a model here, just getting a script from the previous step and have no idea how to use it
+        
+        qwen_response = get_cross_validation_technique(
+            generate_qwen_prompt_with_values(
+                model,
+                target_variable_type,
+                feature_type))
+
+        cross_validation = json.loads(qwen_response)
+        
+        cross_validation_results = CrossValidationHelper.perform_cross_validation(cross_validation, model, target_variable_type)
+        
+        
              
     else:
         print("Train and test CSV files not found in the dataset directory.")
