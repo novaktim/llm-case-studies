@@ -490,7 +490,7 @@ def llm_output():
             
         ### Cross validation - Evaluation###
         
-        model=best_model_name
+        model_name=best_model_name
         feature_type = get_feature_data_types(path_to_dataset)
         target_variable_type = ProblemType.CLASSIFICATION.value #TODO: Still mising target_variable_type from EDA group
         
@@ -499,16 +499,16 @@ def llm_output():
         # class ProblemType(Enum):
         #     REGRESSION = "regression"
         #     CLASSIFICATION = "classification"
-
-        model = "LinearRegression()" #TODO: still missing a model here, just getting a script from the previous step and have no idea how to use it
         
         qwen_response = get_cross_validation_technique(
             generate_qwen_prompt_with_values(
-                model,
+                model_name,
                 target_variable_type,
                 feature_type))
 
         cross_validation = json.loads(qwen_response)
+        model = "LinearRegression()" #TODO: still missing a model here, just getting a script from the previous step and have no idea how to use it
+
         
         cross_validation_results = CrossValidationHelper.perform_cross_validation(cross_validation, model, target_variable_type)
         
