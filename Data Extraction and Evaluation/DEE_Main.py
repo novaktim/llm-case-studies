@@ -1,7 +1,8 @@
 from ninept import qwen
+import pandas as pd
 import subprocess
+import os
 
-# Run all the other python files as a process
 def run_file(filename):
     try:
         print(f"\nRunning {filename}...")
@@ -20,7 +21,6 @@ def llm_evaluation(file_path, dataset_name):
 
     return "Dataset description not found."
 
-# Output from QWEN LLM
 def llm_output():
     datasets = [
     "digit-recognizer",
@@ -37,20 +37,22 @@ def llm_output():
 
     selected_dataset = input("\nEnter the dataset name: ").strip()
 
+    new_file_path = os.path.join("kaggle_datasets", selected_dataset, "train.csv")
+    dataframe = pd.read_csv(new_file_path)
+    target_variable = dataframe.iloc[:, -1]
+    print("\nTarget Variable: " + target_variable.name + "\n")
+
     file_path = "kaggle_competitions_details.txt"
     result = llm_evaluation(file_path, selected_dataset)
 
     print("Hello! This is your QWEN LLM Agent !!!")
-    print(result + ". Give me a python code for implementing the evaluation metric?")
-    response = qwen(result + ". Give me a python code for implementing the evaluation metric?")
+    print(result + ". Give me a function named evaluation for implementing the evaluation metric?")
+    response = qwen(result + ". Give me a function named evaluation for implementing the evaluation metric?")
     print(response)
     with open("llm_evaluation_code.py", "w", encoding="utf-8") as file:
         file.write(response)
 
-
-
-
 if __name__ == "__main__":
-    run_file("DataExtraction.py")
-    run_file("GettingMetadata.py")
+    # run_file("DataExtraction.py")
+    # run_file("GettingMetadata.py")
     llm_output()
