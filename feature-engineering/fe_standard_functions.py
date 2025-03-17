@@ -12,7 +12,10 @@ from sklearn.metrics import make_scorer, mean_squared_error, accuracy_score
 from sklearn.linear_model import BayesianRidge
 from scipy.stats import boxcox
 import ast
-
+import warnings
+from sklearn.exceptions import ConvergenceWarning
+import random
+import math
 ######################################## Lots of Functions ####################################
 
 ### impute a dataframe n_imputations many times and return dataframe
@@ -50,35 +53,44 @@ def impute_mixed_data(df, n_imputations=1, strategy = "stacking"):
         early_stopping_rounds=None,
         verbosity=0
     )
+
     if n_imputations == 1:
         numeric_imputer = IterativeImputer(estimator=xgb_estimator, max_iter=100, random_state=42)
     else:   
-        #rather use Bayesian Ridge since we need posterior estimation with std estimate when MI is used, not SI
+        # Use Bayesian Ridge for multiple imputations (MI)
         numeric_imputer = IterativeImputer(
-        estimator=BayesianRidge(),
-        max_iter=100,
-        random_state=42,
-        sample_posterior=True  # Use posterior sampling
+            estimator=BayesianRidge(),
+            max_iter=100,
+            random_state=42,
+            sample_posterior=True  # Use posterior sampling
         )
-    categorical_imputer = SimpleImputer(strategy="constant") #fill_value=None, add_indicator=FALSE
-    #set missing values as their own category seems more sensible
-    
-    
+
+    categorical_imputer = SimpleImputer(strategy="constant")  # Set missing values as a separate category
+
     # Perform imputations
     imputations = []
     for _ in range(n_imputations):
         df_imputed = df.copy()
         
-        # Impute numeric columns
+        # Try imputation for numeric columns
         if not numeric_cols.empty:
-            df_imputed[numeric_cols] = numeric_imputer.fit_transform(df[numeric_cols])
-        
+            try:
+                with warnings.catch_warnings():
+                    warnings.simplefilter("error", ConvergenceWarning)  # Treat warning as error
+                    df_imputed[numeric_cols] = numeric_imputer.fit_transform(df[numeric_cols])
+                print("Successfully applied IterativeImputer.")
+
+            except ConvergenceWarning:
+                print("ConvergenceWarning: Falling back to mean imputation.")
+                mean_imputer = SimpleImputer(strategy="mean")
+                df_imputed[numeric_cols] = mean_imputer.fit_transform(df[numeric_cols])
+
         # Impute categorical columns
         if not categorical_cols.empty:
             df_imputed[categorical_cols] = categorical_imputer.fit_transform(df[categorical_cols])
-        
-        imputations.append(df_imputed)
 
+        imputations.append(df_imputed)
+    
     if n_imputations == 1:
         return imputations[0]
     else:
@@ -437,7 +449,7 @@ def call_llm_pairlist(content, role, tries=10):
             )
 
 #function to add dummy missingness to the dataframe for all columns in indices
-def add_missingness_columns(df, indices):
+def add_missingness_columns(df, indices, response = ""):
     """
     Adds missingness indicators for columns with missing values.
     Ignores categorical columns.
@@ -457,7 +469,9 @@ def add_missingness_columns(df, indices):
             raise ValueError(f"Column index {col_index} is out of bounds for the DataFrame.")
         
         col_name = df.columns[col_index]
-
+        if col_name == response:
+            print(f"Skipping interaction term for '{col_name}' since thats the response variable.")
+            
         # Skip categorical columns
         if df[col_name].dtype == "object" or pd.api.types.is_categorical_dtype(df[col_name]):
             print(f"Skipping categorical column: '{col_name}'")
@@ -476,7 +490,7 @@ def add_missingness_columns(df, indices):
 
 
 
-def add_power_columns(df, column_indices, power):
+def add_power_columns(df, column_indices, power, response = ""):
     """
     Adds power versions of the specified columns to the DataFrame.
 
@@ -491,12 +505,22 @@ def add_power_columns(df, column_indices, power):
     # Create a copy of the DataFrame to avoid modifying the original
     df = df.copy()
 
+    #validate that we do not add too many columns
+    col_num = len(df.columns)
+    threshold = math.ceil(math.sqrt(col_num))
+    if len(column_indices) > threshold:
+        print(f"Reducing column indices from {len(column_indices)} to {threshold}.")
+        column_indices = random.sample(column_indices, threshold)  # Select a random subset
+        
     for index in column_indices:
         if index < 0 or index >= len(df.columns):
             raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
         
         
         column_name = df.columns[index]
+        if column_name == response:
+            print(f"Skipping interaction term for '{column_name}' since thats the response variable.")
+            
         # Handle power-specific column naming
         if power == 2:
             new_column_name = f"{column_name}_squared"
@@ -516,7 +540,7 @@ def add_power_columns(df, column_indices, power):
     return df
 
 
-def add_log_columns(df, column_indices):
+def add_log_columns(df, column_indices, response = ""):
     """
     Adds log-transformed versions of the specified columns to the DataFrame.
 
@@ -534,8 +558,20 @@ def add_log_columns(df, column_indices):
         if index < 0 or index >= len(df.columns):
             raise ValueError(f"Column index {index} is out of bounds for the DataFrame.")
         
+        
+
+        #validate that we do not add too many columns
+        col_num = len(df.columns)
+        threshold = math.ceil(math.sqrt(col_num))
+        if len(column_indices) > threshold:
+            print(f"Reducing column indices from {len(column_indices)} to {threshold}.")
+            column_indices = random.sample(column_indices, threshold)  # Select a random subset
+        
+    
         column_name = df.columns[index]
         
+        if column_name == response:
+            print(f"Skipping interaction term for '{column_name}' since thats the response variable.")
         # Check for non-positive values
         if (df[column_name] <= 0).any():
             print(f"Column '{column_name}' contains non-positive values and will be skipped.")
@@ -578,7 +614,7 @@ def add_interaction_columns(df, column_indices):
 
     return df
 
-def add_interaction_column_pair(df, column_pair):
+def add_interaction_column_pair(df, column_pair, response = ""):
     """
     Adds an interaction term for a pair of specified columns to the DataFrame.
 
@@ -600,6 +636,13 @@ def add_interaction_column_pair(df, column_pair):
     # Generate the name for the new column
     col1_name = df.columns[column_pair[0]]
     col2_name = df.columns[column_pair[1]]
+    
+    # Check if either column is the response variable
+    if col1_name == response or col2_name == response:
+        print(f"Skipping interaction term for '{col1_name}' and '{col2_name}' as one of them is the response variable.")
+        return df, column_pair  # Return unchanged dataframe
+    
+    
     new_column_name = f"{col1_name[:5]}*{col2_name[:5]}"
 
     # Add the interaction column
@@ -711,3 +754,43 @@ def determine_imputations(missing_frequency, n):
     print(f"Reason: {reason}")
 
     return num_imputations, reason
+
+import pandas as pd
+
+def encode_categorical_variables(df, moderate_threshold=20, high_threshold=100):
+    """
+    Encodes categorical variables in a DataFrame intelligently:
+    - If levels <= moderate_threshold: Standard one-hot encoding.
+    - If moderate_threshold < levels <= high_threshold: Group rare levels into 'Other' and then one-hot encode.
+    - If levels > high_threshold: Use frequency encoding instead.
+
+    Parameters:
+        df (pd.DataFrame): The input DataFrame.
+        moderate_threshold (int): Max levels for one-hot encoding.
+        high_threshold (int): Max levels before using frequency encoding.
+
+    Returns:
+        pd.DataFrame: Transformed DataFrame with categorical encoding.
+    """
+    df = df.copy()
+    categorical_cols = df.select_dtypes(include=["object", "category"]).columns
+
+    for col in categorical_cols:
+        num_levels = df[col].nunique()
+
+        if num_levels <= moderate_threshold:
+            print(f"Encoding '{col}' with {num_levels} levels using One-Hot Encoding.")
+            df = pd.get_dummies(df, columns=[col], drop_first=True)
+
+        elif num_levels <= high_threshold:
+            print(f"Encoding '{col}' with {num_levels} levels by grouping rare categories into 'Other' before One-Hot Encoding.")
+            top_categories = df[col].value_counts().index[:moderate_threshold]
+            df[col] = df[col].apply(lambda x: x if x in top_categories else "Other")
+            df = pd.get_dummies(df, columns=[col], drop_first=True)
+
+        else:
+            print(f"Encoding '{col}' with {num_levels} levels using Frequency Encoding.")
+            freq_map = df[col].value_counts(normalize=True)
+            df[col] = df[col].map(freq_map)
+
+    return df

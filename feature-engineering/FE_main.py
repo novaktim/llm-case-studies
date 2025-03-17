@@ -4,19 +4,17 @@ import sys
 import pandas
 sys.path.append('/feature-engineering')
 from sklearn.preprocessing import StandardScaler
-from  fe_vince import *
+from  fe_standard import *
 import feature_generation #tim
-#1 call imputation
-#2 call vince FE approach
-#3 call Tim FE approach
-#4 aggregate and return
+
 
 ##### info for the preprocessing group:
 # if the data contains temporal data, e.g. the date, it should be in datetime64_any_dtype format.
-# See enrich_temporal_data() function in fe_vince_functions.py for more details
+# See enrich_temporal_data() function in fe_standard_functions.py for more details
 
 #fe_main performs feature engineering
-def fe_main(df, eda_summary, ext_info, response, apply_standardization=True, print_details = False): 
+def fe_main(df, eda_summary, ext_info, response, apply_standardization = True, print_details = False,
+            apply_dummy_encoding = True): 
     """
     Main function to apply feature engineering to a dataset.
 
@@ -67,18 +65,23 @@ def fe_main(df, eda_summary, ext_info, response, apply_standardization=True, pri
         
     print("Performing imputation")
     df_imp = imputation_by_LLM(df, eda_summary = eda_summary, ext_info = ext_info, response=response)
+    eda_summary = eda_summary + ". Missing values have been imputed."
     
-    print("Performing imputation and hard coded standard feature engineering steps.\n")
-    fe_vince_results = vince_feature_engineering(df_imp, eda_summary, ext_info, response, print_details=print_details) #including imputation
-    df_vince = fe_vince_results["transformed data"]
-    trafos_summary = fe_vince_results["explanation"]
+    print("Performing hard coded standard feature engineering steps.\n")
+    fe_standard_results = standard_feature_engineering(df_imp, eda_summary, ext_info, response, print_details=print_details) #including imputation
+    df_standard = fe_standard_results["transformed data"]
+    trafos_summary = fe_standard_results["explanation"]
     
     print("Performing flexible feature engineering steps.\n")
     #df_new, generation_summary = feature_generation.feature_generation(df_new, eda_summary, ext_info, response)
     df_tim, generation_summary = feature_generation.feature_generation(df_imp, eda_summary, ext_info, response) #rather do the FE seperately
     
-    df_new = pd.concat([df_vince, df_tim], axis=1)
-    df_new = df_new.loc[:, ~df_new.T.duplicated()] #remove duplicates
+    if len(df_tim) != len(df_standard):
+        print(f"⚠️ Warning: The two FE appraches have different numbers of rows! ({len(df_tim)} vs {len(df_standard)})")
+        
+    df_new = pd.concat([df_standard, df_tim], axis=1)
+    df_new = df_new.loc[:, ~df_new.T.duplicated()] #remove duplicate columns
+    df_new.loc[:, df_new.nunique() > 1] #removes constant columns
     
     if apply_standardization:
         try:
@@ -90,8 +93,16 @@ def fe_main(df, eda_summary, ext_info, response, apply_standardization=True, pri
             df_standardized[response] = df_new[response].values
             df_new = df_standardized
         except:
-            print("There was an error in applying Standardization.")
+            if print_details:
+                print("There was an error in applying Standardization.")
 
+        if apply_dummy_encoding:
+            print("Performung Dummy encoding for categorical columns")
+            try:
+                df = encode_categorical_variables(df)
+            except:
+                if print_details:
+                    print("Error in performing dummy encoding")
         results = {
             "df_new": df_new,
             "fe_summary": trafos_summary + generation_summary

@@ -1,11 +1,11 @@
 import sys
 sys.path.append('/feature-engineering')
-from  fe_vince_functions import *
+from  fe_standard_functions import *
 from ninept import qwen
-
+import math
 ################################################### Main function ##########################################
 
-def vince_feature_engineering(df, 
+def standard_feature_engineering(df, 
                             eda_summary = "", #from EDA
                             ext_info = "", #from external knowledge group
                             response = "mpg",
@@ -13,36 +13,9 @@ def vince_feature_engineering(df,
     
     colnames_string = ", ".join(df.columns) 
     col_num = len(df.columns)
-    
     df_new = df.copy()
-    #### imputation: First add missing columns for numerical variables, then impute
-    # query_missing = ("Have a look at the following columns: " + colnames_string + 
-    #                  " . Also consider the results from the explanatory data analysis: " + eda_summary +
-    #                  " , these additional information: " + ext_info +  
-    #                  " and try to have an educated guess, for which numerical variables the indicator whether the value is missing or not could have predictive power on the response variable: " + response + 
-    #                  ". Ignore categorical variables. Return a list of integers and do not output anything else!  If you don't find a useful column, return NULL.")
-    # try:
-    #     answer_missing = call_llm_mv(query_missing, "data science expert")
-    # except Exception:
-    #     print("Could not ask LLM for missingness columns.")
-    #     answer_missing = ""
-    # if print_details:
-    #     print(answer_missing)
+
         
-    # try:
-    #     df_new = add_missingness_columns(df, answer_missing)
-    #     print("Successfully added missingness columns.")
-    # except Exception as e:
-    #     df_new = df
-    #     print(f"Failed to add missing columns: {e}")    
-        
-    
-    # #the number of imputations depend on the size of the dataset and the missingness rate
-    # missing_frequency = df.isnull().sum().sum() / df.size
-    # n_imputations, explanation = determine_imputations(missing_frequency, df.shape[0])
-    # df_new = impute_mixed_data(df_new, n_imputations = n_imputations) #this should never fail
-        
-    
     #### handle temporal data if the df contains temporal data
     try:
         df_new = enrich_temporal_data(df_new)
@@ -71,49 +44,26 @@ def vince_feature_engineering(df,
                  " and try to have an educated guess,  which variable should be log-tranformed  which could improve a prediction model on " + response + 
                  ", so return a small list of integers and do not output anything else!  If you don't find a useful column, return NULL. Example output: [5, 9]")
     
-   # query_boxCox = "Have a look at the following columns: " + colnames_string + " . Also consider the results from the explanatory data analysis: " + eda_summary + " , these additional information: " + ext_info +  " and try to have an educated guess,  which variable should be box-cox transformed which could improve a prediction model on " + response + ", so return a list of integers and do not output anything else!  If you don't find a useful column, return NULL."
-   # query_temp = "Have a look at the following columns: " + colnames_string + " . Also consider the results from the explanatory data analysis: " + eda_summary + " , these additional information: " + ext_info +  " and tell me, which columns contain temporal data, e.g. the date, so return a list of integers and do not output anything else!  If you don't find a column with temporal data, return NULL."
-    
-    #answer_Ints = call_llm_mv(query_Ints, "data science expert")
-    # try:
-    #     answer_Squ = call_llm_mv(query_Squ, "data science expert")
-    # except Exception:
-    #     answer_Squ = list()
-    # try:
-    #     answer_Cub = call_llm_mv(query_Cub, "data science expert")
-    # except Exception:
-    #     answer_Cub = list()
-    # try:
-    #     answer_Log = call_llm_mv(query_Log, "data science expert")
-    # except Exception:
-    #     answer_Log = list()
-        
-    # if print_details:
-    #     print(answer_Squ)
-    #     print(answer_Cub)
-    #     print(answer_Log)
-    #answer_temp = call_llm_mv(query_temp, "data science expert")
-    #answer_boxCox = call_llm_mv(query_boxCox, "data science expert")
      
     
     #Try to perform transformation without crashing the main
     try:
         answer_Squ = call_llm_mv(query_Squ, "data science expert")
-        df_new = add_power_columns(df_new, answer_Squ, 2)
+        df_new = add_power_columns(df_new, answer_Squ, 2, response=response)
         print("Successfully applied squared power columns.")
     except Exception as e:
         print(f"Failed to add squared power columns: {e}")
 
     try:
         answer_Cub = call_llm_mv(query_Cub, "data science expert")
-        df_new = add_power_columns(df_new, answer_Cub, 3)
+        df_new = add_power_columns(df_new, answer_Cub, 3, response=response)
         print("Successfully applied cubed power columns.")
     except Exception as e:
         print(f"Failed to add cubed power columns: {e}")
 
     try:
         answer_Log = call_llm_mv(query_Log, "data science expert")
-        df_new = add_log_columns(df_new, answer_Log)
+        df_new = add_log_columns(df_new, answer_Log, response=response)
         print("Successfully applied log columns.")
     except Exception as e:
         print(f"Failed to add log columns: {e}")
@@ -147,7 +97,10 @@ def vince_feature_engineering(df,
         if max_iterations == 0:
             break
         max_iterations  = max_iterations - 1
-        
+        if len(excluded_cols) > 2 * math.ceil(math.sqrt(col_num)):
+            #print("Enough interactions added.")
+            break
+            
         excluded_info = f" The following column pairs have already been excluded: {excluded_cols}."
         
         if print_details:
@@ -166,13 +119,10 @@ def vince_feature_engineering(df,
 
             # Try to add the interaction column
             try:
-                tmp = add_interaction_column_pair(df_new, answer_Ints)
+                tmp = add_interaction_column_pair(df_new, answer_Ints, response=response)
                 df_new = tmp[0]
                 new_excluded_cols = tmp[1]
-                #excluded_cols.append(tmp[1])  # Update excluded_cols with the handled pair
-                #excluded_cols.extend(tmp[1] if isinstance(tmp[1], list) else [tmp[1]])  # Ensure list format
-                #excluded_cols = [col for pair in excluded_cols for col in pair] #flatten
-                
+
                 # extend
                 excluded_cols.extend(new_excluded_cols if isinstance(new_excluded_cols, list) else [new_excluded_cols])
                 excluded_cols = [col for pair in excluded_cols for col in (pair if isinstance(pair, (list, tuple)) else [pair])] #flattten
@@ -195,18 +145,6 @@ def vince_feature_engineering(df,
     #Ask LLM which transformations have been performed
     new_colnames =  ", ".join(df_new.columns)
     
-    # query_trafos = "Which feature engineering transformations have been done?"
-    # "Look at the column names" + new_colnames + "and have an educated guess "
-    # " based on the column name endings: "
-    # "the column names ending e.g. in _squared when the orginal column was added squared, _log for a "
-    # "log-transformation, _missing for adding a dummy encoded column indicating if the observation has "
-    # "a missing value in the orginal variable. _is_weekend, _day_of_week, etc, are indicators that"
-    # "date data was enriched with furhter information. _intA indicate an added interaction term. "
-    
-    # answer_trafos = qwen(query_trafos)
-    # if print_details:
-    #     print(answer_trafos + "\n")
-
     query_trafos = ("We have performed a few feature engineering transformations, as indicated by the column names ending e.g. " +
                     "in _Squ when the orginal column was added squared, _log for a logtransformation etc. Compare the orginal column names: " + colnames_string + 
                     " with the new column names: " + new_colnames + "and describe the performed transformation very briefly!")
@@ -247,7 +185,7 @@ def imputation_by_LLM(df,
         print(answer_missing)
         
     try:
-        df_new = add_missingness_columns(df_new, answer_missing)
+        df_new = add_missingness_columns(df_new, answer_missing, response=response)
         print("Successfully added missingness columns.")
     except Exception as e:
         print(f"Failed to add missing columns: {e}")    
@@ -255,22 +193,16 @@ def imputation_by_LLM(df,
     
     #the number of imputations depend on the size of the dataset and the missingness rate
     missing_frequency = df.isnull().sum().sum() / df.size
-    n_imputations, explanation = determine_imputations(missing_frequency, df.shape[0])
+    #n_imputations, explanation = determine_imputations(missing_frequency, df.shape[0])
+    n_imputations = 1 #more solid
     
     try:
         df_new = impute_mixed_data(df_new, n_imputations = n_imputations) #this should never fail
     except:
-        df_new = df
+        print("Imputations failed")
     return df_new
 
-#### short test
-# file_path = 'data/mtcars.csv'  
-# mtcars_df = pd.read_csv(file_path)
-
-# #mtcars_df = mtcars_df.drop(mtcars_df.columns[0], axis=1)
-# mtcars_df_mis = delete_values_with_exclusion(mtcars_df, 25, "mpg")
-# print(mtcars_df_mis)
-
-# results = vince_feature_engineering(mtcars_df_mis, print_details=True)
-# #print(results["transformed data"])
-# results["transformed data"].to_csv("test_new.csv", index=False)
+#TODO
+# make own reporting string
+# write about dummy encoding
+# add to query that it should not change the number of rows

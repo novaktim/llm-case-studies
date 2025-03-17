@@ -127,7 +127,7 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
 
     except:
         transformed_dataset = original_dataset
-        generation_summary = "No changes to the dataset where made."
+        generation_summary = "No additional changes to the dataset where made."
     
     # Output what transformations were made by the LLM
     print(generation_summary)
