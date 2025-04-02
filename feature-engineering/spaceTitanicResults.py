@@ -123,4 +123,4 @@ results = fe_main(titanic_df, response = "Transported", eda_summary = eda, ext_i
 
 print("########################### results Titanic Spaceship ################################### \n")
 print(results["fe_summary"])
-results["df_new"].to_csv("data/spaceTitanicResults.csv", index=False)
+results["df_new"].to_csv("SpaceTitanic/train_afterFE.csv", index=False)
