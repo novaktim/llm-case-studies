@@ -65,7 +65,7 @@ def ask_llm_python(dataset, query, role, tries=3):
         return dataset, exec_code
     except:
         if tries == 0:
-            raise Exception(f"Failed to get a valid response from the llm: {query}")
+            raise Exception(f"Failed to get a valid response from the LLM: {query}")
         else:
             return ask_llm_python(dataset, query + " The last answer was not a valid python code. Please answer only in python code without explanations or comments.",
             role=role, tries=tries-1)
@@ -124,11 +124,14 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
         query = "Write a summary of the features that were generated or changed by this code: " + exec_code
         # print("Asking gwen:", query + "\n")
         generation_summary = qwen(query)
+      
 
-    except:
+    except Exception as e:
         transformed_dataset = original_dataset
-        generation_summary = "No additional changes to the dataset where made."
-    
+        generation_summary = f"No features have been flexibly generated."
+        with open("error_feature_generation.txt", "a") as log:
+            log.write(f"Error that happened: {e}\n Generated code was: {exec_code}")
+
     # Output what transformations were made by the LLM
     # print(generation_summary)
     # print("\nFinished with feature generation.\n")
