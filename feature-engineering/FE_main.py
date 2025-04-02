@@ -13,7 +13,7 @@ import feature_generation #tim
 # See enrich_temporal_data() function in fe_standard_functions.py for more details
 
 #fe_main performs feature engineering
-def fe_main(df, eda_summary, ext_info, response, apply_standardization = True, print_details = False,
+def fe_main(df, eda_summary, ext_info, response, apply_standardization = False, print_details = False,
             apply_dummy_encoding = True): 
     """
     Main function to apply feature engineering to a dataset.
@@ -96,17 +96,16 @@ def fe_main(df, eda_summary, ext_info, response, apply_standardization = True, p
             if print_details:
                 print("There was an error in applying Standardization.")
 
-        if apply_dummy_encoding:
-            print("Performung Dummy encoding for categorical columns")
-            try:
-                df = encode_categorical_variables(df)
-            except:
-                if print_details:
-                    print("Error in performing dummy encoding")
-        results = {
-            "df_new": df_new,
-            "fe_summary": trafos_summary + generation_summary
-        }
+    if apply_dummy_encoding:
+        print("Performing Dummy encoding for categorical columns")
+        try:
+            df_new = encode_categorical_variables(df_new)
+        except:
+            print("Error in performing dummy encoding")
+    results = {
+        "df_new": df_new,
+        "fe_summary": trafos_summary + generation_summary
+    }
     return results
 
 

@@ -194,7 +194,7 @@ def imputation_by_LLM(df,
     #the number of imputations depend on the size of the dataset and the missingness rate
     missing_frequency = df.isnull().sum().sum() / df.size
     #n_imputations, explanation = determine_imputations(missing_frequency, df.shape[0])
-    n_imputations = 1 #more solid
+    n_imputations = 1 #more robust
     
     try:
         df_new = impute_mixed_data(df_new, n_imputations = n_imputations) #this should never fail
