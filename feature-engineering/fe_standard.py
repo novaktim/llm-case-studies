@@ -11,17 +11,38 @@ def standard_feature_engineering(df,
                             response = "mpg",
                             print_details = False):  #turn this on for debugging purposes
     
-    colnames_string = ", ".join(df.columns) 
-    col_num = len(df.columns)
-    df_new = df.copy()
+    
+    def filter_numerical_and_response(df, response):
+        """
+        Filters the DataFrame to retain only numerical columns and the specified response column.
 
-        
+        Parameters:
+            df (pd.DataFrame): The input DataFrame.
+            response (str): The name of the response column to keep.
+
+        Returns:
+            pd.DataFrame: Filtered DataFrame with only numerical columns and the response column.
+        """
+        numeric_cols = df.select_dtypes(include=["number"]).columns
+        selected_cols = list(numeric_cols) + [response] if response in df.columns else list(numeric_cols)
+    
+        return df[selected_cols]
+
     #### handle temporal data if the df contains temporal data
     try:
-        df_new = enrich_temporal_data(df_new)
+        df = enrich_temporal_data(df)
         print("Successfully handled temporal data.")
     except Exception as e:
-        print(f"Failed to enrich temporal data: {e}")    
+        print(f"Failed to enrich temporal data: {e}")  
+
+
+    #df_new = df.copy()
+    
+    df_new = filter_numerical_and_response(df, response=response)
+    colnames_string = ", ".join(df_new.columns) 
+    col_num = len(df_new.columns)    
+    
+  
     
     
     #### ask LLM about some common transformation
@@ -52,7 +73,13 @@ def standard_feature_engineering(df,
         df_new = add_power_columns(df_new, answer_Squ, 2, response=response)
         print("Successfully applied squared power columns.")
     except Exception as e:
-        print(f"Failed to add squared power columns: {e}")
+        print(f"Failed to add squared power columns: {e}, will try again!")
+        query_Squ = "Try again!" + query_Squ
+        try:
+            answer_Squ = call_llm_mv(query_Squ, "data science expert")
+            df_new = add_power_columns(df_new, answer_Squ, 2, response=response)
+        except:
+            print("did not work again")
 
     try:
         answer_Cub = call_llm_mv(query_Cub, "data science expert")
@@ -133,11 +160,11 @@ def standard_feature_engineering(df,
                 
         except ValueError as ve:
             print(f"Validation error: {ve}")
-            break  # Exit if the LLM response is invalid
+            #break  # Exit if the LLM response is invalid
 
         except Exception as e:
             print(f"Failed to add interaction columns: {e}")
-            break  # Exit on other exceptions
+            #break  # Exit on other exceptions
     
     #delete duplicate columns, this can sometimes happen unfortunately
     df_new = df_new.loc[:, ~df_new.T.duplicated()]
@@ -153,9 +180,13 @@ def standard_feature_engineering(df,
     if print_details:
         print(answer_trafos + "\n")
     
+    # merge with original
+    merged_df = pd.concat([df, df_new], axis=1)
+    merged_df = merged_df.loc[:, ~merged_df.T.duplicated()]
+    
     #return transformed dataframe and a description of performed transformations
     results = {
-    "transformed data": df_new,
+    "transformed data": merged_df,
     "explanation": answer_trafos
     }
     return results

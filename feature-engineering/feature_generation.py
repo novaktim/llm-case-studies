@@ -130,7 +130,7 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
         transformed_dataset = original_dataset
         generation_summary = f"No features have been flexibly generated."
         with open("error_feature_generation.txt", "a") as log:
-            log.write(f"Error that happened: {e}\n Generated code was: {exec_code}")
+            log.write(f"Error that happened: {e}\n Generated code ...")
 
     # Output what transformations were made by the LLM
     # print(generation_summary)

@@ -304,12 +304,14 @@ def call_llm(content, role, tries=10):
 
 # Imagine the response has to be an array of integers
 def read_mv(output):
+    if isinstance(output, list):  # Handle list input
+        return [int(value) for value in output]
     output = output.strip()
     output = output.replace(",", ".")
     # Split the output into parts and try converting each to an integer
     return [int(value) for value in output.split()]
 
-def call_llm_mv(content, role, tries=10):
+def call_llm_mv(content, role, tries=25):
     outp = qwen(content, role)
     try:
         return read_mv(outp)
@@ -643,7 +645,7 @@ def add_interaction_column_pair(df, column_pair, response = ""):
         return df, column_pair  # Return unchanged dataframe
     
     
-    new_column_name = f"{col1_name[:5]}*{col2_name[:5]}"
+    new_column_name = f"{col1_name}*{col2_name}"
 
     # Add the interaction column
     df[new_column_name] = df.iloc[:, column_pair[0]] * df.iloc[:, column_pair[1]]

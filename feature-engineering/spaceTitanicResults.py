@@ -115,13 +115,13 @@ def automated_eda_numerical_only(df, unique_threshold=0.7):
 file_path = 'data/train.csv'  
 titanic_df = pd.read_csv(file_path)
 
-eda, _ = automated_eda_numerical_only(titanic_df)
+#eda, titanic_df = automated_eda_numerical_only(titanic_df)
 #print(eda)
 
 #results = fe_main(titanic_df, response = "Transported", eda_summary = eda, ext_info = ext, 
 #                 apply_standardization=False)
 
-print("########################### results Titanic Spaceship ################################### \n")
+#print("########################### results Titanic Spaceship ################################### \n")
 #print(results["fe_summary"])
 #results["df_new"].to_csv("SpaceTitanic/train_afterFE.csv", index=False)
 
@@ -129,10 +129,10 @@ print("########################### results Titanic Spaceship ###################
 ###### test
 file_path = 'data/test.csv'  
 titanic_test = pd.read_csv(file_path)
+eda, titanic_test = automated_eda_numerical_only(titanic_test)
+
 titanic_test["Transported"] = "no label"
 results_test = fe_main(titanic_test, response = "Transported", eda_summary = eda, ext_info = ext, 
                   apply_standardization=False)
 print(results_test["fe_summary"])
-
-#results_test["df_new"] = results_test["df_new"].drop("Transported", axis=1)
 results_test["df_new"].to_csv("SpaceTitanic/test_afterFE.csv", index=False)
