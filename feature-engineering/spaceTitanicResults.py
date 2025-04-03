@@ -115,15 +115,15 @@ def automated_eda_numerical_only(df, unique_threshold=0.7):
 file_path = 'data/train.csv'  
 titanic_df = pd.read_csv(file_path)
 
-#eda, titanic_df = automated_eda_numerical_only(titanic_df)
-#print(eda)
+eda, titanic_df = automated_eda_numerical_only(titanic_df)
+print(eda)
 
-#results = fe_main(titanic_df, response = "Transported", eda_summary = eda, ext_info = ext, 
-#                 apply_standardization=False)
+results = fe_main(titanic_df, response = "Transported", eda_summary = eda, ext_info = ext, 
+                 apply_standardization=False)
 
-#print("########################### results Titanic Spaceship ################################### \n")
-#print(results["fe_summary"])
-#results["df_new"].to_csv("SpaceTitanic/train_afterFE.csv", index=False)
+print("########################### results Titanic Spaceship ################################### \n")
+print(results["fe_summary"])
+results["df_new"].to_csv("SpaceTitanic/train_afterFE.csv", index=False)
 
 
 ###### test

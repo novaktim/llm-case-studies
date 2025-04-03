@@ -30,10 +30,22 @@ def extract_code_or_keep(input_string):
     if code_blocks:
         return "\n".join(code_blocks)
     else:
+        # Happens if the answer of the LLM is cut off before finishing the code block
+        match = re.search(r"```python\n(.*?)(```|$)", input_string, re.DOTALL)
+        if match:
+            python_code = match.group(1).strip()
+            # Remove last line that might be incomplete
+            lines = python_code.split("\n")
+            if len(lines) > 1:
+                python_code = "\n".join(lines[:-1])
+            else:
+                python_code = ""
+            return python_code
+        
         return input_string
         
 
-def ask_llm_python(dataset, query, role, tries=3):
+def ask_llm_python(query, role, tries=3):
     """
     Interact with a language model to execute generated Python code on a dataset.
 
@@ -42,7 +54,6 @@ def ask_llm_python(dataset, query, role, tries=3):
     execution fails, it retries with an adjusted query up to a specified number of attempts.
 
     Parameters:
-        dataset (pandas.DataFrame): The dataset that may be modified by executing the generated Python code.
         query (str): The prompt sent to the LLM describing what needs to be done.
         role (str): The role/personality of the LLM during interaction.
         tries (int): The maximum number of retries if valid Python output is not received. Default is 3.
@@ -59,12 +70,12 @@ def ask_llm_python(dataset, query, role, tries=3):
 
     try:
         output = qwen(query, role)
-        return dataset, output
+        return output
     except:
         if tries == 0:
             raise Exception(f"Failed to get a valid response from the LLM: {query}")
         else:
-            return ask_llm_python(dataset, query + " The last answer was not a valid python code. Please answer only in python code without explanations or comments.",
+            return ask_llm_python(query + " The last answer was not a valid python code. Please answer only in python code without explanations or comments.",
             role=role, tries=tries-1)
             
 
@@ -92,7 +103,7 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
     """
     
     # Copy dataset in case an error happens
-    transformed_dataset = original_dataset.copy()
+    dataset = original_dataset.copy()
 
 
 
@@ -109,28 +120,32 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
         header = header.iloc[:, :200]
 
     # Add the header rows to the query, to describe our dataset
-    query = query + ("Assume \"dataset\" is already given as a variable and return only python code "
-            "to derive the new interesting variables for machine learning: " 
+    query = query + ("Assume \"dataset\" is already given as a variable. Dont drop any features. Return only python code "
+            "to derive new interesting features for machine learning: " 
             + header.to_string()
     )
     # print("Asking gwen:", query + "\n")
     try:
-        transformed_dataset, output = ask_llm_python(transformed_dataset, query, role="You are a python program", tries=3)
+        output = ask_llm_python(query, role="You are a python program", tries=3)
         
-        with open("feature_generation_llm_output.txt", "a") as log:
-            log.write(f"Generated code was: {output}")
+        with open("feature_generation_llm_output.txt", "w") as log:
+            log.write(f"Qwen generated the following python code to transform the dataset:\n{output}")
             
         exec_code = extract_code_or_keep(output)
-        exec(exec_code)
+        
+        #exec(exec_code)
+        exec_env = {"dataset": dataset}
+        exec(exec_code, exec_env)
+        dataset = exec_env["dataset"]
         
         # Ask gwen what changes to the dataset were made.
         query = "Write a summary of the features that were generated or changed by this code: " + exec_code
         # print("Asking gwen:", query + "\n")
         generation_summary = qwen(query)
-      
+    
 
     except Exception as e:
-        transformed_dataset = original_dataset
+        dataset = original_dataset
         generation_summary = f"No features have been flexibly generated."
         with open("error_feature_generation.txt", "a") as log:
             log.write(f"Error that happened: {e}")
@@ -138,7 +153,7 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
     # Output what transformations were made by the LLM
     # print(generation_summary)
     # print("\nFinished with feature generation.\n")
-    return transformed_dataset, generation_summary
+    return dataset, generation_summary
     
 
     
