@@ -121,11 +121,11 @@ print(eda)
 results = fe_main(titanic_df, response = "Transported", eda_summary = eda, ext_info = ext, 
                  apply_standardization=False)
 
-print("########################### results Titanic Spaceship ################################### \n")
+print("########################### results train Titanic Spaceship ################################### \n")
 print(results["fe_summary"])
-results["df_new"].to_csv("SpaceTitanic/train_afterFE.csv", index=False)
+results["df_new"].to_csv("SpaceTitanic/train_afterFE2.csv", index=False)
 
-
+print("########################### results test Titanic Spaceship ################################### \n")
 ###### test
 file_path = 'data/test.csv'  
 titanic_test = pd.read_csv(file_path)
@@ -135,4 +135,4 @@ titanic_test["Transported"] = "no label"
 results_test = fe_main(titanic_test, response = "Transported", eda_summary = eda, ext_info = ext, 
                   apply_standardization=False)
 print(results_test["fe_summary"])
-results_test["df_new"].to_csv("SpaceTitanic/test_afterFE.csv", index=False)
+results_test["df_new"].to_csv("SpaceTitanic/test_afterFE2.csv", index=False)
