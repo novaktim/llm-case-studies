@@ -782,17 +782,17 @@ def encode_categorical_variables(df, moderate_threshold=20, high_threshold=100):
 
         if num_levels <= moderate_threshold:
             print(f"Encoding '{col}' with {num_levels} levels using One-Hot Encoding.")
-            df = pd.get_dummies(df, columns=[col], drop_first=True)
+            df = pd.get_dummies(df, columns=[col], drop_first=False)
 
         elif num_levels <= high_threshold:
             print(f"Encoding '{col}' with {num_levels} levels by grouping rare categories into 'Other' before One-Hot Encoding.")
             top_categories = df[col].value_counts().index[:moderate_threshold]
             df[col] = df[col].apply(lambda x: x if x in top_categories else "Other")
-            df = pd.get_dummies(df, columns=[col], drop_first=True)
+            df = pd.get_dummies(df, columns=[col], drop_first=False)
 
         else:
             print(f"Encoding '{col}' with {num_levels} levels using Frequency Encoding.")
-            freq_map = df[col].value_counts(normalize=True)
+            freq_map = df[col].value_counts(normalize=False)
             df[col] = df[col].map(freq_map)
 
     return df
