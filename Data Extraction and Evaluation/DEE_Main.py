@@ -2,6 +2,7 @@ from ninept import qwen
 import pandas as pd
 import subprocess
 import os
+import re
 
 def run_file(filename):
     try:
@@ -40,19 +41,33 @@ def llm_output():
     new_file_path = os.path.join("kaggle_datasets", selected_dataset, "train.csv")
     dataframe = pd.read_csv(new_file_path)
     target_variable = dataframe.iloc[:, -1]
-    print("\nTarget Variable: " + target_variable.name + "\n")
 
     file_path = "kaggle_competitions_details.txt"
     result = llm_evaluation(file_path, selected_dataset)
 
-    print("Hello! This is your QWEN LLM Agent !!!")
-    print(result + ". Give me a function named evaluation for implementing the evaluation metric?")
-    response = qwen(result + ". Give me a function named evaluation for implementing the evaluation metric?")
-    print(response)
+    details = "Have a look at the following details:\n" + result + "\n\nYou have train, test and submit_submission.csv" + "\n\nThe target variable is " + target_variable.name + "\n\nProvide a function named Evaluation for optimized and minimal the evaluation metric of the competition" + "\n\nOutput only the function, nothing else" + "\n\nThe function must be **minimal**, containing only the required code. No comments, no print statements, no explanations."
+    
+    print(details)
+    
+    response = qwen(content = "Have a look at the following details:\n\n" + result + 
+        "\n\nYou have train, test and submit_submission.csv" + 
+        "\n\nThe target variable is " + target_variable.name + 
+        "\n\nProvide a function named Evaluation for optimized and minimal evaluation metric of the competition." + 
+        "\n\nOutput only the function, nothing else." + 
+        "\n\nThe function must be **minimal**, containing only the required code. No comments, no print statements, no explanations." +
+        "\n\nExecute the function and give path to train, test and sample_submission.csv files. Also make sure there is no errors while executing."
+        , role = "You are a data scientist assistant" 
+        )
+    
+    pattern = r"```(?:python\n)?(.*?)```"
+    matches = re.findall(pattern, response, re.DOTALL)
+    newresponse = "\n\n".join(match.strip() for match in matches)
+
     with open("llm_evaluation_code.py", "w", encoding="utf-8") as file:
-        file.write(response)
+        file.write(newresponse)
 
 if __name__ == "__main__":
-    # run_file("DataExtraction.py")
-    # run_file("GettingMetadata.py")
+    run_file("DataExtraction.py")
+    run_file("GettingMetadata.py")
     llm_output()
+

@@ -9,7 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 from duckduckgo_search import DDGS
 from sklearn.preprocessing import StandardScaler
-from  fe_vince_functions import *
+from  fe_standard_functions import *
 from  FE_main import *
 import feature_generation #tim
 import json

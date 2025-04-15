@@ -28,7 +28,7 @@ def extract_code_or_keep(input_string):
     # Regular expression to capture Python code within triple backticks
     code_blocks = re.findall(r"```python\n(.*?)```", input_string, re.DOTALL)
     if code_blocks:
-        return "\n".join(code_blocks)
+        python_code = "\n".join(code_blocks)
     else:
         # Happens if the answer of the LLM is cut off before finishing the code block
         match = re.search(r"```python\n(.*?)(```|$)", input_string, re.DOTALL)
@@ -40,9 +40,24 @@ def extract_code_or_keep(input_string):
                 python_code = "\n".join(lines[:-1])
             else:
                 python_code = ""
-            return python_code
+        else:
+            # If the LLM really did only provide code, which often does not
+            python_code = input_string
         
-        return input_string
+    python_code = clean_faulty_imports(python_code)
+    return python_code
+    
+
+def clean_faulty_imports(code):
+    # Removes any lines where the LLM tries to import 'your_dataset.csv'
+    code = "\n".join(line for line in code.splitlines() if "your_dataset.csv" not in line)
+    
+    # Often lead to errors as he used categorical data in cut function that excepts numerics
+    code = "\n".join(line for line in code.splitlines() if "pd.cut" not in line)
+    
+    # We already do categorical encoding. But the LLM often tries sklearns LabelEncoder
+    code = "\n".join(line for line in code.splitlines() if ".fit_transform" not in line)
+    return code
         
 
 def ask_llm_python(query, role, tries=3):
@@ -120,20 +135,23 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
         header = header.iloc[:, :200]
 
     # Add the header rows to the query, to describe our dataset
-    query = query + ("Assume \"dataset\" is already given as a variable. Dont drop any features. Return only python code "
-            "to derive new interesting features for machine learning: " 
-            + header.to_string()
+    query = query + ("This is the dataset header: "
+                     + header.to_string() +
+                     "\n\nAssume the dataset is already loaded and named \"dataset\". "
+                     "Please return python code to derive new interesting features for machine learning, "
+                     "but dont drop any features and dont use the pandas cut function. "
+                     "We have already taken care of missing value imputation and categorical encoding."  
     )
-    # print("Asking gwen:", query + "\n")
+    
     try:
         output = ask_llm_python(query, role="You are a python program", tries=3)
         
-        with open("feature_generation_llm_output.txt", "w") as log:
+        with open(f"data/cache/feature_generation_llm_output_dim{dataset.shape[0]}-{dataset.shape[1]}.txt", "w") as log:
             log.write(f"Qwen generated the following python code to transform the dataset:\n{output}")
             
         exec_code = extract_code_or_keep(output)
         
-        #exec(exec_code)
+        # Run the generated python code line by line
         exec_env = {"dataset": dataset}
         exec(exec_code, exec_env)
         dataset = exec_env["dataset"]
@@ -147,7 +165,7 @@ def feature_generation(original_dataset, eda_summary="", ext_info="", response="
     except Exception as e:
         dataset = original_dataset
         generation_summary = f"No features have been flexibly generated."
-        with open("error_feature_generation.txt", "a") as log:
+        with open("data/cache/error_feature_generation.txt", "a") as log:
             log.write(f"Error that happened: {e}")
 
     # Output what transformations were made by the LLM
